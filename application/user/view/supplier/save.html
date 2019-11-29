@@ -1,0 +1,209 @@
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+			<form id="my-form" class="layui-form " enctype="multipart/form-data" method="post">
+			{notempty name="$list"}			
+				<div class="widget-head">							
+					<div class="widget-title">添加供应商信息</div>		
+				</div>
+				<div class="widget-body layui-col-sm12 layui-col-md12 layui-col-lg12">
+				   
+						<div class="layui-form-item">
+							<label class="layui-form-label form-require">供应商名称:</label>
+							<div class="layui-col-sm7 layer-midd-left">
+								<input type="text" class="layui-input" name="name"
+									   value="{$list['name']??''}" required>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label form-require">详细地址:</label>
+							<div class="layui-col-sm7 layer-midd-left">
+								<input type="text" class="layui-input" name="address"
+									   value="{$list['address']??''}" required>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">营业执照： </label>
+							<div class="layui-col-sm7 layer-midd-left">
+								<div class="layer-form-file">
+									<button type="button"
+											class="upload-file layer-btn-secondary layer-radius layui-btn">
+										<i class="layer-icon-cloud-upload "></i> 选择图片
+									</button>
+									<div class="uploader-list layer-cf">
+										  <div class="file-item">
+												<a href="{$list['store_pic']}" title="点击查看大图" target="_blank">
+													<img src="{$list['store_pic']}">
+												</a>
+												<input type="hidden" name="store_pic"
+													   value="{$list['store_pic']??''}">
+												<i class="mdi menu-icon mdi-window-close file-item-delete"></i>
+											</div>
+									</div>
+								</div>
+								<div class="help-block layer-margin-top-sm">
+									<small>尺寸150x150像素以上，大小2M以下</small>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label form-require">经营类型：</label>
+							<div class="layui-col-sm7 layer-midd-left">
+								<input type="number" class="layui-input" name="category"
+									   value="{$list['sort']??''}" required>
+								<small>数字越小越靠前</small>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label form-require">交货点额:</label>
+							<div class="layui-col-sm7 layer-midd-left">
+								<input type="decimal(8,2)" class="layui-input" name="agio" value="{$list.agio}" required>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label form-require">收货人:</label>
+							<div class="layui-col-sm7 layer-midd-left">
+							  <input type="text" class="layui-input" name="contacts" value="{$list.contacts}" required>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label form-require">联系电话:</label>
+							<div class="layui-col-sm7 layer-midd-left">
+							  <input type="phone" class="layui-input" name="phone" value="{$list.phone}" required>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label form-require">登录密码:</label>
+							<div class="layui-col-sm7 layer-midd-left">
+							  <input type="number" class="layui-input" name="password" value="{$list['password']}" required>
+							</div>
+						</div>
+						<div>
+							<input type="hidden" name="brand[id]" value="{$list['id']??''}">
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button type="submit" class="j-submit layui-btn layui-btn-secondary">提交
+								</button>
+							</div>
+						</div>
+				</div>
+			{else /}
+				<div class="widget-head">							
+					<div class="widget-title">添加供应商</div>		
+				</div>
+				<div class="widget-body layui-col-sm12 layui-col-md12 layui-col-lg12">
+				   
+						<div class="layui-form-item">
+							<label class="layui-form-label form-require">供应商名称:</label>
+							<div class="layui-col-sm7 layer-midd-left">
+								<input type="text" class="layui-input" name="name"
+									   value="" required>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label form-require">详细地址:</label>
+							<div class="layui-col-sm7 layer-midd-left">
+								<input type="text" class="layui-input" name="address"
+									   value="" required>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">营业执照：</label>
+							<div class="layui-col-sm7 layer-midd-left">
+								<div class="layer-form-file">
+									<button type="button"
+											class="upload-file layer-btn-secondary layer-radius layui-btn">
+										<i class="layer-icon-cloud-upload "></i> 选择图片
+									</button>
+									<div class="uploader-list layer-cf">
+										  <div class="file-item">
+												<a href="" title="点击查看大图" target="_blank">
+													<img src="">
+												</a>
+												<input type="hidden" name="store_pic"
+													   value="">
+												<i class="mdi menu-icon mdi-window-close file-item-delete"></i>
+											</div>
+									</div>
+								</div>
+								<div class="help-block layer-margin-top-sm">
+									<small>尺寸150x150像素以上，大小2M以下</small>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label form-require">经营类型：</label>
+							<div class="layui-col-sm7 layer-midd-left">
+							{volist name="category" id='c'}
+								<input type="checkbox" class="layui-input" name="category[]" value="{$c['id']}">{$c['name']}
+							{/volist}
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label form-require">交货点额:</label>
+							<div class="layui-col-sm7 layer-midd-left">
+							  <input type="decimal(8,2)" class="layui-input" name="agio" value="" required>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label form-require">收货人:</label>
+							<div class="layui-col-sm7 layer-midd-left">
+							  <input type="text" class="layui-input" name="contacts" value="" required>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label form-require">联系电话:</label>
+							<div class="layui-col-sm7 layer-midd-left">
+							  <input type="phone" class="layui-input" name="phone" value="" required>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label form-require">登录密码:</label>
+							<div class="layui-col-sm7 layer-midd-left">
+							  <input type="number" class="layui-input" name="password" value="" required>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button type="submit" class="j-submit layui-btn layui-btn-secondary">提交
+								</button>
+							</div>
+						</div>
+				</div>
+			{/notempty}
+			</form>
+        </div>
+    </div>
+</div>
+
+<!-- 图片文件列表模板 -->
+{include file="layouts/_template/tpl_file_item" /}
+
+<!-- 文件库弹窗 -->
+{include file="layouts/_template/file_library" /}
+
+<script>
+    $(function () {
+
+        // 选择图片
+        $('.upload-file').selectImages({
+            name: 'brand[logo]'
+        });
+
+        /**
+         * 表单验证提交
+         * @type {*}
+         */
+		 var parent_id=$("#parent_id_1").val();
+	
+		 if(parent_id > 0 ){
+			get_category($("#parent_id_1").val(),'parent_id_2',0);	 
+		}	
+        $('#my-form').superForm();
+
+    });
+
+		
+
+</script>

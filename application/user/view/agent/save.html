@@ -1,0 +1,106 @@
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+            <form id="my-form" class="layui-form " enctype="multipart/form-data" method="post" action="{Url('Agent/saveAgent')}">
+                {notempty name="$list"}
+                <div class="widget-head">
+                    <div class="widget-title">修改推广员信息</div>
+                </div>
+                <div class="widget-body layui-col-sm12 layui-col-md12 layui-col-lg12">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label form-require">联系电话:</label>
+                        <div class="layui-col-sm7 layer-midd-left">
+                            <input type="phone" class="layui-input" name="phone" value="{$list.phone}" required>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label form-require">登录密码:</label>
+                        <div class="layui-col-sm7 layer-midd-left">
+                            <input type="number" class="layui-input" name="password" value="{$list['password']}" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="layui-form-label form-require">性别:</label>
+                        <div class="layui-col-sm7 layer-midd-left">
+                            {if ($list['gender']) == 1}
+                            <input type="number" class="layui-input" name="text" value="男" disabled>
+                            {/if}
+                            <input type="number" class="layui-input" name="text" value="女" disabled>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="hidden" name="brand[id]" value="{$list['id']??''}">
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button type="submit" class="j-submit layui-btn layui-btn-secondary">提交
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {else /}
+                <div class="widget-head">
+                    <div class="widget-title">添加推广员</div>
+                </div>
+                <div class="widget-body layui-col-sm12 layui-col-md12 layui-col-lg12">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label form-require">联系电话:</label>
+                        <div class="layui-col-sm7 layer-midd-left">
+                            <input type="tel" class="layui-input" name="phone" value="" required>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label form-require">登录密码:</label>
+                        <div class="layui-col-sm7 layer-midd-left">
+                            <input type="password" class="layui-input" name="password" value="" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="layui-form-label form-require">性别:</label>
+                        <div class="layui-col-sm7 layer-midd-left">
+                            <select class="form-control" name="gender">
+                                <option value="1">男</option>
+                                <option value="2">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button type="submit" class="j-submit layui-btn layui-btn-secondary">提交
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {/notempty}
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 图片文件列表模板 -->
+{include file="layouts/_template/tpl_file_item" /}
+
+<!-- 文件库弹窗 -->
+{include file="layouts/_template/file_library" /}
+
+<script>
+    $(function () {
+
+        // 选择图片
+        $('.upload-file').selectImages({
+            name: 'brand[logo]'
+        });
+
+        /**
+         * 表单验证提交
+         * @type {*}
+         */
+        $('#my-form').superForm();
+
+    });
+
+
+
+</script>

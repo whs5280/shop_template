@@ -1,0 +1,81 @@
+<style type="text/css">
+     /* altrowstable */
+  
+     table.altrowstable {
+         font-family: verdana,arial,sans-serif;
+         font-size:20px;
+         color:#333333;
+         border-width: 1px;
+         border-color: #a9c6c9;
+         border-collapse: collapse;
+      }
+     table.altrowstable th {
+         border-width: 1px;
+         padding: 8px;
+         border-style: solid;
+         border-color: #a9c6c9;
+      }
+     table.altrowstable td {
+         border-width: 1px;
+         padding: 8px;
+         border-style: solid;
+         border-color: #a9c6c9;
+      }
+     .oddrowcolor{
+         background-color:#d4e3e5;
+      }
+     .evenrowcolor{
+         background-color:#c3dde0;
+      }
+     /* /altrowstable */
+</style>
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+			<div class="widget-head">
+				<div class="widget-title">平台下订</div>
+			</div>
+			<form class="layui-form" method="post" action="{:url('supplier/goodsBuy')}">
+				<table class="altrowstable" id="alternatecolor">
+					<tbody id='spec_input_tab'>
+				    	<tr>
+				    		<th>ID</th>
+					        <th>规格名</th>
+							<th>价格</th>
+					        <th>库存</th>
+					        <th>购买数量</th>
+				   		</tr>
+				   		{volist name="data" id="v" key="k"}
+						<tr>
+							<input type="hidden" name="sku[{$k}][key]" value="{$v.key}">
+							<input type="hidden" name="sku[{$k}][goods_id]" value="{$v.goods_id}">
+							<input type="hidden" name="sku[{$k}][store_count]" value="{$v.store_count}">
+							<td>{$v.key}</td>
+							<td>{$v.key_name}</td>
+							<td>{$v.price}</td>
+							<td>{$v.store_count}</td>
+							<td><input type="number" name="sku[{$k}][number]" placeholder="0" value="" /></td>
+						</tr>
+						{/volist}
+				    </tbody>
+				</table>
+				<div class="layer-form-group" style="margin-top: 20px;margin-left: 185px;">
+					<div class="layui-col-sm7  layer-u-sm-push-3 layer-margin-top-lg">
+						<button type="submit" class="j-submit layui-btn layer-btn-secondary">提交
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+    </div>
+</div>
+<script>
+    $(function () {
+        /**
+         * 表单验证提交
+         * @type {*}
+         */
+        $('#my-form').superForm();
+
+    });
+</script>
