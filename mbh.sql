@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-11-29 17:45:13
+Date: 2020-01-06 11:29:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,6 +23,10 @@ CREATE TABLE `bfb_ad` (
   `id` int(8) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
+  `province` varchar(3000) NOT NULL DEFAULT '0,',
+  `city` varchar(5000) NOT NULL DEFAULT '0,',
+  `region` varchar(8000) NOT NULL DEFAULT '0,',
+  `all` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0为不全部显示，1为全部显示',
   `create_time` int(11) NOT NULL,
   `update_time` int(11) NOT NULL,
   `is_delete` int(1) NOT NULL DEFAULT '1',
@@ -33,10 +37,10 @@ CREATE TABLE `bfb_ad` (
 -- ----------------------------
 -- Records of bfb_ad
 -- ----------------------------
-INSERT INTO `bfb_ad` VALUES ('6', '12', 'qe', '1', '2', '0', '10001');
-INSERT INTO `bfb_ad` VALUES ('7', '公告1', '公告内容1', '1574930465', '1574930465', '0', '10001');
-INSERT INTO `bfb_ad` VALUES ('8', '公告2', '公告内容2', '1574930509', '1574930509', '0', '10001');
-INSERT INTO `bfb_ad` VALUES ('9', '公告5', '公告内容5', '1574934491', '1574934491', '0', '10001');
+INSERT INTO `bfb_ad` VALUES ('6', '美博会', '欢迎进入美博会', '0,', '0,', '0,', '0', '1', '2', '0', '10001');
+INSERT INTO `bfb_ad` VALUES ('7', '公告1', '公告内容1', '0,', '0,', '0,', '0', '1574930465', '1574930465', '0', '10001');
+INSERT INTO `bfb_ad` VALUES ('8', '公告2', '公告内容2', '0,', '0,', '0,', '0', '1574930509', '1574930509', '0', '10001');
+INSERT INTO `bfb_ad` VALUES ('9', '公告5', '公告内容5', '0,', '0,', '0,', '0', '1574934491', '1574934491', '0', '10001');
 
 -- ----------------------------
 -- Table structure for bfb_agent
@@ -66,11 +70,14 @@ CREATE TABLE `bfb_agent` (
 -- ----------------------------
 -- Records of bfb_agent
 -- ----------------------------
-INSERT INTO `bfb_agent` VALUES ('3', '0.00', '10.00', '0.00', '0.00', '27.00', '60.00', '10.00', '10001', '0', '1574408965', null, '', '0', '1', '0', '1');
+INSERT INTO `bfb_agent` VALUES ('3', '0.00', '70.00', '0.00', '0.00', '79.00', '68.00', '10.00', '10001', '0', '1575465575', null, '', '0', '1', '0', '1');
 INSERT INTO `bfb_agent` VALUES ('13', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '10001', '1574387346', '1574387346', null, '', '0', '0', '0', '1');
 INSERT INTO `bfb_agent` VALUES ('14', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '10001', '1574387713', '1574387713', null, '', '0', '0', '0', '1');
 INSERT INTO `bfb_agent` VALUES ('15', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '10001', '1574388443', '1574388443', null, '', '0', '0', '0', '1');
 INSERT INTO `bfb_agent` VALUES ('16', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '10001', '1574390996', '1574390996', null, '', '0', '0', '0', '1');
+INSERT INTO `bfb_agent` VALUES ('18', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '10001', '1575871710', '1575871710', null, '', '0', '0', '0', '1');
+INSERT INTO `bfb_agent` VALUES ('19', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '10001', '1575944568', '1575944568', null, '', '0', '0', '0', '1');
+INSERT INTO `bfb_agent` VALUES ('22', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '10001', '1576908892', '1576908892', null, '', '0', '0', '0', '1');
 
 -- ----------------------------
 -- Table structure for bfb_agent_capital
@@ -125,13 +132,15 @@ CREATE TABLE `bfb_agent_record` (
   `app_id` int(11) unsigned NOT NULL DEFAULT '10001',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='推广员资金明细表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='推广员资金明细表';
 
 -- ----------------------------
 -- Records of bfb_agent_record
 -- ----------------------------
 INSERT INTO `bfb_agent_record` VALUES ('7', '3', '300', '10.00', '成功完成了任务1,获得奖励10.00元', '10001', '1574154911');
 INSERT INTO `bfb_agent_record` VALUES ('9', '3', '400', '-10.00', '成功提现了10.00元', '10001', '1574408965');
+INSERT INTO `bfb_agent_record` VALUES ('10', '3', '300', '30.00', '成功完成了任务2,获得奖励30.00元', '10001', '1575512269');
+INSERT INTO `bfb_agent_record` VALUES ('11', '3', '300', '30.00', '成功完成了任务2,获得奖励30.00元', '10001', '1575512896');
 
 -- ----------------------------
 -- Table structure for bfb_agent_task
@@ -143,32 +152,53 @@ CREATE TABLE `bfb_agent_task` (
   `task_id` int(11) NOT NULL COMMENT '任务id',
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态(0为待接收1为待完成2为审核中3为已完成4为删除)',
   `bonus` decimal(6,2) NOT NULL DEFAULT '0.00' COMMENT '任务奖金',
+  `reason` varchar(255) NOT NULL DEFAULT '0' COMMENT '失败原因',
   `app_id` int(11) unsigned NOT NULL DEFAULT '10001',
   `create_time` int(11) NOT NULL COMMENT '创建时间',
   `update_time` int(11) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='推广员任务表';
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COMMENT='推广员任务表';
 
 -- ----------------------------
 -- Records of bfb_agent_task
 -- ----------------------------
-INSERT INTO `bfb_agent_task` VALUES ('1', '3', '1', '3', '10.00', '10001', '1573542341', '1574154911');
-INSERT INTO `bfb_agent_task` VALUES ('2', '3', '2', '2', '30.00', '10001', '1573542341', '1574388071');
-INSERT INTO `bfb_agent_task` VALUES ('3', '3', '3', '1', '10.00', '10001', '1573542341', '1574388071');
-INSERT INTO `bfb_agent_task` VALUES ('4', '3', '4', '4', '30.00', '10001', '1573542341', '1574388071');
-INSERT INTO `bfb_agent_task` VALUES ('5', '13', '1', '0', '10.00', '10001', '1574387346', '1574387346');
-INSERT INTO `bfb_agent_task` VALUES ('8', '14', '1', '0', '10.00', '10001', '1574388292', '1574388292');
-INSERT INTO `bfb_agent_task` VALUES ('9', '14', '2', '0', '30.00', '10001', '1574388292', '1574388292');
-INSERT INTO `bfb_agent_task` VALUES ('10', '14', '3', '0', '10.00', '10001', '1574388292', '1574388292');
-INSERT INTO `bfb_agent_task` VALUES ('11', '14', '4', '0', '30.00', '10001', '1574388292', '1574388292');
-INSERT INTO `bfb_agent_task` VALUES ('12', '15', '1', '0', '10.00', '10001', '1574388443', '1574388443');
-INSERT INTO `bfb_agent_task` VALUES ('13', '15', '2', '0', '30.00', '10001', '1574388443', '1574388443');
-INSERT INTO `bfb_agent_task` VALUES ('14', '15', '3', '0', '10.00', '10001', '1574388443', '1574388443');
-INSERT INTO `bfb_agent_task` VALUES ('15', '15', '4', '0', '30.00', '10001', '1574388443', '1574388443');
-INSERT INTO `bfb_agent_task` VALUES ('16', '16', '1', '0', '10.00', '10001', '1574390996', '1574390996');
-INSERT INTO `bfb_agent_task` VALUES ('17', '16', '2', '0', '30.00', '10001', '1574390996', '1574390996');
-INSERT INTO `bfb_agent_task` VALUES ('18', '16', '3', '0', '10.00', '10001', '1574390996', '1574390996');
-INSERT INTO `bfb_agent_task` VALUES ('19', '16', '4', '0', '30.00', '10001', '1574390996', '1574390996');
+INSERT INTO `bfb_agent_task` VALUES ('1', '3', '1', '1', '10.00', '0', '10001', '1573542341', '1575546411');
+INSERT INTO `bfb_agent_task` VALUES ('2', '3', '2', '3', '30.00', '这不算', '10001', '1573542341', '1575513229');
+INSERT INTO `bfb_agent_task` VALUES ('3', '3', '3', '3', '10.00', '不通过', '10001', '1573542341', '1574388071');
+INSERT INTO `bfb_agent_task` VALUES ('4', '3', '4', '4', '30.00', '0', '10001', '1573542341', '1575464857');
+INSERT INTO `bfb_agent_task` VALUES ('5', '13', '1', '0', '10.00', '0', '10001', '1574387346', '1574387346');
+INSERT INTO `bfb_agent_task` VALUES ('8', '14', '1', '0', '10.00', '0', '10001', '1574388292', '1574388292');
+INSERT INTO `bfb_agent_task` VALUES ('9', '14', '2', '0', '30.00', '0', '10001', '1574388292', '1574388292');
+INSERT INTO `bfb_agent_task` VALUES ('10', '14', '3', '0', '10.00', '0', '10001', '1574388292', '1574388292');
+INSERT INTO `bfb_agent_task` VALUES ('11', '14', '4', '0', '30.00', '0', '10001', '1574388292', '1574388292');
+INSERT INTO `bfb_agent_task` VALUES ('12', '15', '1', '0', '10.00', '0', '10001', '1574388443', '1574388443');
+INSERT INTO `bfb_agent_task` VALUES ('13', '15', '2', '0', '30.00', '0', '10001', '1574388443', '1574388443');
+INSERT INTO `bfb_agent_task` VALUES ('14', '15', '3', '0', '10.00', '0', '10001', '1574388443', '1574388443');
+INSERT INTO `bfb_agent_task` VALUES ('15', '15', '4', '0', '30.00', '0', '10001', '1574388443', '1574388443');
+INSERT INTO `bfb_agent_task` VALUES ('16', '16', '1', '0', '10.00', '0', '10001', '1574390996', '1574390996');
+INSERT INTO `bfb_agent_task` VALUES ('17', '16', '2', '0', '30.00', '0', '10001', '1574390996', '1574390996');
+INSERT INTO `bfb_agent_task` VALUES ('18', '16', '3', '0', '10.00', '0', '10001', '1574390996', '1574390996');
+INSERT INTO `bfb_agent_task` VALUES ('19', '16', '4', '0', '30.00', '0', '10001', '1574390996', '1574390996');
+INSERT INTO `bfb_agent_task` VALUES ('20', '18', '1', '0', '10.00', '0', '10001', '1575871710', '1575871710');
+INSERT INTO `bfb_agent_task` VALUES ('21', '18', '2', '0', '30.00', '0', '10001', '1575871710', '1575871710');
+INSERT INTO `bfb_agent_task` VALUES ('22', '18', '3', '0', '10.00', '0', '10001', '1575871710', '1575871710');
+INSERT INTO `bfb_agent_task` VALUES ('23', '18', '4', '0', '30.00', '0', '10001', '1575871710', '1575871710');
+INSERT INTO `bfb_agent_task` VALUES ('24', '19', '1', '0', '10.00', '0', '10001', '1575944568', '1575944568');
+INSERT INTO `bfb_agent_task` VALUES ('25', '19', '2', '0', '30.00', '0', '10001', '1575944568', '1575944568');
+INSERT INTO `bfb_agent_task` VALUES ('26', '19', '3', '0', '10.00', '0', '10001', '1575944568', '1575944568');
+INSERT INTO `bfb_agent_task` VALUES ('27', '19', '4', '0', '30.00', '0', '10001', '1575944568', '1575944568');
+INSERT INTO `bfb_agent_task` VALUES ('35', '22', '1', '0', '10.00', '0', '10001', '1576908892', '1576908892');
+INSERT INTO `bfb_agent_task` VALUES ('36', '22', '2', '0', '30.00', '0', '10001', '1576908892', '1576908892');
+INSERT INTO `bfb_agent_task` VALUES ('37', '22', '3', '0', '10.00', '0', '10001', '1576908892', '1576908892');
+INSERT INTO `bfb_agent_task` VALUES ('38', '22', '4', '0', '30.00', '0', '10001', '1576908892', '1576908892');
+INSERT INTO `bfb_agent_task` VALUES ('39', '3', '6', '1', '50.00', '0', '10001', '1577071916', '1577071966');
+INSERT INTO `bfb_agent_task` VALUES ('40', '13', '6', '0', '50.00', '0', '10001', '1577071916', '1577071916');
+INSERT INTO `bfb_agent_task` VALUES ('41', '14', '6', '0', '50.00', '0', '10001', '1577071916', '1577071916');
+INSERT INTO `bfb_agent_task` VALUES ('42', '15', '6', '0', '50.00', '0', '10001', '1577071916', '1577071916');
+INSERT INTO `bfb_agent_task` VALUES ('43', '16', '6', '0', '50.00', '0', '10001', '1577071916', '1577071916');
+INSERT INTO `bfb_agent_task` VALUES ('44', '18', '6', '0', '50.00', '0', '10001', '1577071916', '1577071916');
+INSERT INTO `bfb_agent_task` VALUES ('45', '19', '6', '0', '50.00', '0', '10001', '1577071916', '1577071916');
+INSERT INTO `bfb_agent_task` VALUES ('46', '22', '6', '0', '50.00', '0', '10001', '1577071916', '1577071916');
 
 -- ----------------------------
 -- Table structure for bfb_agent_withdraw
@@ -193,7 +223,7 @@ CREATE TABLE `bfb_agent_withdraw` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COMMENT='分销商提现明细表';
+) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COMMENT='分销商提现明细表';
 
 -- ----------------------------
 -- Records of bfb_agent_withdraw
@@ -204,6 +234,9 @@ INSERT INTO `bfb_agent_withdraw` VALUES ('38', '3', '3', '50.00', '1', '林少�
 INSERT INTO `bfb_agent_withdraw` VALUES ('39', '3', '3', '20.00', '2', '', '', 'whs5286', '', '', '', '30', '1574405484', '', '10001', '1574327702', '1574405484');
 INSERT INTO `bfb_agent_withdraw` VALUES ('40', '3', '3', '3.00', '3', '', '', '', '广州分行', '58966555', '987456321111', '40', '1574406054', '', '10001', '1574329339', '1574406054');
 INSERT INTO `bfb_agent_withdraw` VALUES ('41', '12', '2', '100.00', '2', '', '', 'hhawad589', '', '', '', '10', '1574406054', '', '10001', '1574329339', '1574406054');
+INSERT INTO `bfb_agent_withdraw` VALUES ('42', '3', '3', '3.00', '1', '林少红', '123456789', '', '', '', '', '10', '0', '', '10001', '1575465336', '1575465336');
+INSERT INTO `bfb_agent_withdraw` VALUES ('43', '3', '3', '3.00', '2', '', '', 'whs5289', '', '', '', '10', '0', '', '10001', '1575465460', '1575465460');
+INSERT INTO `bfb_agent_withdraw` VALUES ('44', '3', '3', '2.00', '1', '林少红', '123456789', '', '', '', '', '10', '0', '', '10001', '1575465575', '1575465575');
 
 -- ----------------------------
 -- Table structure for bfb_app
@@ -226,12 +259,13 @@ CREATE TABLE `bfb_app` (
   `user_id` int(7) DEFAULT NULL COMMENT '所属用户',
   PRIMARY KEY (`app_id`),
   KEY `id` (`app_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=10041 DEFAULT CHARSET=utf8 COMMENT='微信小程序记录表';
+) ENGINE=MyISAM AUTO_INCREMENT=10100 DEFAULT CHARSET=utf8 COMMENT='微信小程序记录表';
 
 -- ----------------------------
 -- Records of bfb_app
 -- ----------------------------
 INSERT INTO `bfb_app` VALUES ('10001', '2号小程序', ' ', ' ', ' ', ' ', '1542961438', '1559781353', '1', '1.0.7', '1073', '30', ' ', '10001');
+INSERT INTO `bfb_app` VALUES ('0', '3号小程序', '', '', '', '', '1542961438', '1559781353', '1', null, '0', '10', '', '0');
 
 -- ----------------------------
 -- Table structure for bfb_app_help
@@ -331,11 +365,12 @@ CREATE TABLE `bfb_auth` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`role_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10108 DEFAULT CHARSET=utf8 COMMENT='商家用户角色表';
+) ENGINE=MyISAM AUTO_INCREMENT=10109 DEFAULT CHARSET=utf8 COMMENT='商家用户角色表';
 
 -- ----------------------------
 -- Records of bfb_auth
 -- ----------------------------
+INSERT INTO `bfb_auth` VALUES ('10108', '二级管理员', '12', '10001', '1576129513', '1576129513');
 
 -- ----------------------------
 -- Table structure for bfb_auth_group
@@ -366,11 +401,55 @@ CREATE TABLE `bfb_auth_list` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='商家用户角色权限关系表';
+) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COMMENT='商家用户角色权限关系表';
 
 -- ----------------------------
 -- Records of bfb_auth_list
 -- ----------------------------
+INSERT INTO `bfb_auth_list` VALUES ('1', '10108', '10001', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('2', '10108', '10003', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('3', '10108', '100015', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('4', '10108', '100016', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('5', '10108', '100017', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('6', '10108', '100019', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('7', '10108', '100020', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('8', '10108', '100021', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('9', '10108', '100023', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('10', '10108', '100024', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('11', '10108', '100025', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('12', '10108', '100027', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('13', '10108', '100028', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('14', '10108', '100029', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('15', '10108', '100031', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('16', '10108', '100032', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('17', '10108', '100033', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('18', '10108', '100035', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('19', '10108', '100036', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('20', '10108', '100037', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('21', '10108', '100039', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('22', '10108', '100040', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('23', '10108', '100041', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('24', '10108', '100042', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('25', '10108', '100278', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('26', '10108', '10004', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('27', '10108', '100043', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('28', '10108', '100044', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('29', '10108', '100149', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('30', '10108', '100154', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('31', '10108', '100155', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('32', '10108', '100156', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('33', '10108', '100157', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('34', '10108', '100233', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('35', '10108', '100234', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('36', '10108', '100247', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('37', '10108', '100249', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('38', '10108', '100250', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('39', '10108', '100254', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('40', '10108', '10002', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('41', '10108', '10012', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('42', '10108', '10016', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('43', '10108', '10017', '10001', '1576129513');
+INSERT INTO `bfb_auth_list` VALUES ('44', '10108', '100277', '10001', '1576129513');
 
 -- ----------------------------
 -- Table structure for bfb_brand
@@ -434,13 +513,47 @@ CREATE TABLE `bfb_category` (
   `update_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `parent_id` (`pid`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bfb_category
 -- ----------------------------
-INSERT INTO `bfb_category` VALUES ('4', '商品', '0', '100', '1', '8', '10001', '1573293935', '1573294128');
-INSERT INTO `bfb_category` VALUES ('5', '会员', '0', '50', '0', '8', '10001', '1573293935', '1573294128');
+INSERT INTO `bfb_category` VALUES ('1', '耗材', '0', '100', '1', '56', '10001', '1573293935', '1576222647');
+INSERT INTO `bfb_category` VALUES ('18', '1', '0', '255', '1', '', '10001', '1577094990', '1577424464');
+INSERT INTO `bfb_category` VALUES ('2', '产品', '0', '100', '1', '58', '10001', '1575701081', '1576222640');
+INSERT INTO `bfb_category` VALUES ('3', '器材', '0', '100', '1', '57', '10001', '1575701093', '1575701093');
+INSERT INTO `bfb_category` VALUES ('4', '工具', '0', '100', '1', '59', '10001', '1575701140', '1576222617');
+INSERT INTO `bfb_category` VALUES ('5', '会员', '0', '100', '0', '', '10001', '1575701140', '1575713236');
+
+-- ----------------------------
+-- Table structure for bfb_collect
+-- ----------------------------
+DROP TABLE IF EXISTS `bfb_collect`;
+CREATE TABLE `bfb_collect` (
+  `collect_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '表id',
+  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '商品id',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1开，0关',
+  `add_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `app_id` int(11) NOT NULL DEFAULT '10001',
+  PRIMARY KEY (`collect_id`),
+  KEY `user_id` (`user_id`),
+  KEY `goods_id` (`goods_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='收藏表';
+
+-- ----------------------------
+-- Records of bfb_collect
+-- ----------------------------
+INSERT INTO `bfb_collect` VALUES ('1', '1', '1', '0', '1575869568', '10001');
+INSERT INTO `bfb_collect` VALUES ('2', '1', '27', '0', '1575869844', '10001');
+INSERT INTO `bfb_collect` VALUES ('3', '1', '25', '0', '1575872376', '10001');
+INSERT INTO `bfb_collect` VALUES ('4', '1', '28', '0', '1576093150', '10001');
+INSERT INTO `bfb_collect` VALUES ('5', '1', '29', '1', '1576227701', '10001');
+INSERT INTO `bfb_collect` VALUES ('6', '1', '26', '0', '1576569219', '10001');
+INSERT INTO `bfb_collect` VALUES ('7', '1', '24', '1', '1576738205', '10001');
+INSERT INTO `bfb_collect` VALUES ('8', '1', '35', '0', '1577166750', '10001');
+INSERT INTO `bfb_collect` VALUES ('9', '1', '38', '1', '1577932534', '10001');
+INSERT INTO `bfb_collect` VALUES ('10', '21', '38', '1', '1578038233', '10001');
 
 -- ----------------------------
 -- Table structure for bfb_comment
@@ -450,7 +563,7 @@ CREATE TABLE `bfb_comment` (
   `comment_id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '评价id',
   `score` tinyint(3) unsigned NOT NULL DEFAULT '10' COMMENT '评分 (10好评 20中评 30差评)',
   `content` text NOT NULL COMMENT '评价内容',
-  `is_picture` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否为图片评价',
+  `is_picture` varchar(255) NOT NULL DEFAULT '0' COMMENT '是否为图片评价',
   `sort` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '评价排序',
   `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '状态(0隐藏 1显示)',
   `user_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
@@ -462,12 +575,101 @@ CREATE TABLE `bfb_comment` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`comment_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='订单评价记录表';
+) ENGINE=MyISAM AUTO_INCREMENT=80 DEFAULT CHARSET=utf8 COMMENT='订单评价记录表';
 
 -- ----------------------------
 -- Records of bfb_comment
 -- ----------------------------
-INSERT INTO `bfb_comment` VALUES ('19', '3', '还行', '0', '0', '1', '1', '20', '2', '20', '10001', '0', '123', '456');
+INSERT INTO `bfb_comment` VALUES ('19', '3', '还行', '1', '0', '1', '1', '20', '2', '20', '10001', '0', '123', '1575710940');
+INSERT INTO `bfb_comment` VALUES ('20', '3', '还行111', '0', '0', '1', '1', '20', '17', '20', '10001', '0', '123', '456');
+INSERT INTO `bfb_comment` VALUES ('21', '10', '', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1575423905', '1575423905');
+INSERT INTO `bfb_comment` VALUES ('22', '10', '', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1575423905', '1575423905');
+INSERT INTO `bfb_comment` VALUES ('23', '10', '', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1575423905', '1575423905');
+INSERT INTO `bfb_comment` VALUES ('24', '10', '', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1575423930', '1575423930');
+INSERT INTO `bfb_comment` VALUES ('25', '10', '', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1575423930', '1575423930');
+INSERT INTO `bfb_comment` VALUES ('26', '10', '', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1575423930', '1575423930');
+INSERT INTO `bfb_comment` VALUES ('27', '10', '', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1575423934', '1575423934');
+INSERT INTO `bfb_comment` VALUES ('28', '0', '', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1575423934', '1575423934');
+INSERT INTO `bfb_comment` VALUES ('29', '10', '', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1575423934', '1575423934');
+INSERT INTO `bfb_comment` VALUES ('30', '10', '', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1575424357', '1575424357');
+INSERT INTO `bfb_comment` VALUES ('31', '10', '', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1575424357', '1575424357');
+INSERT INTO `bfb_comment` VALUES ('32', '10', '', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1575424357', '1575424357');
+INSERT INTO `bfb_comment` VALUES ('33', '10', '', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1575424379', '1575424379');
+INSERT INTO `bfb_comment` VALUES ('34', '10', '', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1575424379', '1575424379');
+INSERT INTO `bfb_comment` VALUES ('35', '10', '', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1575424379', '1575424379');
+INSERT INTO `bfb_comment` VALUES ('36', '3', 'asdfsadf', '0', '100', '1', '1', '12', '3', '11', '10001', '0', '0', '0');
+INSERT INTO `bfb_comment` VALUES ('37', '3', 'asdfsadf', '0', '100', '1', '1', '12', '3', '11', '10001', '0', '0', '0');
+INSERT INTO `bfb_comment` VALUES ('38', '3', 'asdfsadf', '0', '100', '1', '1', '12', '3', '11', '10001', '0', '0', '0');
+INSERT INTO `bfb_comment` VALUES ('39', '3', 'asdfsadf', '0', '100', '1', '1', '12', '3', '11', '10001', '0', '0', '0');
+INSERT INTO `bfb_comment` VALUES ('40', '3', 'asdfsadf', '0', '100', '1', '1', '12', '3', '11', '10001', '0', '0', '0');
+INSERT INTO `bfb_comment` VALUES ('41', '3', 'asdfsadf', '0', '100', '1', '1', '12', '3', '11', '10001', '0', '0', '0');
+INSERT INTO `bfb_comment` VALUES ('42', '3', '321', '0', '100', '1', '1', '38', '27', '36', '10001', '0', '1575718408', '1575718408');
+INSERT INTO `bfb_comment` VALUES ('43', '3', '321', '0', '100', '1', '1', '38', '27', '36', '10001', '0', '1575718474', '1575718474');
+INSERT INTO `bfb_comment` VALUES ('44', '3', '321', '0', '100', '1', '1', '38', '27', '36', '10001', '0', '1575718524', '1575718524');
+INSERT INTO `bfb_comment` VALUES ('45', '3', '321', '0', '100', '1', '1', '38', '27', '36', '10001', '0', '1575718527', '1575718527');
+INSERT INTO `bfb_comment` VALUES ('46', '3', '321', '0', '100', '1', '1', '38', '27', '36', '10001', '0', '1575718533', '1575718533');
+INSERT INTO `bfb_comment` VALUES ('47', '3', '321', '0', '100', '1', '1', '38', '27', '36', '10001', '0', '1575718544', '1575718544');
+INSERT INTO `bfb_comment` VALUES ('48', '3', '321', '0', '100', '1', '1', '38', '27', '36', '10001', '0', '1575718983', '1575718983');
+INSERT INTO `bfb_comment` VALUES ('49', '3', '321', '0', '100', '1', '1', '38', '27', '36', '10001', '0', '1575718992', '1575718992');
+INSERT INTO `bfb_comment` VALUES ('50', '3', '321', '0', '100', '1', '1', '38', '27', '36', '10001', '0', '1575719015', '1575719015');
+INSERT INTO `bfb_comment` VALUES ('51', '3', '32131', '0', '100', '1', '1', '1', '3', '1', '10001', '0', '1576228260', '1576228260');
+INSERT INTO `bfb_comment` VALUES ('52', '4', '好呀！', '0', '100', '1', '1', '3', '3', '2', '10001', '0', '1576228308', '1576228308');
+INSERT INTO `bfb_comment` VALUES ('53', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228332', '1576228332');
+INSERT INTO `bfb_comment` VALUES ('54', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228334', '1576228334');
+INSERT INTO `bfb_comment` VALUES ('55', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228336', '1576228336');
+INSERT INTO `bfb_comment` VALUES ('56', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228339', '1576228339');
+INSERT INTO `bfb_comment` VALUES ('57', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228340', '1576228340');
+INSERT INTO `bfb_comment` VALUES ('58', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228341', '1576228341');
+INSERT INTO `bfb_comment` VALUES ('59', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228342', '1576228342');
+INSERT INTO `bfb_comment` VALUES ('60', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228343', '1576228343');
+INSERT INTO `bfb_comment` VALUES ('61', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228343', '1576228343');
+INSERT INTO `bfb_comment` VALUES ('62', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228344', '1576228344');
+INSERT INTO `bfb_comment` VALUES ('63', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228344', '1576228344');
+INSERT INTO `bfb_comment` VALUES ('64', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228345', '1576228345');
+INSERT INTO `bfb_comment` VALUES ('65', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228345', '1576228345');
+INSERT INTO `bfb_comment` VALUES ('66', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228345', '1576228345');
+INSERT INTO `bfb_comment` VALUES ('67', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228357', '1576228357');
+INSERT INTO `bfb_comment` VALUES ('68', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228357', '1576228357');
+INSERT INTO `bfb_comment` VALUES ('69', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228359', '1576228359');
+INSERT INTO `bfb_comment` VALUES ('70', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228374', '1576228374');
+INSERT INTO `bfb_comment` VALUES ('71', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228376', '1576228376');
+INSERT INTO `bfb_comment` VALUES ('72', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228377', '1576228377');
+INSERT INTO `bfb_comment` VALUES ('73', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228378', '1576228378');
+INSERT INTO `bfb_comment` VALUES ('74', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228378', '1576228378');
+INSERT INTO `bfb_comment` VALUES ('75', '5', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228379', '1576228379');
+INSERT INTO `bfb_comment` VALUES ('76', '4', '32131', '0', '100', '1', '1', '19', '3', '18', '10001', '0', '1576228437', '1576228437');
+INSERT INTO `bfb_comment` VALUES ('77', '3', '321', '0', '100', '1', '1', '26', '17', '24', '10001', '0', '1576228446', '1576228446');
+INSERT INTO `bfb_comment` VALUES ('78', '3', '321312', '0', '100', '1', '1', '4', '3', '3', '10001', '0', '1576229155', '1576229155');
+INSERT INTO `bfb_comment` VALUES ('79', '4', '321312', '0', '100', '1', '1', '20', '3', '19', '10001', '0', '1576563790', '1576563790');
+
+-- ----------------------------
+-- Table structure for bfb_comment_image
+-- ----------------------------
+DROP TABLE IF EXISTS `bfb_comment_image`;
+CREATE TABLE `bfb_comment_image` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `comment_id` int(11) NOT NULL COMMENT '评价id',
+  `image_id` int(11) NOT NULL COMMENT '图片',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '状态(0隐藏 1显示)',
+  `app_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '小程序id',
+  `is_delete` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '软删除',
+  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COMMENT='订单评价图片表';
+
+-- ----------------------------
+-- Records of bfb_comment_image
+-- ----------------------------
+INSERT INTO `bfb_comment_image` VALUES ('46', '19', '13', '1', '10001', '0', '1575710940', '0');
+INSERT INTO `bfb_comment_image` VALUES ('45', '19', '15', '1', '10001', '0', '1575710940', '0');
+INSERT INTO `bfb_comment_image` VALUES ('47', '50', '17', '1', '10001', '0', '0', '0');
+INSERT INTO `bfb_comment_image` VALUES ('48', '51', '60', '1', '10001', '0', '0', '0');
+INSERT INTO `bfb_comment_image` VALUES ('49', '52', '60', '1', '10001', '0', '0', '0');
+INSERT INTO `bfb_comment_image` VALUES ('50', '76', '17', '1', '10001', '0', '0', '0');
+INSERT INTO `bfb_comment_image` VALUES ('51', '77', '17', '1', '10001', '0', '0', '0');
+INSERT INTO `bfb_comment_image` VALUES ('52', '78', '17', '1', '10001', '0', '0', '0');
+INSERT INTO `bfb_comment_image` VALUES ('53', '79', '60', '1', '10001', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for bfb_coupon
@@ -531,12 +733,15 @@ CREATE TABLE `bfb_delivery` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`delivery_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10081 DEFAULT CHARSET=utf8 COMMENT='配送模板主表';
+) ENGINE=MyISAM AUTO_INCREMENT=10085 DEFAULT CHARSET=utf8 COMMENT='配送模板主表';
 
 -- ----------------------------
 -- Records of bfb_delivery
 -- ----------------------------
-INSERT INTO `bfb_delivery` VALUES ('10080', '全国运输', '20', '10001', '1', '0', '0');
+INSERT INTO `bfb_delivery` VALUES ('10080', '全国运输', '20', '10001', '100', '0', '1576565353');
+INSERT INTO `bfb_delivery` VALUES ('10081', '供应商', '20', '10001', '100', '1576566037', '1576566037');
+INSERT INTO `bfb_delivery` VALUES ('10082', '平台代发', '10', '10001', '100', '1576566194', '1576566194');
+INSERT INTO `bfb_delivery` VALUES ('10084', '供应商包邮', '30', '10001', '100', '1576635728', '1576636501');
 
 -- ----------------------------
 -- Table structure for bfb_delivery_rule
@@ -553,12 +758,18 @@ CREATE TABLE `bfb_delivery_rule` (
   `app_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '小程序id',
   `create_time` int(11) unsigned NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`rule_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='配送模板区域及运费表';
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='配送模板区域及运费表';
 
 -- ----------------------------
 -- Records of bfb_delivery_rule
 -- ----------------------------
 INSERT INTO `bfb_delivery_rule` VALUES ('1', '10080', '2,20,38,61,76,84,104,124,150,168,180,197,208,221,232,244,250,264,271,278,290,304,319,337,352,362,372,376,389,398,407,422,430,442,449,462,467,481,492,500,508,515,522,530,537,545,553,558,566,574,581,586,597,607,614,619,627,634,640,646,656,675,692,702,711,720,730,748,759,764,775,782,793,802,821,833,842,853,861,871,880,887,896,906,913,920,927,934,948,960,972,980,986,993,1003,1010,1015,1025,1035,1047,1057,1066,1074,1081,1088,1093,1098,1110,1118,1127,1136,1142,1150,1155,1160,1169,1183,1190,1196,1209,1222,1234,1245,1253,1264,1274,1279,1285,1299,1302,1306,1325,1339,1350,1362,1376,1387,1399,1408,1415,1421,1434,1447,1459,1466,1471,1476,1479,1492,1504,1513,1522,1533,1546,1556,1572,1583,1593,1599,1612,1623,1630,1637,1643,1650,1664,1674,1685,1696,1707,1710,1724,1731,1740,1754,1764,1768,1774,1782,1791,1802,1809,1813,1822,1828,1838,1848,1854,1867,1880,1890,1900,1905,1912,1924,1936,1949,1955,1965,1977,1988,1999,2003,2011,2017,2025,2035,2041,2050,2056,2065,2070,2077,2082,2091,2123,2146,2150,2156,2163,2177,2189,2207,2215,2220,2225,2230,2236,2245,2258,2264,2276,2283,2292,2297,2302,2306,2324,2363,2368,2388,2395,2401,2409,2416,2426,2434,2440,2446,2458,2468,2475,2486,2493,2501,2510,2516,2521,2535,2554,2573,2584,2589,2604,2611,2620,2631,2640,2657,2671,2686,2696,2706,2712,2724,2730,2741,2750,2761,2775,2784,2788,2801,2807,2812,2817,2826,2845,2857,2870,2882,2890,2899,2913,2918,2931,2946,2958,2972,2984,2997,3008,3016,3023,3032,3036,3039,3045,3053,3058,3065,3073,3081,3090,3098,3108,3117,3127,3135,3142,3147,3152,3158,3165,3172,3179,3186,3190,3196,3202,3207,3216,3221,3225,3229,3237,3242,3252,3262,3267,3280,3289,3301,3309,3317,3326,3339,3378,3386,3416,3454,3458,3461,3491,3504,3518,3532,3551,3578,3592,3613,3632,3666,3683,3697,3704,3711,3717,3722,3728,3739,3745,3747', '1', '0.00', '0', '0.00', '10001', '0');
+INSERT INTO `bfb_delivery_rule` VALUES ('2', '10080', '2,20,38,61,76,84,104,124,150,168,180,197,208,221,232,244,250,264,271,278,290,304,319,337,352,362,372,376,389,398,407,422,430,442,449,462,467,481,492,500,508,515,522,530,537,545,553,558,566,574,581,586,597,607,614,619,627,634,640,646,656,675,692,702,711,720,730,748,759,764,775,782,793,802,821,833,842,853,861,871,880,887,896,906,913,920,927,934,948,960,972,980,986,993,1003,1010,1015,1025,1035,1047,1057,1066,1074,1081,1088,1093,1098,1110,1118,1127,1136,1142,1150,1155,1160,1169,1183,1190,1196,1209,1222,1234,1245,1253,1264,1274,1279,1285,1299,1302,1306,1325,1339,1350,1362,1376,1387,1399,1408,1415,1421,1434,1447,1459,1466,1471,1476,1479,1492,1504,1513,1522,1533,1546,1556,1572,1583,1593,1599,1612,1623,1630,1637,1643,1650,1664,1674,1685,1696,1707,1710,1724,1731,1740,1754,1764,1768,1774,1782,1791,1802,1809,1813,1822,1828,1838,1848,1854,1867,1880,1890,1900,1905,1912,1924,1936,1949,1955,1965,1977,1988,1999,2003,2011,2017,2025,2035,2041,2050,2056,2065,2070,2077,2082,2091,2123,2146,2150,2156,2163,2177,2189,2207,2215,2220,2225,2230,2236,2245,2258,2264,2276,2283,2292,2297,2302,2306,2324,2363,2368,2388,2395,2401,2409,2416,2426,2434,2440,2446,2458,2468,2475,2486,2493,2501,2510,2516,2521,2535,2554,2573,2584,2589,2604,2611,2620,2631,2640,2657,2671,2686,2696,2706,2712,2724,2730,2741,2750,2761,2775,2784,2788,2801,2807,2812,2817,2826,2845,2857,2870,2882,2890,2899,2913,2918,2931,2946,2958,2972,2984,2997,3008,3016,3023,3032,3036,3039,3045,3053,3058,3065,3073,3081,3090,3098,3108,3117,3127,3135,3142,3147,3152,3158,3165,3172,3179,3186,3190,3196,3202,3207,3216,3221,3225,3229,3237,3242,3252,3262,3267,3280,3289,3301,3309,3317,3326,3339,3378,3386,3416,3454,3458,3461,3491,3504,3518,3532,3551,3578,3592,3613,3632,3666,3683,3697,3704,3711,3717,3722,3728,3739,3745,3747', '1', '0.00', '0', '0.00', '10001', '1576565353');
+INSERT INTO `bfb_delivery_rule` VALUES ('3', '10081', '2', '1', '8.00', '2', '5.00', '10001', '1576566037');
+INSERT INTO `bfb_delivery_rule` VALUES ('4', '10081', '38,61,76,84,104,124,150,168,180,197,208', '1', '12.00', '2', '4.00', '10001', '1576566037');
+INSERT INTO `bfb_delivery_rule` VALUES ('5', '10082', '352,362,372,376,389,398,407,422,430,442,449,462,467,481,492,500,508,515,522,530,537,545,553,558,566,574,581,586,597,607,614,619,627,634,640,646', '1', '0.00', '0', '0.00', '10001', '1576566194');
+INSERT INTO `bfb_delivery_rule` VALUES ('6', '10082', '3127,3135,3142,3147,3152,3158,3165,3172,3179,3186,3190,3196,3202,3207,3216,3221,3225,3229,3237,3242,3252,3262,3267,3280,3289,3301,3309,3317', '1', '0.00', '0', '0.00', '10001', '1576566194');
+INSERT INTO `bfb_delivery_rule` VALUES ('7', '10082', '1965,1977,1988,1999,2003,2011,2017,2025,2035,2041,2050,2056,2065,2070,2077,2082,2091,2123,2146,2150,2156,2292,2297,2302,2306', '1', '0.00', '0', '0.00', '10001', '1576566194');
 
 -- ----------------------------
 -- Table structure for bfb_express
@@ -620,19 +831,51 @@ DROP TABLE IF EXISTS `bfb_images`;
 CREATE TABLE `bfb_images` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '图片id 自增',
   `image_id` varchar(255) NOT NULL DEFAULT '' COMMENT '图片地址',
+  `image_url` varchar(255) NOT NULL,
   `app_id` int(8) NOT NULL,
   `create_time` int(11) NOT NULL,
   `update_time` int(11) NOT NULL,
   `pid` int(10) DEFAULT NULL COMMENT '关联id',
   `is_delete` tinyint(3) NOT NULL DEFAULT '0' COMMENT '0显示，1删除',
   `type` varchar(30) DEFAULT NULL COMMENT '类型 如：产品item,评论comment',
+  `url` varchar(255) DEFAULT NULL COMMENT '海报链接',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bfb_images
 -- ----------------------------
-INSERT INTO `bfb_images` VALUES ('1', '20191119133804daa452292.jpg', '10001', '1', '1', null, '0', 'banner');
+INSERT INTO `bfb_images` VALUES ('1', '58', '20191212103330ff1829519.jpg', '10001', '1', '1', null, '0', 'banner', '33');
+INSERT INTO `bfb_images` VALUES ('2', '57', '20191212103136d334c4938.jpg', '10001', '1575703858', '1575703858', null, '0', 'banner', '40');
+INSERT INTO `bfb_images` VALUES ('3', '59', '20191212103824206cb8819.jpg', '10001', '1575703866', '1575703866', null, '0', 'banner', '32');
+INSERT INTO `bfb_images` VALUES ('5', '308', '20191230134915ca3bc4784.jpg', '10001', '1577689750', '1577689750', null, '0', 'banner', '37');
+
+-- ----------------------------
+-- Table structure for bfb_industry
+-- ----------------------------
+DROP TABLE IF EXISTS `bfb_industry`;
+CREATE TABLE `bfb_industry` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(90) NOT NULL DEFAULT '' COMMENT '商品行业名称',
+  `sort` tinyint(1) NOT NULL DEFAULT '50' COMMENT '排序',
+  `is_show` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否显示',
+  `image` varchar(512) DEFAULT '' COMMENT '分类图片',
+  `app_id` int(8) NOT NULL DEFAULT '10001',
+  `create_time` int(11) NOT NULL,
+  `update_time` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='商品行业表';
+
+-- ----------------------------
+-- Records of bfb_industry
+-- ----------------------------
+INSERT INTO `bfb_industry` VALUES ('1', '美容', '1', '1', '59', '10001', '1576120145', '1577081262');
+INSERT INTO `bfb_industry` VALUES ('2', '养生', '2', '1', '58', '10001', '1576129283', '1577081271');
+INSERT INTO `bfb_industry` VALUES ('3', '沐足', '3', '1', '', '10001', '1576136179', '1577081278');
+INSERT INTO `bfb_industry` VALUES ('4', '美发', '4', '1', '', '10001', '1576220043', '1577081292');
+INSERT INTO `bfb_industry` VALUES ('5', '日化', '5', '1', '', '10001', '1576222554', '1577093994');
+INSERT INTO `bfb_industry` VALUES ('6', '彩妆', '6', '1', '', '10001', '1576222568', '1577081307');
+INSERT INTO `bfb_industry` VALUES ('7', '美甲', '7', '1', '', '10001', '1576222575', '1577081319');
 
 -- ----------------------------
 -- Table structure for bfb_integral
@@ -659,6 +902,7 @@ CREATE TABLE `bfb_integral` (
 DROP TABLE IF EXISTS `bfb_item`;
 CREATE TABLE `bfb_item` (
   `goods_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '商品id',
+  `industry_id` varchar(30) NOT NULL,
   `cat_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '分类id',
   `plat_id` int(11) NOT NULL DEFAULT '0' COMMENT '该商品属于哪个供应商',
   `plat_type` tinyint(3) NOT NULL DEFAULT '1' COMMENT '1=>平台订单   2=>平台代发    3=>客户订单',
@@ -666,6 +910,7 @@ CREATE TABLE `bfb_item` (
   `goods_name` varchar(120) NOT NULL DEFAULT '' COMMENT '商品名称',
   `goods_price` decimal(8,2) NOT NULL DEFAULT '0.00',
   `goods_image` varchar(255) DEFAULT NULL,
+  `discount_price` decimal(8,2) DEFAULT NULL COMMENT '折扣价',
   `click` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '点击数',
   `brand_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '品牌id',
   `store_count` smallint(5) unsigned NOT NULL DEFAULT '10' COMMENT '库存数量',
@@ -686,6 +931,7 @@ CREATE TABLE `bfb_item` (
   `spec_type` smallint(5) DEFAULT '0' COMMENT '商品规格类型，取值表goods_type的cat_id',
   `give_integral` mediumint(8) DEFAULT '0' COMMENT '购买商品赠送积分',
   `exchange_integral` int(10) NOT NULL DEFAULT '0' COMMENT '积分兑换：0不参与积分兑换，积分和现金的兑换比例100：1',
+  `end_time` int(11) DEFAULT NULL,
   `sales_sum` int(11) DEFAULT '0' COMMENT '商品销量',
   `prom_type` tinyint(1) DEFAULT '0' COMMENT '0 普通订单,1 限时抢购, 2 团购 , 3 促销优惠',
   `prom_id` int(11) DEFAULT '0' COMMENT '优惠活动id',
@@ -696,6 +942,13 @@ CREATE TABLE `bfb_item` (
   `discount` float DEFAULT '0' COMMENT '折扣',
   `agent_type` int(2) NOT NULL DEFAULT '1' COMMENT '(1百分比2固定)',
   `agent_price` varchar(20) NOT NULL DEFAULT '0' COMMENT '分销金额',
+  `is_sole` tinyint(3) NOT NULL DEFAULT '0' COMMENT '0不独家，1独家',
+  `sole_user` int(11) NOT NULL DEFAULT '0' COMMENT '被谁独家',
+  `sole_time` int(11) NOT NULL DEFAULT '0' COMMENT '独家到期时间',
+  `sole_must_num` int(11) NOT NULL DEFAULT '0' COMMENT '独家所需购买数量',
+  `sole_range` int(11) NOT NULL DEFAULT '0' COMMENT '独家范围',
+  `ship_address` varchar(255) DEFAULT NULL COMMENT '发货地址',
+  `price_range` varchar(255) DEFAULT NULL COMMENT '价格范围',
   PRIMARY KEY (`goods_id`),
   KEY `cat_id` (`cat_id`),
   KEY `brand_id` (`brand_id`),
@@ -703,32 +956,46 @@ CREATE TABLE `bfb_item` (
   KEY `goods_weight` (`weight`),
   KEY `sort_order` (`sort`),
   KEY `plat_id` (`plat_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bfb_item
 -- ----------------------------
-INSERT INTO `bfb_item` VALUES ('1', '4', '0', '1', '1', '商品1', '0.00', '', '0', '0', '10', '0', '0', '商品1简介', '啊大大', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '20', '0', '0', '0', '0', '10001', '1573296284', '1573296284', '10080', '0', '1', '1');
-INSERT INTO `bfb_item` VALUES ('2', '4', '0', '1', '2', '商品2', '0.00', '', '0', '0', '10', '0', '0', '商品2 简介', '阿斯顿发斯蒂芬', '1', '1', '0', '50', '0', '0', '1', '0', '0', '0', '3', '30', '0', '0', '0', '0', '10001', '1573296741', '1573296741', '10080', '0', '1', '2');
-INSERT INTO `bfb_item` VALUES ('3', '4', '0', '1', '2', '商品2', '0.00', '', '0', '0', '10', '0', '0', '商品2简介', '阿士大夫撒地方', '1', '1', '0', '50', '0', '1', '0', '0', '0', '0', '3', '20', '0', '22', '0', '0', '10001', '1573296896', '1573543032', '10080', '0', '1', '2');
-INSERT INTO `bfb_item` VALUES ('4', '4', '0', '1', '3', '商品4', '789.00', '20190424171350d17247654.jpg', '0', '0', '8', '0', '0', '商品4简介', '																																																																																																																																																																																				阿士大夫撒放																																																																																																																																																																																				', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '50', '0', '0', '0', '0', '10001', '1573296940', '1574058689', '10080', '0', '1', '5');
-INSERT INTO `bfb_item` VALUES ('5', '0', '0', '1', '0', '', '0.00', null, '0', '0', '8', '0', '0', '', null, '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '0', '1573525943', '1573525943', '0', '0', '1', '0');
-INSERT INTO `bfb_item` VALUES ('6', '0', '0', '1', '0', '', '0.00', null, '0', '0', '8', '0', '0', '', null, '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '0', '1573525975', '1573525975', '0', '0', '1', '0');
-INSERT INTO `bfb_item` VALUES ('7', '0', '0', '1', '0', '', '0.00', null, '0', '0', '8', '0', '0', '', null, '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '0', '1573526160', '1573526160', '0', '0', '1', '0');
-INSERT INTO `bfb_item` VALUES ('8', '0', '0', '1', '0', '', '0.00', null, '0', '0', '9', '0', '0', '', null, '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '0', '1573526172', '1573526172', '0', '0', '1', '0');
-INSERT INTO `bfb_item` VALUES ('9', '0', '0', '1', '0', '', '0.00', null, '0', '0', '7', '0', '0', '', null, '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '0', '1573526185', '1573526185', '0', '0', '1', '0');
-INSERT INTO `bfb_item` VALUES ('10', '5', '0', '1', '0', 'VIP会员', '99.00', null, '0', '0', '9999', '0', '0', '', null, '1', '1', '1', '50', '0', '0', '0', '0', '0', '0', '6', '0', '0', '0', '0', '0', '10001', '0', '0', '10080', '0', '1', '0');
-INSERT INTO `bfb_item` VALUES ('11', '5', '0', '1', '100', '商品2', '0.00', null, '0', '3', '10', '0', '0', '搜索', '																				', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '10001', '1574059752', '1574059752', '10080', '0', '1', '1');
-INSERT INTO `bfb_item` VALUES ('12', '5', '0', '1', '111', '商品1', '0.00', null, '0', '3', '10', '0', '0', '123', '撒旦法', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '10001', '1574060078', '1574060078', '10080', '0', '1', '1');
-INSERT INTO `bfb_item` VALUES ('13', '4', '0', '1', '123', '商品3', '0.00', null, '0', '3', '10', '0', '0', '阿斯蒂芬', '阿斯蒂芬', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '10001', '1574060560', '1574060560', '10080', '0', '1', '1');
-INSERT INTO `bfb_item` VALUES ('14', '4', '0', '1', '111', '商品3', '0.00', null, '0', '3', '10', '0', '0', '阿斯蒂芬', '阿斯蒂芬', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '10001', '1574060647', '1574060647', '10080', '0', '1', '1');
-INSERT INTO `bfb_item` VALUES ('15', '4', '0', '1', '1111', '商品3', '0.00', null, '0', '3', '10', '0', '0', '123', '阿士大夫撒地方', '1', '2', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '10001', '1574060694', '1574239918', '10080', '0', '1', '1');
-INSERT INTO `bfb_item` VALUES ('16', '4', '12', '1', '123', '商品121', '100.00', '20191119133804daa452292.jpg', '0', '3', '10', '0', '0', '商品1212', '										阿士大夫撒地方撒地方撒发斯蒂芬撒地方撒发顺丰撒地方										', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '5', '0', '0', '0', '0', '0', '10001', '1574481118', '1574481181', '10080', '0', '1', '1');
-INSERT INTO `bfb_item` VALUES ('17', '4', '12', '3', '123', '213商品', '0.00', null, '0', '3', '7', '0', '0', '1231456', '阿斯顿发生发大水发', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '5', '0', '0', '0', '0', '0', '10001', '1574839422', '1574844936', '10080', '0', '1', '1');
-INSERT INTO `bfb_item` VALUES ('18', '4', '0', '1', '456', '商品12332', '123.00', null, '0', '3', '10', '0', '0', '阿士大夫撒范德萨发鬼地方', '傲世轻物二无群二', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '5', '20', '0', '0', '0', '0', '10001', '1574850130', '1574850130', '10080', '0', '1', '0');
-INSERT INTO `bfb_item` VALUES ('19', '4', '0', '1', '123213', '商品12aa', '123.00', '20191119133804daa452292.jpg', '0', '3', '10', '0', '0', 'asdfsadfsaf', '阿沙发垫撒地方三', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '10001', '1574850781', '1574850781', '10080', '0', '1', '0');
-INSERT INTO `bfb_item` VALUES ('20', '4', '0', '1', '333', '商品13', '134.00', '2019112911415009b6e8570.png', '0', '3', '10', '0', '0', '商品13简介', '<p>商品13详情</p>																				', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '5', '0', '0', '0', '0', '0', '10001', '1574999344', '1574999344', '10080', '0', '1', '0');
-INSERT INTO `bfb_item` VALUES ('21', '4', '0', '1', '123', '商品14', '159.00', '201911291141505a0510689.jpg', '0', '3', '10', '0', '0', '商品14简介', '<p>商品14详情</p>																				', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '10001', '1574999453', '1574999453', '10080', '0', '1', '0');
+INSERT INTO `bfb_item` VALUES ('1', '0,1,2,7,', '4', '0', '1', '1', '商品1', '0.00', '', null, '0', '0', '10', '0', '0', '商品1简介', '啊大大', '1', '1', '0', '50', '1', '0', '0', '0', '0', '0', '3', '20', '0', null, '0', '0', '0', '10001', '1573296284', '1573296284', '10080', '0', '1', '1', '1', '12', '1573296284', '10', '5000', null, null);
+INSERT INTO `bfb_item` VALUES ('2', '0,1,2,7,', '4', '0', '1', '2', '商品2', '0.00', '', null, '0', '0', '10', '0', '0', '商品2 简介', '阿斯顿发斯蒂芬', '1', '1', '0', '50', '0', '0', '1', '0', '0', '0', '3', '30', '0', null, '0', '0', '0', '10001', '1573296741', '1573296741', '10080', '0', '1', '2', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('3', '0,1,2,7,', '2', '0', '1', '2', '商品2', '0.00', '', null, '0', '0', '8', '0', '0', '商品2简介', '阿士大夫撒地方', '1', '1', '0', '50', '0', '1', '0', '0', '0', '0', '3', '20', '0', null, '22', '0', '0', '10001', '1573296896', '1575452914', '10080', '0', '1', '2', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('4', '0,1,2,7,', '4', '0', '1', '3', '商品4', '789.00', '20190424171350d17247654.jpg', null, '0', '0', '8', '0', '0', '商品4简介', '																																																																																																																																																																																				阿士大夫撒放																																																																																																																																																																																				', '1', '1', '0', '50', '0', '0', '1', '0', '0', '0', '3', '50', '0', null, '0', '0', '0', '10001', '1573296940', '1574058689', '10080', '0', '1', '5', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('5', '0,1,2,7,', '0', '0', '1', '0', '', '0.00', null, null, '0', '0', '8', '0', '0', '', null, '1', '1', '0', '50', '0', '0', '1', '0', '0', '0', '3', '0', '0', null, '0', '0', '0', '0', '1573525943', '1573525943', '0', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('6', '0,1,2,7,', '0', '0', '1', '0', '', '0.00', null, null, '0', '0', '8', '0', '0', '', null, '1', '1', '0', '50', '0', '0', '1', '0', '0', '0', '3', '0', '0', null, '0', '0', '0', '0', '1573525975', '1573525975', '0', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('7', '0,1,2,7,', '0', '0', '1', '0', '', '0.00', null, null, '0', '0', '8', '0', '0', '', null, '1', '1', '0', '50', '1', '0', '0', '0', '0', '0', '3', '0', '0', null, '0', '0', '0', '0', '1573526160', '1573526160', '0', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('8', '0,1,2,7,', '0', '0', '1', '0', '', '0.00', null, null, '0', '0', '9', '0', '0', '', null, '1', '1', '0', '50', '1', '0', '0', '0', '0', '0', '3', '0', '0', null, '0', '0', '0', '0', '1573526172', '1573526172', '0', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('9', '0,1,2,7,', '0', '0', '1', '0', '', '0.00', null, null, '0', '0', '7', '0', '0', '', null, '1', '1', '0', '50', '1', '0', '0', '0', '0', '0', '3', '0', '0', '1575626393', '0', '0', '0', '0', '1573526185', '1573526185', '0', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('37', '0,1,', '2', '3', '1', '120', '毛巾', '15.00', '20191226153857133253782.jpg', null, '0', '0', '120', '0', '10', '洁丽雅', '																				<p>洁丽雅</p>', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '14', '0', '0', '0', '0', '0', '0', '10001', '1577425073', '1577425073', '10080', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('38', '0,1,', '4', '2', '1', '1000', '毛巾2', '120.00', '20191227133318eb6721085.jpg', null, '0', '0', '10000', '0', '150', '美容毛巾', '																				<p><img src=\"http://mbh.laoma-app.com/uploads/1577425923645993.jpg\" style=\"max-width:100%;\"><br></p>', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '14', '0', '0', '0', '0', '0', '0', '10001', '1577426023', '1577426023', '10080', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('13', '0,1,2,7,', '4', '0', '1', '123', '商品3', '0.00', null, null, '0', '3', '10', '0', '0', '阿斯蒂芬', '阿斯蒂芬', '1', '1', '0', '50', '0', '1', '0', '0', '0', '0', '3', '0', '0', '1575626393', '0', '0', '0', '10001', '1574060560', '1574060560', '10080', '0', '1', '1', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('14', '0,1,2,7,', '4', '0', '1', '111', '商品3', '0.00', null, null, '0', '3', '10', '0', '0', '阿斯蒂芬', '阿斯蒂芬', '1', '1', '0', '50', '0', '1', '1', '0', '0', '0', '3', '0', '0', null, '0', '0', '0', '10001', '1574060647', '1575439978', '10080', '0', '1', '1', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('15', '0,1,2,7,', '4', '0', '1', '1111', '商品3', '0.00', null, null, '0', '3', '10', '0', '0', '123', '阿士大夫撒地方', '1', '2', '0', '50', '0', '1', '0', '0', '0', '0', '3', '0', '0', null, '0', '0', '0', '10001', '1574060694', '1574239918', '10080', '0', '1', '1', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('16', '0,1,2,7,', '4', '12', '1', '123', '商品121', '100.00', '20191119133804daa452292.jpg', null, '0', '3', '4', '0', '0', '商品1212', '										阿士大夫撒地方撒地方撒发斯蒂芬撒地方撒发顺丰撒地方										', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '5', '0', '0', null, '0', '0', '0', '10001', '1574481118', '1575453095', '10080', '0', '1', '1', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('17', '0,1,2,7,', '4', '12', '3', '123', '213商品', '0.00', null, null, '0', '3', '607', '0', '0', '1231456', '阿斯顿发生发大水发', '1', '1', '0', '50', '1', '1', '0', '0', '0', '0', '5', '0', '0', null, '0', '0', '0', '10001', '1574839422', '1575439984', '10080', '0', '1', '1', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('18', '0,1,2,7,', '4', '0', '1', '456', '商品12332', '123.00', null, null, '0', '3', '10', '0', '0', '阿士大夫撒范德萨发鬼地方', '傲世轻物二无群二', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '5', '20', '0', null, '0', '0', '0', '10001', '1574850130', '1574850130', '10080', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('19', '0,1,2,7,', '4', '0', '1', '123213', '商品12aa', '123.00', '20191119133804daa452292.jpg', null, '0', '3', '10', '0', '0', 'asdfsadfsaf', '阿沙发垫撒地方三', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '0', null, '0', '0', '0', '10001', '1574850781', '1574850781', '10080', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('20', '0,1,2,7,', '4', '0', '1', '333', '商品13', '134.00', '2019112911415009b6e8570.png', null, '0', '3', '10', '0', '0', '商品13简介', '<p>商品13详情</p>																				', '1', '1', '0', '50', '0', '1', '0', '0', '0', '0', '5', '0', '0', null, '0', '0', '0', '10001', '1574999344', '1575439684', '10080', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('21', '0,1,2,7,', '2', '0', '1', '123', '商品14', '159.00', '201911291141505a0510689.jpg', null, '0', '3', '10', '0', '0', '商品14简介', '										<p>商品14详情</p>																														', '1', '1', '0', '50', '1', '0', '0', '0', '0', '0', '3', '0', '0', null, '0', '0', '0', '10001', '1574999453', '1575439649', '10080', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('22', '0,1,2,7,', '2', '0', '1', '321', '33333', '1.00', '20191129114151fe8a04803.png', null, '0', '0', '9', '0', '0', '3333', '																				', '1', '1', '0', '50', '0', '0', '1', '0', '0', '0', '3', '0', '1', null, '0', '0', '0', '10001', '1575272757', '1575540704', '10080', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('23', '0,1,2,7,', '2', '0', '1', '123', 'test1', '456.00', '20191129114151fe8a04803.png', null, '0', '3', '10', '0', '0', '阿士大夫撒地方是', '阿士大夫撒地方三分', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '5', '0', '1', null, '0', '0', '0', '10001', '1575540560', '1575540560', '10080', '0', '1', '1', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('25', '0,1,2,7,', '2', '0', '1', '123', '商品12', '123.00', '201911291141519d3d01371.jpg', null, '0', '3', '10', '0', '0', '123131', '阿士大夫撒地方撒放水电费收费', '1', '1', '0', '50', '0', '0', '1', '0', '0', '0', '5', '0', '1', '1565539200', '0', '0', '0', '10001', '1575542395', '1575704784', '10080', '0', '1', '1', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('26', '0,1,2,7,', '1', '0', '1', '456', '商品123', '78.00', '20191129114151fe8a04803.png', null, '0', '3', '10', '0', '0', '沙发都是大放送', '暗室逢灯的撒发放大', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '5', '0', '1', '0', '0', '0', '0', '10001', '1575542443', '1575704781', '10080', '0', '1', '1', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('27', '0,1,2,7,', '1', '0', '1', '123', '商品12333', '123.00', '20191129114151fe8a04803.png', null, '0', '3', '9', '0', '0', '阿士大夫撒放大是大非对方是否', '										暗示法撒旦法士大夫士大夫舒服舒服撒飞洒法萨芬撒地方撒放										', '1', '1', '0', '50', '0', '0', '1', '0', '0', '0', '5', '0', '1', '0', '0', '0', '0', '10001', '1575704541', '1576223712', '10080', '0', '1', '1', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('28', '0,1,2,7,', '1', '0', '1', '100', '商品66', '120.00', '201912091011533404a0618.jpg', null, '0', '0', '20', '0', '0', '啊啊啊', '																														<p>																														事实上																														</p><p><img src=\"http://mbh.laoma-app.com/uploads/20191216\\975a99687f6ae139de0552caa5441be5.jpg\" alt=\"\"><br></p><p><img src=\"http://mbh.laoma-app.com/uploads/20191216/4c8a6974fb0b3e8433c2dc743e0e827f.jpg\" alt=\"\"><br></p>																														', '1', '1', '0', '50', '1', '0', '1', '0', '0', '0', '5', '30', '1', '0', '0', '0', '0', '10001', '1575873589', '1577787061', '10080', '0', '1', '0', '0', '0', '0', '0', '0', '爱仕达所大', '100.00~120.00');
+INSERT INTO `bfb_item` VALUES ('29', '0,1,2,3,', '4', '0', '1', '500', '美容四件套', '150.00', '20191210094223b04e59698.jpg', null, '0', '3', '14', '0', '0', '美容四件套...', '																																																																																																																																																																																														<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																																						', '1', '1', '0', '50', '1', '1', '1', '0', '0', '0', '3', '150', '1', '0', '0', '0', '0', '10001', '1575942877', '1577695464', '10080', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('30', '0,1,2,7,', '3', '0', '1', '111', '测试商品1', '100.00', '20191210113101365796608.png', null, '0', '0', '20', '0', '0', '测试商品1简介', '																				<p><img src=\"http://mbh.laoma-app.com/uploads/1577065977718557.jpg\" style=\"max-width:100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577065977509378.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577065977853634.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><br></p>																														', '1', '2', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '1', '0', '0', '0', '0', '10001', '1575956170', '1577172880', '10080', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('31', '0,1,2,7,', '2', '3', '2', '200', '熏蒸药包', '500.00', '201912160927401d2747455.jpg', null, '0', '0', '53', '0', '200', '竹篮一件20套 桶装一件24桶 散装一件300包', '																																																		<img src=\"http://mbh.laoma-app.com/uploads/20191216\\c346d469e0a04179e4265225c6a54eef.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\aaa2b57b97d9d4b79d77159f2d321a5a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\0096d43863da95c6ccd416bc00c37b4c.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\7db8b2c82504b7d2f49e4143dc45533a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\b4dc7538ae4665743c5e948467bee15d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\fd5c3a80f68194619a5c04fe0bb32cc6.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\c4337f72e3ee3a32d2cee8338fc01e68.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\271d96a880c04811b8669b62b55bb12d.jpg\" alt=\"\">																																																																						', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '1', '0', '0', '0', '0', '10001', '1576460043', '1577694496', '10080', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('32', '0,6,', '1', '2', '2', '5000', '洗发水', '500.00', '20191223103146385455508.jpg', null, '0', '0', '8960', '0', '200', '洗发水...', '																														<p><img src=\"http://localhost/uploads/1577068329957093.jpg\" style=\"max-width:100%;\"><img src=\"http://localhost/uploads/1577068329339943.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://localhost/uploads/1577068329398094.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><br></p>										', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '5', '100', '0', '0', '0', '0', '0', '10001', '1577068365', '1577068470', '10082', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('33', '0,6,', '2', '2', '2', '500', '化妆包', '1250.00', '20191223103840c7cde0966.jpg', null, '0', '0', '500', '0', '100', '化妆包...', '																														<p><img src=\"http://mbh.laoma-app.com/uploads/1577068979411050.gif\" style=\"max-width:100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577068979289431.gif\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577068979700595.gif\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577068979350845.gif\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577068979631051.gif\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577068979500863.gif\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577068979399899.gif\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577068979408715.gif\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577068979720892.gif\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577068979849267.gif\" style=\"font-size: 1.3rem; max-width: 100%;\"><br></p>										', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '4', '100', '0', '0', '0', '0', '0', '10001', '1577069019', '1577069192', '10081', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('34', '0,2,5,', '2', '0', '1', '500', '测试2', '150.00', '20191223173248a5f0b3103.jpg', null, '0', '0', '100', '0', '100', '测试2', '																				<p><img src=\"http://mbh.laoma-app.com/uploads/1577093882907000.jpg\" style=\"max-width:100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577093882205468.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577093882529812.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577093882664175.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577093882188796.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><br></p>', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '0', '10001', '1577093920', '1577094592', '10082', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('39', '0,1,3,6,', '4', '0', '1', '1000', '毛巾3', '100.00', '20191227141304021d41510.jpg', null, '0', '0', '100', '0', '150', '美容毛巾，足浴毛巾', '																																								<p><img src=\"http://mbh.laoma-app.com/uploads/1577427214740887.jpg\" style=\"max-width:100%;\"><br></p>																				', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '14', '0', '0', '0', '0', '0', '0', '10001', '1577427263', '1577427889', '10080', '0', '1', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_item` VALUES ('40', '0,1,2,3,4,', '4', '0', '1', '1000', '超细纤维美容毛巾 10条', '45.00', '2019122615385695dcf2356.jpg', null, '0', '0', '100', '0', '150', '', '																																																																																										<p><img src=\"http://mbh.laoma-app.com/uploads/1577428334404541.jpg\" style=\"max-width:100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334667745.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334898541.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334231149.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334549533.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334922079.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334241696.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334759729.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334359140.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334698068.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334327142.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334380838.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><br></p>																																																																						', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '15', '0', '0', '0', '0', '0', '0', '10001', '1577428144', '1577787154', '10080', '0', '1', '0', '0', '0', '0', '0', '0', '广东省普宁市白云区', '45.00~75745.00');
+INSERT INTO `bfb_item` VALUES ('41', '0,1,', '1', '0', '1', '120', 'test', '32.50', '201912271413047472a8312.jpg', null, '0', '0', '900', '0', '50', '123', '																														<p>123</p>										', '1', '1', '0', '50', '0', '0', '0', '0', '0', '0', '14', '0', '0', '0', '0', '0', '0', '10001', '1577699618', '1577787128', '10080', '0', '1', '0', '0', '0', '0', '0', '0', '广东', '32.50~32.50');
 
 -- ----------------------------
 -- Table structure for bfb_item_attr
@@ -746,7 +1013,7 @@ CREATE TABLE `bfb_item_attr` (
   PRIMARY KEY (`goods_attr_id`),
   KEY `goods_id` (`goods_id`),
   KEY `attr_id` (`attr_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=132 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bfb_item_attr
@@ -772,7 +1039,35 @@ INSERT INTO `bfb_item_attr` VALUES ('38', '20', '6', '红色', '', '10001', '157
 INSERT INTO `bfb_item_attr` VALUES ('39', '20', '7', 'L', '', '10001', '1574999344', '1574999344');
 INSERT INTO `bfb_item_attr` VALUES ('40', '20', '8', '绿色', '', '10001', '1574999344', '1574999344');
 INSERT INTO `bfb_item_attr` VALUES ('41', '20', '9', 'M', '', '10001', '1574999344', '1574999344');
-INSERT INTO `bfb_item_attr` VALUES ('42', '21', '3', '1111', '', '10001', '1574999453', '1574999453');
+INSERT INTO `bfb_item_attr` VALUES ('43', '21', '3', '1111', '', '10001', '1575269339', '1575269339');
+INSERT INTO `bfb_item_attr` VALUES ('44', '22', '3', '1111', '', '10001', '1575272757', '1575272757');
+INSERT INTO `bfb_item_attr` VALUES ('45', '23', '6', '红色', '', '10001', '1575540560', '1575540560');
+INSERT INTO `bfb_item_attr` VALUES ('46', '23', '7', 'L', '', '10001', '1575540560', '1575540560');
+INSERT INTO `bfb_item_attr` VALUES ('47', '23', '8', '绿色', '', '10001', '1575540560', '1575540560');
+INSERT INTO `bfb_item_attr` VALUES ('48', '23', '9', 'M', '', '10001', '1575540560', '1575540560');
+INSERT INTO `bfb_item_attr` VALUES ('49', '24', '6', '红色', '', '10001', '1575540755', '1575540755');
+INSERT INTO `bfb_item_attr` VALUES ('50', '24', '7', 'L', '', '10001', '1575540755', '1575540755');
+INSERT INTO `bfb_item_attr` VALUES ('51', '24', '8', '绿色', '', '10001', '1575540755', '1575540755');
+INSERT INTO `bfb_item_attr` VALUES ('52', '24', '9', 'M', '', '10001', '1575540755', '1575540755');
+INSERT INTO `bfb_item_attr` VALUES ('53', '25', '6', '红色', '', '10001', '1575542396', '1575542396');
+INSERT INTO `bfb_item_attr` VALUES ('54', '25', '7', 'L', '', '10001', '1575542396', '1575542396');
+INSERT INTO `bfb_item_attr` VALUES ('55', '25', '8', '绿色', '', '10001', '1575542396', '1575542396');
+INSERT INTO `bfb_item_attr` VALUES ('56', '25', '9', 'M', '', '10001', '1575542396', '1575542396');
+INSERT INTO `bfb_item_attr` VALUES ('57', '26', '6', '红色', '', '10001', '1575542443', '1575542443');
+INSERT INTO `bfb_item_attr` VALUES ('58', '26', '7', 'L', '', '10001', '1575542443', '1575542443');
+INSERT INTO `bfb_item_attr` VALUES ('59', '26', '8', '绿色', '', '10001', '1575542443', '1575542443');
+INSERT INTO `bfb_item_attr` VALUES ('60', '26', '9', 'M', '', '10001', '1575542443', '1575542443');
+INSERT INTO `bfb_item_attr` VALUES ('67', '27', '8', '绿色', '', '10001', '1575704629', '1575704629');
+INSERT INTO `bfb_item_attr` VALUES ('66', '27', '7', 'L', '', '10001', '1575704629', '1575704629');
+INSERT INTO `bfb_item_attr` VALUES ('65', '27', '6', '红色', '', '10001', '1575704629', '1575704629');
+INSERT INTO `bfb_item_attr` VALUES ('68', '27', '9', 'M', '', '10001', '1575704629', '1575704629');
+INSERT INTO `bfb_item_attr` VALUES ('123', '31', '2', '小', '', '10001', '1576909370', '1576909370');
+INSERT INTO `bfb_item_attr` VALUES ('117', '29', '2', '小', '', '10001', '1576894651', '1576894651');
+INSERT INTO `bfb_item_attr` VALUES ('122', '31', '1', '大', '', '10001', '1576909370', '1576909370');
+INSERT INTO `bfb_item_attr` VALUES ('113', '28', '1', '大', '', '10001', '1576461866', '1576461866');
+INSERT INTO `bfb_item_attr` VALUES ('116', '29', '1', '大', '', '10001', '1576894651', '1576894651');
+INSERT INTO `bfb_item_attr` VALUES ('131', '30', '2', '小', '', '10001', '1577065983', '1577065983');
+INSERT INTO `bfb_item_attr` VALUES ('130', '30', '1', '大', '', '10001', '1577065983', '1577065983');
 
 -- ----------------------------
 -- Table structure for bfb_item_attribute
@@ -789,18 +1084,14 @@ CREATE TABLE `bfb_item_attribute` (
   `update_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`attr_id`),
   KEY `cat_id` (`type_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bfb_item_attribute
 -- ----------------------------
-INSERT INTO `bfb_item_attribute` VALUES ('3', '11', '3', '1111', '11', '10001', '1573294737', null);
-INSERT INTO `bfb_item_attribute` VALUES ('4', '颜色', '4', '红色\n绿色\n蓝色', '2', '10001', '1574062095', null);
-INSERT INTO `bfb_item_attribute` VALUES ('5', '型号', '4', '1000*200\n2000*200', '9', '10001', '1574062141', null);
-INSERT INTO `bfb_item_attribute` VALUES ('6', '颜色', '5', '红色', '9', '10001', '1574062579', null);
-INSERT INTO `bfb_item_attribute` VALUES ('7', '型号', '5', 'L', '8', '10001', '1574062611', null);
-INSERT INTO `bfb_item_attribute` VALUES ('8', '颜色', '5', '绿色', '9', '10001', '1574062809', null);
-INSERT INTO `bfb_item_attribute` VALUES ('9', '型号', '5', 'M', '9', '10001', '1574062837', null);
+INSERT INTO `bfb_item_attribute` VALUES ('1', '尺寸', '3', '大', '1', '10001', '1575942689', null);
+INSERT INTO `bfb_item_attribute` VALUES ('2', '测试', '3', '小', '9', '10001', '1576894391', null);
+INSERT INTO `bfb_item_attribute` VALUES ('3', '产地', '4', '韩国,中国', '100', '10001', '1577066713', null);
 
 -- ----------------------------
 -- Table structure for bfb_item_images
@@ -831,14 +1122,20 @@ CREATE TABLE `bfb_item_type` (
   `create_time` int(11) NOT NULL,
   `update_time` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bfb_item_type
 -- ----------------------------
-INSERT INTO `bfb_item_type` VALUES ('3', '美食', '10001', '1573294120', '1573294120');
-INSERT INTO `bfb_item_type` VALUES ('4', '美容', '10001', '1574062046', '1574062046');
-INSERT INTO `bfb_item_type` VALUES ('5', '衣服', '10001', '1574062534', '1574062534');
+INSERT INTO `bfb_item_type` VALUES ('4', '颜色', '10001', '1577066500', '1577095183');
+INSERT INTO `bfb_item_type` VALUES ('3', '款式', '10001', '1576808911', '1577095176');
+INSERT INTO `bfb_item_type` VALUES ('5', '尺寸', '10001', '1577068123', '1577095153');
+INSERT INTO `bfb_item_type` VALUES ('6', '容量', '10001', '1577084104', '1577095189');
+INSERT INTO `bfb_item_type` VALUES ('13', '编号', '10001', '1577423818', '1577423818');
+INSERT INTO `bfb_item_type` VALUES ('12', '比例', '10001', '1577423812', '1577423812');
+INSERT INTO `bfb_item_type` VALUES ('11', '大小', '10001', '1577423806', '1577423806');
+INSERT INTO `bfb_item_type` VALUES ('14', '纺织品', '10001', '1577424088', '1577424137');
+INSERT INTO `bfb_item_type` VALUES ('15', '超细纤维毛巾', '10001', '1577428989', '1577431651');
 
 -- ----------------------------
 -- Table structure for bfb_login_log
@@ -850,7 +1147,7 @@ CREATE TABLE `bfb_login_log` (
   `create_time` int(11) NOT NULL COMMENT '登录时间',
   `ip` varchar(30) NOT NULL COMMENT '登录用户名',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=184 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=323 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bfb_login_log
@@ -900,6 +1197,145 @@ INSERT INTO `bfb_login_log` VALUES ('180', '10001', '1574924862', '::1');
 INSERT INTO `bfb_login_log` VALUES ('181', '10001', '1574935971', '116.22.19.55');
 INSERT INTO `bfb_login_log` VALUES ('182', '10001', '1575018262', '61.140.112.233');
 INSERT INTO `bfb_login_log` VALUES ('183', '10001', '1575019923', '61.140.112.233');
+INSERT INTO `bfb_login_log` VALUES ('184', '10001', '1575254820', '::1');
+INSERT INTO `bfb_login_log` VALUES ('185', '10001', '1575255347', '116.22.18.248');
+INSERT INTO `bfb_login_log` VALUES ('186', '10001', '1575264353', '::1');
+INSERT INTO `bfb_login_log` VALUES ('187', '10001', '1575271716', '116.22.18.248');
+INSERT INTO `bfb_login_log` VALUES ('188', '10001', '1575271717', '116.22.18.248');
+INSERT INTO `bfb_login_log` VALUES ('189', '10001', '1575340869', '::1');
+INSERT INTO `bfb_login_log` VALUES ('190', '10001', '1575344787', '::1');
+INSERT INTO `bfb_login_log` VALUES ('191', '10001', '1575351018', '::1');
+INSERT INTO `bfb_login_log` VALUES ('192', '10001', '1575423636', '113.65.249.24');
+INSERT INTO `bfb_login_log` VALUES ('193', '10001', '1575423805', '113.65.249.24');
+INSERT INTO `bfb_login_log` VALUES ('194', '10001', '1575429943', '113.65.249.24');
+INSERT INTO `bfb_login_log` VALUES ('195', '10001', '1575430229', '::1');
+INSERT INTO `bfb_login_log` VALUES ('196', '10001', '1575437045', '::1');
+INSERT INTO `bfb_login_log` VALUES ('197', '10001', '1575464830', '113.65.249.24');
+INSERT INTO `bfb_login_log` VALUES ('198', '10001', '1575509458', '113.65.249.24');
+INSERT INTO `bfb_login_log` VALUES ('199', '10001', '1575511358', '::1');
+INSERT INTO `bfb_login_log` VALUES ('200', '10001', '1575621495', '127.0.0.1');
+INSERT INTO `bfb_login_log` VALUES ('201', '10001', '1575699829', '61.140.113.234');
+INSERT INTO `bfb_login_log` VALUES ('202', '10001', '1575708049', '113.109.207.226');
+INSERT INTO `bfb_login_log` VALUES ('203', '10001', '1575708050', '113.109.207.226');
+INSERT INTO `bfb_login_log` VALUES ('204', '10001', '1575708167', '113.109.207.226');
+INSERT INTO `bfb_login_log` VALUES ('205', '10001', '1575713376', '61.140.113.234');
+INSERT INTO `bfb_login_log` VALUES ('206', '10001', '1575800547', '113.109.207.226');
+INSERT INTO `bfb_login_log` VALUES ('207', '10001', '1575800678', '113.109.207.226');
+INSERT INTO `bfb_login_log` VALUES ('208', '10001', '1575854663', '61.140.113.234');
+INSERT INTO `bfb_login_log` VALUES ('209', '10001', '1575856834', '::1');
+INSERT INTO `bfb_login_log` VALUES ('210', '10001', '1575857388', '113.109.207.226');
+INSERT INTO `bfb_login_log` VALUES ('211', '10001', '1575859717', '113.109.207.226');
+INSERT INTO `bfb_login_log` VALUES ('212', '10001', '1575869388', '::1');
+INSERT INTO `bfb_login_log` VALUES ('213', '10001', '1575869667', '113.65.251.84');
+INSERT INTO `bfb_login_log` VALUES ('214', '10001', '1575871121', '113.65.251.109');
+INSERT INTO `bfb_login_log` VALUES ('215', '10001', '1575876626', '113.65.251.84');
+INSERT INTO `bfb_login_log` VALUES ('216', '10001', '1575878938', '113.65.251.84');
+INSERT INTO `bfb_login_log` VALUES ('217', '10001', '1575940990', '113.65.251.84');
+INSERT INTO `bfb_login_log` VALUES ('218', '10001', '1575946013', '113.65.251.84');
+INSERT INTO `bfb_login_log` VALUES ('219', '10001', '1575967431', '113.65.251.84');
+INSERT INTO `bfb_login_log` VALUES ('220', '10001', '1575969292', '::1');
+INSERT INTO `bfb_login_log` VALUES ('221', '10001', '1575969609', '::1');
+INSERT INTO `bfb_login_log` VALUES ('222', '10001', '1575969895', '::1');
+INSERT INTO `bfb_login_log` VALUES ('223', '10001', '1576030442', '113.65.251.84');
+INSERT INTO `bfb_login_log` VALUES ('224', '10001', '1576033728', '::1');
+INSERT INTO `bfb_login_log` VALUES ('225', '10001', '1576043631', '::1');
+INSERT INTO `bfb_login_log` VALUES ('226', '10001', '1576050175', '::1');
+INSERT INTO `bfb_login_log` VALUES ('227', '10001', '1576058070', '113.65.248.250');
+INSERT INTO `bfb_login_log` VALUES ('228', '10001', '1576058489', '113.65.248.182');
+INSERT INTO `bfb_login_log` VALUES ('229', '10001', '1576059062', '113.65.248.182');
+INSERT INTO `bfb_login_log` VALUES ('230', '10001', '1576117401', '113.65.248.182');
+INSERT INTO `bfb_login_log` VALUES ('231', '10001', '1576117690', '113.65.248.182');
+INSERT INTO `bfb_login_log` VALUES ('232', '10001', '1576126737', '113.65.248.250');
+INSERT INTO `bfb_login_log` VALUES ('233', '10001', '1576126738', '113.65.248.250');
+INSERT INTO `bfb_login_log` VALUES ('234', '10001', '1576126738', '113.65.248.250');
+INSERT INTO `bfb_login_log` VALUES ('235', '10001', '1576129574', '113.65.248.182');
+INSERT INTO `bfb_login_log` VALUES ('236', '10001', '1576129607', '113.65.248.182');
+INSERT INTO `bfb_login_log` VALUES ('237', '10001', '1576132625', '::1');
+INSERT INTO `bfb_login_log` VALUES ('238', '10001', '1576200381', '::1');
+INSERT INTO `bfb_login_log` VALUES ('239', '10001', '1576201942', '113.65.248.182');
+INSERT INTO `bfb_login_log` VALUES ('240', '10001', '1576217106', '::1');
+INSERT INTO `bfb_login_log` VALUES ('241', '10001', '1576222724', '::1');
+INSERT INTO `bfb_login_log` VALUES ('242', '10001', '1576223190', '61.140.133.157');
+INSERT INTO `bfb_login_log` VALUES ('243', '10001', '1576226651', '::1');
+INSERT INTO `bfb_login_log` VALUES ('244', '10001', '1576229562', '116.21.131.145');
+INSERT INTO `bfb_login_log` VALUES ('245', '10001', '1576229563', '116.21.131.145');
+INSERT INTO `bfb_login_log` VALUES ('246', '10001', '1576230433', '61.140.133.157');
+INSERT INTO `bfb_login_log` VALUES ('247', '10001', '1576459461', '61.140.115.231');
+INSERT INTO `bfb_login_log` VALUES ('248', '10001', '1576460999', '61.140.115.231');
+INSERT INTO `bfb_login_log` VALUES ('249', '10001', '1576562248', '::1');
+INSERT INTO `bfb_login_log` VALUES ('250', '10001', '1576565001', '::1');
+INSERT INTO `bfb_login_log` VALUES ('251', '10001', '1576632372', '::1');
+INSERT INTO `bfb_login_log` VALUES ('252', '10001', '1576634139', '61.140.113.253');
+INSERT INTO `bfb_login_log` VALUES ('253', '10001', '1576636470', '61.140.113.253');
+INSERT INTO `bfb_login_log` VALUES ('254', '10001', '1576647377', '116.21.131.148');
+INSERT INTO `bfb_login_log` VALUES ('255', '10001', '1576647378', '116.21.131.148');
+INSERT INTO `bfb_login_log` VALUES ('256', '10001', '1576651463', '::1');
+INSERT INTO `bfb_login_log` VALUES ('257', '10001', '1576655932', '116.21.131.148');
+INSERT INTO `bfb_login_log` VALUES ('258', '10001', '1576655962', '116.21.131.148');
+INSERT INTO `bfb_login_log` VALUES ('259', '10001', '1576727341', '61.140.112.37');
+INSERT INTO `bfb_login_log` VALUES ('260', '10001', '1576727719', '116.22.19.68');
+INSERT INTO `bfb_login_log` VALUES ('261', '10001', '1576727817', '61.140.112.37');
+INSERT INTO `bfb_login_log` VALUES ('262', '10001', '1576739238', '116.22.19.68');
+INSERT INTO `bfb_login_log` VALUES ('263', '10099', '1576741991', '127.0.0.1');
+INSERT INTO `bfb_login_log` VALUES ('264', '10001', '1576742571', '116.21.131.148');
+INSERT INTO `bfb_login_log` VALUES ('265', '10001', '1576742572', '116.21.131.148');
+INSERT INTO `bfb_login_log` VALUES ('266', '10001', '1576742572', '116.21.131.148');
+INSERT INTO `bfb_login_log` VALUES ('267', '10001', '1576746082', '61.140.112.37');
+INSERT INTO `bfb_login_log` VALUES ('268', '10001', '1576808236', '116.21.130.226');
+INSERT INTO `bfb_login_log` VALUES ('269', '10001', '1576808777', '116.22.19.68');
+INSERT INTO `bfb_login_log` VALUES ('270', '10001', '1576809641', '116.21.130.226');
+INSERT INTO `bfb_login_log` VALUES ('271', '10001', '1576822274', '116.21.130.226');
+INSERT INTO `bfb_login_log` VALUES ('272', '10001', '1576826185', '116.21.130.226');
+INSERT INTO `bfb_login_log` VALUES ('273', '10001', '1576826437', '61.140.112.37');
+INSERT INTO `bfb_login_log` VALUES ('274', '10001', '1576829200', '116.21.130.226');
+INSERT INTO `bfb_login_log` VALUES ('275', '10001', '1576829202', '116.21.130.226');
+INSERT INTO `bfb_login_log` VALUES ('276', '10001', '1576891383', '61.140.112.37');
+INSERT INTO `bfb_login_log` VALUES ('277', '10001', '1576891508', '116.22.19.68');
+INSERT INTO `bfb_login_log` VALUES ('278', '10001', '1576892501', '61.140.112.37');
+INSERT INTO `bfb_login_log` VALUES ('279', '10001', '1576892729', '61.140.112.37');
+INSERT INTO `bfb_login_log` VALUES ('280', '10001', '1576894129', '::1');
+INSERT INTO `bfb_login_log` VALUES ('281', '10001', '1576906253', '::1');
+INSERT INTO `bfb_login_log` VALUES ('282', '10001', '1576918025', '::1');
+INSERT INTO `bfb_login_log` VALUES ('283', '10001', '1576922381', '113.65.251.62');
+INSERT INTO `bfb_login_log` VALUES ('284', '10001', '1577064260', '113.65.251.62');
+INSERT INTO `bfb_login_log` VALUES ('285', '10001', '1577064501', '::1');
+INSERT INTO `bfb_login_log` VALUES ('286', '10001', '1577064698', '113.65.251.62');
+INSERT INTO `bfb_login_log` VALUES ('287', '10001', '1577067123', '113.65.249.233');
+INSERT INTO `bfb_login_log` VALUES ('288', '10001', '1577070145', '116.21.130.15');
+INSERT INTO `bfb_login_log` VALUES ('289', '10001', '1577080993', '116.21.130.15');
+INSERT INTO `bfb_login_log` VALUES ('290', '10001', '1577080994', '116.21.130.15');
+INSERT INTO `bfb_login_log` VALUES ('291', '10001', '1577082019', '116.21.130.15');
+INSERT INTO `bfb_login_log` VALUES ('292', '10001', '1577093428', '116.21.130.15');
+INSERT INTO `bfb_login_log` VALUES ('293', '10001', '1577094327', '223.104.63.95');
+INSERT INTO `bfb_login_log` VALUES ('294', '10001', '1577110656', '113.68.11.254');
+INSERT INTO `bfb_login_log` VALUES ('295', '10001', '1577110695', '113.68.11.254');
+INSERT INTO `bfb_login_log` VALUES ('296', '10001', '1577166193', '61.140.113.153');
+INSERT INTO `bfb_login_log` VALUES ('297', '10001', '1577266505', '61.140.132.169');
+INSERT INTO `bfb_login_log` VALUES ('298', '10001', '1577340331', '61.140.132.169');
+INSERT INTO `bfb_login_log` VALUES ('299', '10001', '1577345596', '113.109.207.253');
+INSERT INTO `bfb_login_log` VALUES ('300', '10001', '1577413200', '61.140.113.123');
+INSERT INTO `bfb_login_log` VALUES ('301', '10001', '1577423532', '113.109.207.253');
+INSERT INTO `bfb_login_log` VALUES ('302', '10001', '1577609615', '116.21.128.149');
+INSERT INTO `bfb_login_log` VALUES ('303', '10001', '1577670417', '::1');
+INSERT INTO `bfb_login_log` VALUES ('304', '10001', '1577670661', '116.22.18.192');
+INSERT INTO `bfb_login_log` VALUES ('305', '10001', '1577673077', '116.22.18.192');
+INSERT INTO `bfb_login_log` VALUES ('306', '10001', '1577684331', '::1');
+INSERT INTO `bfb_login_log` VALUES ('307', '10001', '1577685829', '116.22.18.192');
+INSERT INTO `bfb_login_log` VALUES ('308', '10001', '1577687930', '116.22.18.192');
+INSERT INTO `bfb_login_log` VALUES ('309', '10001', '1577763499', '113.65.250.71');
+INSERT INTO `bfb_login_log` VALUES ('310', '10001', '1577772760', '127.0.0.1');
+INSERT INTO `bfb_login_log` VALUES ('311', '10001', '1577772761', '127.0.0.1');
+INSERT INTO `bfb_login_log` VALUES ('312', '10001', '1577784150', '::1');
+INSERT INTO `bfb_login_log` VALUES ('313', '10001', '1577787113', '113.65.250.71');
+INSERT INTO `bfb_login_log` VALUES ('314', '10001', '1577851771', '183.160.247.42');
+INSERT INTO `bfb_login_log` VALUES ('315', '10001', '1577866998', '183.160.247.42');
+INSERT INTO `bfb_login_log` VALUES ('316', '10001', '1577884081', '183.160.84.47');
+INSERT INTO `bfb_login_log` VALUES ('317', '10001', '1578017229', '61.140.135.87');
+INSERT INTO `bfb_login_log` VALUES ('318', '10001', '1578043340', '::1');
+INSERT INTO `bfb_login_log` VALUES ('319', '10001', '1578043754', '113.109.204.66');
+INSERT INTO `bfb_login_log` VALUES ('320', '10001', '1578043754', '113.109.204.66');
+INSERT INTO `bfb_login_log` VALUES ('321', '10001', '1578122982', '61.140.132.223');
+INSERT INTO `bfb_login_log` VALUES ('322', '10001', '1578234103', '117.136.41.83');
 
 -- ----------------------------
 -- Table structure for bfb_mbhmd
@@ -943,30 +1379,30 @@ CREATE TABLE `bfb_menu` (
   `app_id` int(10) NOT NULL,
   `is_show` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '0隐藏，1显示',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=100276 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='商家用户权限表';
+) ENGINE=MyISAM AUTO_INCREMENT=100282 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='商家用户权限表';
 
 -- ----------------------------
 -- Records of bfb_menu
 -- ----------------------------
 INSERT INTO `bfb_menu` VALUES ('10001', '首页', 'user/index/index', '0', '1', '1540628721', '1540781975', 'index', 'mdi-home', '10001', '1');
-INSERT INTO `bfb_menu` VALUES ('10002', '会员', 'user/user/index', '0', '9', '1540628721', '1540628721', 'user', 'mdi-account', '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('10002', '商户', 'user/user/index', '0', '8', '1540628721', '1540628721', 'user', 'mdi-account', '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('10003', '商品', 'user/item/index', '0', '3', '1540628721', '1540628721', 'item', 'mdi-gift', '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('10004', '订单', 'user/order/deliverylist', '0', '4', '1540628721', '1540628721', 'order', 'mdi-clipboard-text', '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('10005', '营销', 'user/market/coupon', '0', '2', '1540628721', '1540628721', 'market', 'mdi-dropbox', '10001', '0');
 INSERT INTO `bfb_menu` VALUES ('10006', '应用', 'user/app/setting', '0', '5', '1540628721', '1540628721', 'app', 'mdi-bank', '10001', '0');
 INSERT INTO `bfb_menu` VALUES ('10007', '模板', 'user/tpl/index', '0', '6', '1540628721', '1540628721', 'tpl', 'mdi-camera', '10001', '0');
-INSERT INTO `bfb_menu` VALUES ('10009', '权限', 'user/auth/userindex', '0', '10', '1540628721', '1540628721', 'auth', 'mdi-clipboard-account', '10001', '1');
-INSERT INTO `bfb_menu` VALUES ('10012', '会员卡', 'user/user/index', '10002', '100', '0', '0', 'user', null, '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('10009', '权限', 'user/auth/userindex', '0', '15', '1540628721', '1540628721', 'auth', 'mdi-clipboard-account', '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('10012', '用户列表', 'user/user/index', '10002', '100', '0', '0', 'user', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('10016', '用户列表', 'user/user/index', '10012', '100', '0', '0', 'user', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('10017', '冻结列表', 'user/user/frozen', '10012', '100', '0', '0', 'user', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('10018', '推荐', 'user/user/index', '10013', '100', '0', '0', 'user', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100015', '商品设置', 'user/item/index', '10003', '100', '0', '0', 'item', null, '10001', '1');
-INSERT INTO `bfb_menu` VALUES ('100016', '商品分类', 'user/item/categorylist', '100015', '100', '0', '0', 'item', null, '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('100016', '商品分类', 'user/item/categorylist', '100015', '80', '0', '0', 'item', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100020', '商品列表', 'user/item/index', '100015', '100', '0', '0', 'item', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100024', '商品类型', 'user/item/itemtype', '100015', '100', '0', '0', 'item', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100028', '商品规格', 'user/item/speclist', '100015', '100', '0', '0', 'item', null, '10001', '1');
-INSERT INTO `bfb_menu` VALUES ('100032', '商品属性', 'user/item/attrbute', '100015', '100', '0', '0', 'item', null, '10001', '1');
-INSERT INTO `bfb_menu` VALUES ('100036', '品牌列表', 'user/item/brand', '100015', '100', '0', '0', 'item', null, '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('100032', '商品属性', 'user/item/attrbute', '100015', '100', '0', '0', 'item', null, '10001', '0');
+INSERT INTO `bfb_menu` VALUES ('100036', '品牌列表', 'user/item/brand', '100015', '100', '0', '0', 'item', null, '10001', '0');
 INSERT INTO `bfb_menu` VALUES ('100040', '商品评论', 'user/item/comment', '100015', '100', '0', '0', 'item', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100017', '新增/编辑', 'user/item/editcategory', '100016', '100', '0', '0', 'item', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100019', '删除', 'user/item/item/deletecategory', '100016', '100', '0', '0', 'item', null, '10001', '1');
@@ -1032,14 +1468,14 @@ INSERT INTO `bfb_menu` VALUES ('100223', '分销设置', 'user/setting/agent', '
 INSERT INTO `bfb_menu` VALUES ('100245', '增加/编辑', 'user/setting/addexpress', '100213', '100', '0', '0', 'setting', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100243', '增加/编辑', 'user/setting/edit', '100211', '100', '0', '0', 'setting', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100244', '删除', 'user/setting/delete', '100211', '100', '0', '0', 'setting', null, '10001', '1');
-INSERT INTO `bfb_menu` VALUES ('100210', '设置', 'user/setting/index', '0', '7', '1540628721', '1540628721', 'setting', 'mdi-brightness-5', '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('100210', '设置', 'user/setting/index', '0', '50', '1540628721', '1540628721', 'setting', 'mdi-brightness-5', '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100246', '删除', 'setting/delete', '100213', '100', '0', '0', 'setting', null, '10001', '1');
-INSERT INTO `bfb_menu` VALUES ('100247', '售后分佣', 'user/order/deliverylist', '10004', '100', '0', '0', 'order', null, '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('100247', '售后处理', 'user/order/deliverylist', '10004', '100', '0', '0', 'order', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100249', '待处理售后', 'user/order/etcsaleList', '100247', '100', '0', '0', 'order', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100250', '已处理售后', 'user/order/insaleList', '100247', '100', '0', '0', 'order', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100251', '分佣列表', 'user/order/gold', '100247', '100', '0', '0', 'order', null, '10001', '0');
-INSERT INTO `bfb_menu` VALUES ('100254', '退款申请', 'user/order/returnbuy', '100247', '100', '0', '0', 'order', null, '10001', '1');
-INSERT INTO `bfb_menu` VALUES ('10008', '推广员', 'user/agent/index', '0', '8', '1540628721', '1540628721', 'agent', 'mdi-account', '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('100254', '退款申请', 'user/returnbuy/index', '100247', '100', '0', '0', 'order', null, '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('10008', '推广员', 'user/agent/index', '0', '10', '1540628721', '1540628721', 'agent', 'mdi-account', '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100255', '推广员列表', 'user/agent/index', '10008', '100', '0', '0', 'agent', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100256', '推广员列表', 'user/agent/index', '100255', '50', '0', '0', 'agent', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100257', '任务列表', 'user/agent/task', '100255', '100', '0', '0', 'agent', null, '10001', '1');
@@ -1047,21 +1483,27 @@ INSERT INTO `bfb_menu` VALUES ('100258', '供应商', 'user/supplier/index', '0'
 INSERT INTO `bfb_menu` VALUES ('100259', '供应商列表', 'user/supplier/index', '100258', '100', '0', '0', 'supplier', '', '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100260', '供应商列表', 'user/supplier/index', '100259', '100', '0', '0', 'supplier', '', '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100261', '添加供应商', 'user/supplier/addsupplier', '100259', '100', '0', '0', 'supplier', '', '10001', '1');
-INSERT INTO `bfb_menu` VALUES ('10020', '提现', 'user/withdraw/index', '0', '10', '1540628721', '1540628721', 'withdraw', 'mdi-account', '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('10020', '提现', 'user/withdraw/index', '0', '11', '1540628721', '1540628721', 'withdraw', 'mdi-account', '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100263', '提现列表', 'user/withdraw/index', '10020', '100', '0', '0', 'withdraw', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100264', '推广员提现', 'user/withdraw/index', '100263', '100', '0', '0', 'withdraw', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100265', '供应商提现', 'user/withdraw/supplier', '100263', '100', '0', '0', 'withdraw', null, '10001', '1');
-INSERT INTO `bfb_menu` VALUES ('10021', '退款', 'user/returnbuy/index', '0', '100', '1540628721', '1540628721', 'returnbuy', 'mdi-account', '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('10021', '退款', 'user/returnbuy/index', '0', '12', '1540628721', '1540628721', 'returnbuy', 'mdi-account', '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100267', '退款列表', 'user/returnbuy/index', '10021', '100', '0', '0', 'returnbuy', null, '10001', '1');
-INSERT INTO `bfb_menu` VALUES ('100268', '推广员退款', 'user/returnbuy/agent', '100267', '100', '0', '0', 'returnbuy', null, '10001', '1');
-INSERT INTO `bfb_menu` VALUES ('100269', '供应商退款', 'user/returnbuy/supplier', '100267', '100', '0', '0', 'returnbuy', null, '10001', '1');
-INSERT INTO `bfb_menu` VALUES ('100270', '推广员添加', 'user/agent/saveAgent', '100255', '50', '0', '0', 'agent', null, '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('100268', '推广员退款', 'user/returnbuy/agent', '100267', '100', '0', '0', 'returnbuy', null, '10001', '0');
+INSERT INTO `bfb_menu` VALUES ('100269', '退款列表', 'user/returnbuy/index', '100267', '100', '0', '0', 'returnbuy', null, '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('100270', '推广员添加', 'user/agent/saveAgent', '100255', '60', '0', '0', 'agent', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100271', '供应商商品', 'user/supplier/supplierGoods', '100259', '100', '0', '0', 'supplier', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100272', '平台下订', 'user/supplier/platOrder', '100259', '100', '0', '0', 'supplier', null, '10001', '1');
-INSERT INTO `bfb_menu` VALUES ('10022', '公告', 'user/ad/index', '0', '11', '1540628721', '1540628721', 'ad', 'mdi-account', '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('10022', '公告', 'user/ad/index', '0', '13', '1540628721', '1540628721', 'ad', 'mdi-account', '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100273', '公告列表', 'user/ad/index', '10022', '100', '0', '0', 'ad', null, '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('100276', '推广员冻结列表', 'user/agent/freezelist', '100255', '50', '0', '0', 'agent', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100274', '海报列表', 'user/ad/banner', '100273', '100', '0', '0', 'ad', null, '10001', '1');
 INSERT INTO `bfb_menu` VALUES ('100275', '公告列表', 'user/ad/index', '100273', '100', '0', '0', 'ad', null, '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('100277', '审核列表', 'user/user/auditlist', '10012', '100', '0', '0', 'user', null, '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('100278', '商品行业', 'user/item/industrylist', '100015', '90', '0', '0', 'item', null, '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('100279', '平台代发', 'user/supplier/subOrder', '100259', '100', '0', '0', 'supplier', null, '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('100280', '发布任务', 'user/agent/addTask', '100255', '90', '0', '0', 'agent', null, '10001', '1');
+INSERT INTO `bfb_menu` VALUES ('100281', '任务清单', 'user/agent/tasklist', '100255', '95', '0', '0', 'agent', null, '10001', '1');
 
 -- ----------------------------
 -- Table structure for bfb_order
@@ -1104,14 +1546,14 @@ CREATE TABLE `bfb_order` (
   `sub_type` int(7) DEFAULT NULL COMMENT '售后方式1为退款2为换货',
   PRIMARY KEY (`order_id`),
   UNIQUE KEY `order_no` (`order_no`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='订单记录表';
+) ENGINE=MyISAM AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COMMENT='订单记录表';
 
 -- ----------------------------
 -- Records of bfb_order
 -- ----------------------------
-INSERT INTO `bfb_order` VALUES ('1', '1', '2019112897985348', '246.00', '0', '0.00', '266.00', '0.00', '我要发顺丰快递', '20', '1573543020', '20.00', '20', '10', '10', '0', '', '0', '1', '10001', '1573525489', '1574927875', '1574927875', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
-INSERT INTO `bfb_order` VALUES ('3', '1', '2019111256545010', '246.00', '0', '0.00', '246.00', '0.00', '我要发京东快递', '20', '1573543920', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573525624', '1573525624', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
-INSERT INTO `bfb_order` VALUES ('4', '1', '2019111256535398', '246.00', '0', '0.00', '246.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573525640', '1573525640', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
+INSERT INTO `bfb_order` VALUES ('1', '1', '2019112897985348', '246.00', '0', '0.00', '266.00', '0.00', '我要发顺丰快递', '20', '1573543020', '20.00', '20', '20', '30', '0', '', '1', '1', '10001', '1573525489', '1575359824', '1574927875', '1575359824', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
+INSERT INTO `bfb_order` VALUES ('3', '1', '2019111256545010', '246.00', '0', '0.00', '246.00', '0.00', '我要发京东快递', '20', '1573543920', '0.00', '20', '20', '30', '0', '', '1', '1', '10001', '1573525624', '1575691930', '1575538851', '1575691930', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
+INSERT INTO `bfb_order` VALUES ('4', '1', '2019111256535398', '246.00', '0', '0.00', '246.00', '0.00', '', '20', '1573543920', '0.00', '20', '20', '30', '0', '', '1', '1', '10001', '1573525640', '1575871859', '1575538962', '1575871859', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
 INSERT INTO `bfb_order` VALUES ('5', '1', '2019111210048494', '246.00', '0', '0.00', '246.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573525645', '1573525645', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
 INSERT INTO `bfb_order` VALUES ('6', '1', '2019111255529950', '246.00', '0', '0.00', '246.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573525687', '1573525687', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
 INSERT INTO `bfb_order` VALUES ('7', '1', '2019111250531015', '246.00', '0', '0.00', '246.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573525698', '1573525698', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
@@ -1119,21 +1561,57 @@ INSERT INTO `bfb_order` VALUES ('8', '1', '2019111253975152', '246.00', '0', '0.
 INSERT INTO `bfb_order` VALUES ('9', '1', '2019111297561024', '246.00', '0', '0.00', '246.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573525706', '1573525706', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
 INSERT INTO `bfb_order` VALUES ('10', '1', '2019111253100100', '246.00', '0', '0.00', '246.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573525893', '1573525893', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
 INSERT INTO `bfb_order` VALUES ('11', '1', '2019111255535599', '246.00', '0', '0.00', '246.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573525943', '1573525943', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
-INSERT INTO `bfb_order` VALUES ('12', '1', '2019111255565510', '246.00', '0', '0.00', '246.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573525975', '1573525975', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
+INSERT INTO `bfb_order` VALUES ('12', '1', '2019111255565510', '246.00', '0', '0.00', '246.00', '0.00', '', '20', '0', '0.00', '20', '20', '30', '0', '', '1', '1', '10001', '1573525975', '1573525975', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
 INSERT INTO `bfb_order` VALUES ('13', '1', '2019111248991015', '246.00', '0', '0.00', '246.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573526160', '1573526160', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
-INSERT INTO `bfb_order` VALUES ('14', '1', '2019111299519951', '123.00', '0', '0.00', '123.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573526172', '1573526172', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
+INSERT INTO `bfb_order` VALUES ('14', '1', '2019122456511015', '123.00', '0', '0.00', '135.00', '0.00', '', '10', '0', '12.00', '20', '10', '10', '0', '', '0', '1', '10001', '1573526172', '1577157384', '1577157356', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
 INSERT INTO `bfb_order` VALUES ('15', '1', '2019111257515610', '369.00', '0', '0.00', '369.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573526185', '1573526185', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
 INSERT INTO `bfb_order` VALUES ('16', '1', '2019111210210151', '369.00', '0', '0.00', '369.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573526239', '1573526239', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
 INSERT INTO `bfb_order` VALUES ('17', '1', '2019111299501029', '369.00', '0', '0.00', '369.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573526332', '1573526332', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
 INSERT INTO `bfb_order` VALUES ('18', '1', '2019111252484856', '369.00', '0', '0.00', '369.00', '0.00', '', '10', '0', '0.00', '20', '10', '10', '0', '', '0', '1', '10001', '1573526340', '1573526340', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
-INSERT INTO `bfb_order` VALUES ('19', '1', '2019111254501025', '369.00', '0', '0.00', '369.00', '0.00', '', '10', '0', '0.00', '20', '20', '30', '0', '', '0', '1', '10001', '1573526342', '1573626715', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
-INSERT INTO `bfb_order` VALUES ('20', '1', '2019111256519855', '369.00', '0', '0.00', '369.00', '0.00', '', '20', '1573543020', '0.00', '20', '20', '30', '0', '2019111256519855', '0', '1', '10001', '1573526344', '1573626915', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
-INSERT INTO `bfb_order` VALUES ('22', '1', '2019111250569757', '125.00', '0', '0.00', '125.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573526610', '1573526610', '0', '0', '0', '1', '1', '0', '0', '4', '0', '50', null, null);
-INSERT INTO `bfb_order` VALUES ('23', '1', '2019111249989710', '125.00', '0', '0.00', '125.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573538289', '1573538289', '0', '0', '0', '1', '1', '0', '0', '4', '0', '50', null, null);
-INSERT INTO `bfb_order` VALUES ('24', '1', '2019111854555453', '99.00', '0', '0.00', '99.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1574045366', '1574045366', '0', '0', '0', '1', '1', '0', '0', '10', '0', '0', null, null);
-INSERT INTO `bfb_order` VALUES ('25', '1', '2019112710255575', '123.00', '0', '0.00', '123.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1574844879', '1574844879', '0', '0', '0', '1', '1', '0', '0', '17', '0', '0', null, null);
-INSERT INTO `bfb_order` VALUES ('26', '1', '2019112748494955', '123.00', '0', '0.00', '123.00', '0.00', '', '20', '0', '0.00', '20', '20', '30', '0', '', '0', '1', '10001', '1574844928', '1574926520', '1574926520', '0', '0', '1', '1', '0', '0', '17', '1574926980', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('19', '12', '2019111254501025', '369.00', '0', '0.00', '369.00', '0.00', '', '10', '0', '0.00', '20', '20', '30', '0', '', '1', '1', '10001', '1573526342', '1573626715', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
+INSERT INTO `bfb_order` VALUES ('20', '12', '2019111256519855', '369.00', '0', '0.00', '369.00', '0.00', '', '20', '1573543020', '0.00', '20', '20', '30', '0', '2019111256519855', '1', '1', '10001', '1573526344', '1573626915', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
+INSERT INTO `bfb_order` VALUES ('28', '12', '2019120456545197', '200.00', '0', '0.00', '200.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1575452568', '1575452568', '0', '0', '0', '1', '1', '0', '0', '16', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('22', '12', '2019111250569757', '125.00', '0', '0.00', '125.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573526610', '1573526610', '0', '0', '0', '1', '1', '0', '0', '4', '0', '50', null, null);
+INSERT INTO `bfb_order` VALUES ('23', '12', '2019111249989710', '125.00', '0', '0.00', '125.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1573538289', '1573538289', '0', '0', '0', '1', '1', '0', '0', '4', '0', '50', null, null);
+INSERT INTO `bfb_order` VALUES ('24', '12', '2019111854555453', '99.00', '0', '0.00', '99.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1574045366', '1574045366', '0', '0', '0', '1', '1', '0', '0', '10', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('25', '12', '2019112710255575', '123.00', '0', '0.00', '123.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1574844879', '1574844879', '0', '0', '0', '1', '1', '0', '0', '17', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('26', '12', '2019112748494955', '123.00', '0', '0.00', '123.00', '0.00', '', '20', '0', '10.00', '20', '20', '30', '0', '', '1', '1', '10001', '1574844928', '1575359828', '1574926520', '1575359828', '0', '1', '1', '0', '0', '17', '1574926980', '0', null, null);
 INSERT INTO `bfb_order` VALUES ('27', '1', '2019112899509797', '123.00', '0', '0.00', '133.00', '0.00', '', '10', '0', '10.00', '10', '10', '10', '0', '', '0', '1', '10001', '1574844936', '1574927820', '0', '0', '0', '1', '1', '0', '0', '17', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('29', '1', '2019120453529910', '123.00', '0', '0.00', '123.00', '0.00', '111111111', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1575452693', '1575452693', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
+INSERT INTO `bfb_order` VALUES ('30', '1', '2019120453519750', '200.00', '0', '0.00', '200.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1575452869', '1575452869', '0', '0', '0', '1', '1', '0', '0', '16', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('31', '1', '2019120410149989', '200.00', '0', '0.00', '200.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1575452910', '1575452910', '0', '0', '0', '1', '1', '0', '0', '16', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('32', '1', '2019120450549810', '123.00', '0', '0.00', '123.00', '0.00', '111111111', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1575452914', '1575452914', '0', '0', '0', '1', '1', '0', '0', '3', '0', '20', null, null);
+INSERT INTO `bfb_order` VALUES ('33', '1', '2019120455484951', '200.00', '0', '0.00', '200.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1575453047', '1575453047', '0', '0', '0', '1', '1', '0', '0', '16', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('34', '1', '2019120456491029', '200.00', '0', '0.00', '200.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1575453080', '1575453080', '0', '0', '0', '1', '1', '0', '0', '16', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('35', '1', '2019120455575710', '200.00', '0', '0.00', '200.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1575453095', '1575453095', '0', '0', '0', '1', '1', '0', '0', '16', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('36', '1', '2019120548574952', '1.00', '0', '0.00', '1.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1575540704', '1575540704', '0', '0', '0', '1', '1', '0', '0', '22', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('37', '1', '2019120598495551', '100.00', '0', '0.00', '100.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1575542363', '1575542363', '0', '0', '0', '1', '1', '0', '0', '11', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('38', '1', '2019120710210010', '123.00', '0', '0.00', '123.00', '0.00', '', '20', '1573543020', '20.00', '20', '20', '30', '0', '', '1', '1', '10001', '1575713167', '1575871848', '1575715929', '1575871848', '0', '1', '1', '0', '0', '27', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('39', '1', '2019121153485310', '132.00', '0', '0.00', '132.00', '0.00', '123456', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1576055525', '1576055525', '0', '0', '0', '1', '1', '0', '0', '30', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('40', '1', '2019121850545249', '1321.00', '0', '0.00', '1321.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1576638898', '1576638898', '0', '0', '0', '1', '1', '0', '0', '29', '0', '150', null, null);
+INSERT INTO `bfb_order` VALUES ('41', '1', '2019121849514851', '0.00', '0', '0.00', '0.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1576640273', '1576640273', '0', '0', '0', '1', '1', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('42', '1', '2019121857985198', '0.00', '0', '0.00', '0.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1576640297', '1576640297', '0', '0', '0', '1', '1', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('43', '1', '2019122157101544', '500.00', '0', '0.00', '500.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1576911305', '1576911305', '0', '0', '0', '1', '1', '0', '0', '31', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('44', '1', '2019122155535350', '100.00', '0', '0.00', '100.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1576914567', '1576914567', '0', '0', '0', '1', '1', '0', '0', '30', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('45', '1', '2019122457525310', '120.00', '0', '0.00', '120.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577170953', '1577170953', '0', '0', '0', '1', '1', '0', '0', '29', '0', '150', null, null);
+INSERT INTO `bfb_order` VALUES ('46', '1', '2019122410252504', '120.00', '0', '0.00', '120.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577170959', '1577170959', '0', '0', '0', '1', '1', '0', '0', '29', '0', '150', null, null);
+INSERT INTO `bfb_order` VALUES ('47', '1', '2019122448569756', '120.00', '0', '0.00', '120.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577170960', '1577170960', '0', '0', '0', '1', '1', '0', '0', '29', '0', '150', null, null);
+INSERT INTO `bfb_order` VALUES ('48', '1', '2019122449555555', '120.00', '0', '0.00', '120.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577170961', '1577170961', '0', '0', '0', '1', '1', '0', '0', '29', '0', '150', null, null);
+INSERT INTO `bfb_order` VALUES ('49', '1', '2019122449100541', '120.00', '0', '0.00', '120.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577170961', '1577170961', '0', '0', '0', '1', '1', '0', '0', '29', '0', '150', null, null);
+INSERT INTO `bfb_order` VALUES ('50', '1', '2019122450555197', '120.00', '0', '0.00', '120.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577170962', '1577170962', '0', '0', '0', '1', '1', '0', '0', '29', '0', '150', null, null);
+INSERT INTO `bfb_order` VALUES ('51', '1', '2019122450985255', '120.00', '0', '0.00', '120.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577170962', '1577170962', '0', '0', '0', '1', '1', '0', '0', '29', '0', '150', null, null);
+INSERT INTO `bfb_order` VALUES ('52', '1', '2019122451525048', '120.00', '0', '0.00', '120.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577170963', '1577170963', '0', '0', '0', '1', '1', '0', '0', '29', '0', '150', null, null);
+INSERT INTO `bfb_order` VALUES ('53', '1', '2019122451101100', '120.00', '0', '0.00', '120.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577170963', '1577170963', '0', '0', '0', '1', '1', '0', '0', '29', '0', '150', null, null);
+INSERT INTO `bfb_order` VALUES ('54', '1', '2019122452541021', '120.00', '0', '0.00', '120.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577170964', '1577170964', '0', '0', '0', '1', '1', '0', '0', '29', '0', '150', null, null);
+INSERT INTO `bfb_order` VALUES ('55', '1', '2019122453505156', '120.00', '0', '0.00', '120.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577170965', '1577170965', '0', '0', '0', '1', '1', '0', '0', '29', '0', '150', null, null);
+INSERT INTO `bfb_order` VALUES ('56', '1', '2019122453101505', '120.00', '0', '0.00', '120.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577170965', '1577170965', '0', '0', '0', '1', '1', '0', '0', '29', '0', '150', null, null);
+INSERT INTO `bfb_order` VALUES ('57', '1', '2019122799991025', '400.00', '0', '0.00', '400.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577439804', '1577439804', '0', '0', '0', '1', '1', '0', '0', '29', '0', '150', null, null);
+INSERT INTO `bfb_order` VALUES ('58', '1', '2019122997100514', '200.00', '0', '0.00', '200.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577606378', '1577606378', '0', '0', '0', '1', '1', '0', '0', '28', '0', '30', null, null);
+INSERT INTO `bfb_order` VALUES ('59', '1', '2019122998101505', '200.00', '0', '0.00', '200.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577606379', '1577606379', '0', '0', '0', '1', '1', '0', '0', '28', '0', '30', null, null);
+INSERT INTO `bfb_order` VALUES ('60', '1', '2019123098535350', '75745.00', '0', '0.00', '75745.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577687323', '1577687323', '0', '0', '0', '1', '1', '0', '0', '40', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('61', '1', '2019123010210150', '2500.00', '0', '0.00', '2500.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577691327', '1577691327', '0', '0', '0', '1', '1', '0', '0', '31', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('62', '1', '2019123048569756', '500.00', '0', '0.00', '500.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577694496', '1577694496', '0', '0', '0', '1', '1', '0', '0', '31', '0', '0', null, null);
+INSERT INTO `bfb_order` VALUES ('63', '1', '2019123056975351', '1200.00', '0', '0.00', '1200.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '0', '', '0', '1', '10001', '1577695464', '1577695464', '0', '0', '0', '1', '1', '0', '0', '29', '0', '150', null, null);
 
 -- ----------------------------
 -- Table structure for bfb_order_address
@@ -1152,7 +1630,7 @@ CREATE TABLE `bfb_order_address` (
   `app_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '小程序id',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`order_address_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='订单收货地址记录表';
+) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COMMENT='订单收货地址记录表';
 
 -- ----------------------------
 -- Records of bfb_order_address
@@ -1171,6 +1649,42 @@ INSERT INTO `bfb_order_address` VALUES ('11', '收货人1', '15074937445', '1', 
 INSERT INTO `bfb_order_address` VALUES ('12', '收货人1', '15074937445', '1', '2', '7', '吉旅大酒店', '25', '1', '10001', '1574844879');
 INSERT INTO `bfb_order_address` VALUES ('13', '收货人1', '15074937445', '1', '2', '7', '吉旅大酒店', '26', '1', '10001', '1574844928');
 INSERT INTO `bfb_order_address` VALUES ('14', '收货人1', '15074937445', '1', '2', '7', '吉旅大酒店', '27', '1', '10001', '1574844936');
+INSERT INTO `bfb_order_address` VALUES ('15', '收货人1', '15074937445', '1', '2', '7', '吉旅大酒店', '28', '1', '10001', '1575452568');
+INSERT INTO `bfb_order_address` VALUES ('16', '收货人1', '15074937445', '1', '2', '7', '吉旅大酒店', '29', '1', '10001', '1575452693');
+INSERT INTO `bfb_order_address` VALUES ('17', '收货人1', '15074937445', '1', '2', '7', '吉旅大酒店', '30', '1', '10001', '1575452869');
+INSERT INTO `bfb_order_address` VALUES ('18', '收货人1', '15074937445', '1', '2', '7', '吉旅大酒店', '31', '1', '10001', '1575452910');
+INSERT INTO `bfb_order_address` VALUES ('19', '收货人1', '15074937445', '1', '2', '7', '吉旅大酒店', '32', '1', '10001', '1575452914');
+INSERT INTO `bfb_order_address` VALUES ('20', '收货人1', '15074937445', '1', '2', '7', '吉旅大酒店', '33', '1', '10001', '1575453047');
+INSERT INTO `bfb_order_address` VALUES ('21', '收货人1', '15074937445', '1', '2', '7', '吉旅大酒店', '34', '1', '10001', '1575453080');
+INSERT INTO `bfb_order_address` VALUES ('22', '收货人1', '15074937445', '1', '2', '7', '吉旅大酒店', '35', '1', '10001', '1575453095');
+INSERT INTO `bfb_order_address` VALUES ('23', '收货人1', '15074937445', '1', '2', '7', '吉旅大酒店', '36', '1', '10001', '1575540704');
+INSERT INTO `bfb_order_address` VALUES ('24', '收货人1', '15074937445', '1', '2', '7', '吉旅大酒店', '37', '1', '10001', '1575542363');
+INSERT INTO `bfb_order_address` VALUES ('25', '收货人1', '15074937445', '1', '2', '7', '吉旅大酒店', '38', '1', '10001', '1575713167');
+INSERT INTO `bfb_order_address` VALUES ('26', '收货人1222', '15074937445', '1', '2', '7', '北京市石景山区', '39', '1', '10001', '1576055525');
+INSERT INTO `bfb_order_address` VALUES ('27', '王生', '15074937448', '1', '2', '7', '老家', '40', '1', '10001', '1576638898');
+INSERT INTO `bfb_order_address` VALUES ('28', '王生', '15074937448', '1', '2', '7', '老家', '41', '1', '10001', '1576640273');
+INSERT INTO `bfb_order_address` VALUES ('29', '王生', '15074937448', '1', '2', '7', '老家', '42', '1', '10001', '1576640297');
+INSERT INTO `bfb_order_address` VALUES ('30', '', '', '3325', '3632', '3661', '', '43', '1', '10001', '1576911305');
+INSERT INTO `bfb_order_address` VALUES ('31', '', '', '3325', '3632', '3661', '', '44', '1', '10001', '1576914567');
+INSERT INTO `bfb_order_address` VALUES ('32', '', '', '3325', '3632', '3661', '', '45', '1', '10001', '1577170953');
+INSERT INTO `bfb_order_address` VALUES ('33', '', '', '3325', '3632', '3661', '', '46', '1', '10001', '1577170959');
+INSERT INTO `bfb_order_address` VALUES ('34', '', '', '3325', '3632', '3661', '', '47', '1', '10001', '1577170960');
+INSERT INTO `bfb_order_address` VALUES ('35', '', '', '3325', '3632', '3661', '', '48', '1', '10001', '1577170961');
+INSERT INTO `bfb_order_address` VALUES ('36', '', '', '3325', '3632', '3661', '', '49', '1', '10001', '1577170961');
+INSERT INTO `bfb_order_address` VALUES ('37', '', '', '3325', '3632', '3661', '', '50', '1', '10001', '1577170962');
+INSERT INTO `bfb_order_address` VALUES ('38', '', '', '3325', '3632', '3661', '', '51', '1', '10001', '1577170962');
+INSERT INTO `bfb_order_address` VALUES ('39', '', '', '3325', '3632', '3661', '', '52', '1', '10001', '1577170963');
+INSERT INTO `bfb_order_address` VALUES ('40', '', '', '3325', '3632', '3661', '', '53', '1', '10001', '1577170963');
+INSERT INTO `bfb_order_address` VALUES ('41', '', '', '3325', '3632', '3661', '', '54', '1', '10001', '1577170964');
+INSERT INTO `bfb_order_address` VALUES ('42', '', '', '3325', '3632', '3661', '', '55', '1', '10001', '1577170965');
+INSERT INTO `bfb_order_address` VALUES ('43', '', '', '3325', '3632', '3661', '', '56', '1', '10001', '1577170965');
+INSERT INTO `bfb_order_address` VALUES ('44', '', '', '3325', '3632', '3661', '', '57', '1', '10001', '1577439804');
+INSERT INTO `bfb_order_address` VALUES ('45', '', '', '3325', '3632', '3661', '', '58', '1', '10001', '1577606378');
+INSERT INTO `bfb_order_address` VALUES ('46', '', '', '3325', '3632', '3661', '', '59', '1', '10001', '1577606379');
+INSERT INTO `bfb_order_address` VALUES ('47', '', '', '3325', '3632', '3661', '', '60', '1', '10001', '1577687323');
+INSERT INTO `bfb_order_address` VALUES ('48', '', '', '3325', '3632', '3661', '', '61', '1', '10001', '1577691327');
+INSERT INTO `bfb_order_address` VALUES ('49', '', '', '3325', '3632', '3661', '', '62', '1', '10001', '1577694496');
+INSERT INTO `bfb_order_address` VALUES ('50', '', '', '3325', '3632', '3661', '', '63', '1', '10001', '1577695464');
 
 -- ----------------------------
 -- Table structure for bfb_order_delivery
@@ -1187,13 +1701,21 @@ CREATE TABLE `bfb_order_delivery` (
   `create_time` int(11) NOT NULL,
   `receipt_time` int(11) NOT NULL COMMENT '收货时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bfb_order_delivery
 -- ----------------------------
-INSERT INTO `bfb_order_delivery` VALUES ('3', '2019112897985348', '10031', '123456789652398', '邮政快递', '1', '10001', '1574927875', '0');
-INSERT INTO `bfb_order_delivery` VALUES ('2', '2019112748494955', '10035', '12345678965236', '京东1快递', '1', '10001', '1574926520', '1574926520');
+INSERT INTO `bfb_order_delivery` VALUES ('3', '2019112748494955', '10004', '773016829076660', '申通快递', '1', '10001', '1574927875', '1574927875');
+INSERT INTO `bfb_order_delivery` VALUES ('2', '2019112748494956', '10005', '12345678965236', '京东1快递', '1', '10001', '1574926520', '1574926520');
+INSERT INTO `bfb_order_delivery` VALUES ('4', '2019111256535398', '10005', '8767697193', '韵达快递', '1', '10001', '1575538399', '0');
+INSERT INTO `bfb_order_delivery` VALUES ('5', '2019111256535398', '10005', '1203523346', '韵达快递', '1', '10001', '1575538669', '0');
+INSERT INTO `bfb_order_delivery` VALUES ('6', '2019111256535398', '10005', '9942466432', '韵达快递', '1', '10001', '1575538838', '0');
+INSERT INTO `bfb_order_delivery` VALUES ('7', '2019111256545010', '10005', '5889799208', '韵达快递', '1', '10001', '1575538851', '0');
+INSERT INTO `bfb_order_delivery` VALUES ('8', '2019111256535398', '10005', '4330653324', '韵达快递', '1', '10001', '1575538863', '0');
+INSERT INTO `bfb_order_delivery` VALUES ('9', '2019111256535398', '10005', '9292839750', '韵达快递', '1', '10001', '1575538962', '0');
+INSERT INTO `bfb_order_delivery` VALUES ('10', '2019120710210010', '10003', '12345678965236899', '圆通速递', '1', '10001', '1575715929', '0');
+INSERT INTO `bfb_order_delivery` VALUES ('11', '2019111299519951', '10005', '21312312414214124124123', '韵达快递', '1', '10001', '1577157356', '0');
 
 -- ----------------------------
 -- Table structure for bfb_order_goods
@@ -1223,14 +1745,14 @@ CREATE TABLE `bfb_order_goods` (
   `app_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '小程序id',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`order_goods_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='订单商品记录表';
+) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COMMENT='订单商品记录表';
 
 -- ----------------------------
 -- Records of bfb_order_goods
 -- ----------------------------
-INSERT INTO `bfb_order_goods` VALUES ('1', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573525489', '123.00', '12.00', '0', '2', '246.00', '246.00', '0', '1', '1', '10001', '1573525489');
-INSERT INTO `bfb_order_goods` VALUES ('2', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573525624', '123.00', '12.00', '0', '2', '246.00', '246.00', '0', '3', '1', '10001', '1573525624');
-INSERT INTO `bfb_order_goods` VALUES ('3', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573525640', '123.00', '12.00', '0', '2', '246.00', '246.00', '0', '4', '1', '10001', '1573525640');
+INSERT INTO `bfb_order_goods` VALUES ('1', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573525489', '123.00', '12.00', '0', '2', '246.00', '246.00', '1', '1', '1', '10001', '1573525489');
+INSERT INTO `bfb_order_goods` VALUES ('2', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573525624', '123.00', '12.00', '0', '2', '246.00', '246.00', '1', '3', '1', '10001', '1573525624');
+INSERT INTO `bfb_order_goods` VALUES ('3', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573525640', '123.00', '12.00', '0', '2', '246.00', '246.00', '1', '4', '1', '10001', '1573525640');
 INSERT INTO `bfb_order_goods` VALUES ('4', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573525645', '123.00', '12.00', '0', '2', '246.00', '246.00', '0', '5', '1', '10001', '1573525645');
 INSERT INTO `bfb_order_goods` VALUES ('5', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573525687', '123.00', '12.00', '0', '2', '246.00', '246.00', '0', '6', '1', '10001', '1573525687');
 INSERT INTO `bfb_order_goods` VALUES ('6', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573525698', '123.00', '12.00', '0', '2', '246.00', '246.00', '0', '7', '1', '10001', '1573525698');
@@ -1238,21 +1760,55 @@ INSERT INTO `bfb_order_goods` VALUES ('7', '3', '商品2', 'http://mbh.com/uploa
 INSERT INTO `bfb_order_goods` VALUES ('8', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573525706', '123.00', '12.00', '0', '2', '246.00', '246.00', '0', '9', '1', '10001', '1573525706');
 INSERT INTO `bfb_order_goods` VALUES ('9', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573525893', '123.00', '12.00', '0', '2', '246.00', '246.00', '0', '10', '1', '10001', '1573525893');
 INSERT INTO `bfb_order_goods` VALUES ('10', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573525943', '123.00', '12.00', '0', '2', '246.00', '246.00', '0', '11', '1', '10001', '1573525943');
-INSERT INTO `bfb_order_goods` VALUES ('11', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573525975', '123.00', '12.00', '0', '2', '246.00', '246.00', '0', '12', '1', '10001', '1573525975');
+INSERT INTO `bfb_order_goods` VALUES ('11', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573525975', '123.00', '12.00', '0', '2', '246.00', '246.00', '1', '12', '1', '10001', '1573525975');
 INSERT INTO `bfb_order_goods` VALUES ('12', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573526160', '123.00', '12.00', '0', '2', '246.00', '246.00', '0', '13', '1', '10001', '1573526160');
 INSERT INTO `bfb_order_goods` VALUES ('13', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573526172', '123.00', '12.00', '0', '1', '123.00', '123.00', '0', '14', '1', '10001', '1573526172');
 INSERT INTO `bfb_order_goods` VALUES ('14', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573526185', '123.00', '12.00', '0', '3', '369.00', '369.00', '0', '15', '1', '10001', '1573526185');
 INSERT INTO `bfb_order_goods` VALUES ('15', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573526239', '123.00', '12.00', '0', '3', '369.00', '369.00', '0', '16', '1', '10001', '1573526239');
 INSERT INTO `bfb_order_goods` VALUES ('16', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573526332', '123.00', '12.00', '0', '3', '369.00', '369.00', '0', '17', '1', '10001', '1573526332');
 INSERT INTO `bfb_order_goods` VALUES ('17', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573526340', '123.00', '12.00', '0', '3', '369.00', '369.00', '0', '18', '1', '10001', '1573526340');
-INSERT INTO `bfb_order_goods` VALUES ('18', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573526342', '123.00', '12.00', '0', '3', '369.00', '369.00', '0', '19', '1', '10001', '1573526342');
-INSERT INTO `bfb_order_goods` VALUES ('19', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573526344', '123.00', '12.00', '0', '3', '369.00', '369.00', '0', '20', '1', '10001', '1573526344');
+INSERT INTO `bfb_order_goods` VALUES ('18', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573526342', '123.00', '12.00', '0', '3', '369.00', '369.00', '1', '19', '1', '10001', '1573526342');
+INSERT INTO `bfb_order_goods` VALUES ('19', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573526344', '123.00', '12.00', '0', '3', '369.00', '369.00', '1', '20', '1', '10001', '1573526344');
 INSERT INTO `bfb_order_goods` VALUES ('20', '3', '商品2', 'http://mbh.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1573526490', '123.00', '12.00', '0', '1', '123.00', '123.00', '0', '21', '1', '10001', '1573526490');
 INSERT INTO `bfb_order_goods` VALUES ('21', '4', '商品4', 'http://mbh.com/uploads/20190424171350d17247654.jpg', '20', '3', '5_4_3', '3', '5_4_3', '																																																																																																														阿士大夫撒放																																																																																																														', '1573526610', '125.00', '45.00', '0', '1', '125.00', '125.00', '0', '22', '1', '10001', '1573526610');
 INSERT INTO `bfb_order_goods` VALUES ('22', '4', '商品4', 'http://mbh.com/uploads/20190424171350d17247654.jpg', '20', '3', '5_4_3', '3', '5_4_3', '																																																																																																														阿士大夫撒放																																																																																																														', '1573538289', '125.00', '45.00', '0', '1', '125.00', '125.00', '0', '23', '1', '10001', '1573538289');
 INSERT INTO `bfb_order_goods` VALUES ('23', '17', '213商品', 'http://mbh.com/uploads/20191119133804daa452292.jpg', '20', '5', '16', '5', '绿色', '阿斯顿发生发大水发', '1574844879', '123.00', '45.00', '0', '1', '123.00', '123.00', '0', '25', '1', '10001', '1574844879');
-INSERT INTO `bfb_order_goods` VALUES ('24', '17', '213商品', 'http://mbh.com/uploads/20191119133804daa452292.jpg', '20', '5', '16', '5', '绿色', '阿斯顿发生发大水发', '1574844928', '123.00', '45.00', '0', '1', '123.00', '123.00', '0', '26', '1', '10001', '1574844928');
+INSERT INTO `bfb_order_goods` VALUES ('24', '17', '213商品', 'http://mbh.com/uploads/20191119133804daa452292.jpg', '20', '5', '16', '5', '绿色', '阿斯顿发生发大水发', '1574844928', '123.00', '45.00', '0', '1', '123.00', '123.00', '1', '26', '1', '10001', '1574844928');
 INSERT INTO `bfb_order_goods` VALUES ('25', '17', '213商品', 'http://mbh.com/uploads/20191119133804daa452292.jpg', '20', '5', '16', '5', '绿色', '阿斯顿发生发大水发', '1574844936', '123.00', '45.00', '0', '1', '123.00', '123.00', '0', '27', '1', '10001', '1574844936');
+INSERT INTO `bfb_order_goods` VALUES ('26', '16', '商品121', 'http://mbh.laoma-app.com/uploads/20191119133804daa452292.jpg', '20', '5', '15', '5', '绿色', '										阿士大夫撒地方撒地方撒发斯蒂芬撒地方撒发顺丰撒地方										', '1575452568', '200.00', '80.00', '0', '1', '200.00', '200.00', '0', '28', '1', '10001', '1575452568');
+INSERT INTO `bfb_order_goods` VALUES ('27', '3', '商品2', 'http://mbh.laoma-app.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1575452693', '123.00', '12.00', '0', '1', '123.00', '123.00', '0', '29', '1', '10001', '1575452693');
+INSERT INTO `bfb_order_goods` VALUES ('28', '16', '商品121', 'http://mbh.laoma-app.com/uploads/20191119133804daa452292.jpg', '20', '5', '15', '5', '绿色', '										阿士大夫撒地方撒地方撒发斯蒂芬撒地方撒发顺丰撒地方										', '1575452869', '200.00', '80.00', '0', '1', '200.00', '200.00', '0', '30', '1', '10001', '1575452869');
+INSERT INTO `bfb_order_goods` VALUES ('29', '16', '商品121', 'http://mbh.laoma-app.com/uploads/20191119133804daa452292.jpg', '20', '5', '15', '5', '绿色', '										阿士大夫撒地方撒地方撒发斯蒂芬撒地方撒发顺丰撒地方										', '1575452910', '200.00', '80.00', '0', '1', '200.00', '200.00', '0', '31', '1', '10001', '1575452910');
+INSERT INTO `bfb_order_goods` VALUES ('30', '3', '商品2', 'http://mbh.laoma-app.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '3', '3', '3', '阿士大夫撒地方', '1575452914', '123.00', '12.00', '0', '1', '123.00', '123.00', '0', '32', '1', '10001', '1575452914');
+INSERT INTO `bfb_order_goods` VALUES ('31', '16', '商品121', 'http://mbh.laoma-app.com/uploads/20191119133804daa452292.jpg', '20', '5', '15', '5', '绿色', '										阿士大夫撒地方撒地方撒发斯蒂芬撒地方撒发顺丰撒地方										', '1575453047', '200.00', '80.00', '0', '1', '200.00', '200.00', '0', '33', '1', '10001', '1575453047');
+INSERT INTO `bfb_order_goods` VALUES ('32', '16', '商品121', 'http://mbh.laoma-app.com/uploads/20191119133804daa452292.jpg', '20', '5', '15', '5', '绿色', '										阿士大夫撒地方撒地方撒发斯蒂芬撒地方撒发顺丰撒地方										', '1575453080', '200.00', '80.00', '0', '1', '200.00', '200.00', '0', '34', '1', '10001', '1575453080');
+INSERT INTO `bfb_order_goods` VALUES ('33', '16', '商品121', 'http://mbh.laoma-app.com/uploads/20191119133804daa452292.jpg', '20', '5', '15', '5', '绿色', '										阿士大夫撒地方撒地方撒发斯蒂芬撒地方撒发顺丰撒地方										', '1575453095', '200.00', '80.00', '0', '1', '200.00', '200.00', '0', '35', '1', '10001', '1575453095');
+INSERT INTO `bfb_order_goods` VALUES ('34', '22', '33333', 'http://mbh.laoma-app.com/uploads/20191129114151fe8a04803.png', '20', '3', '5', '3', 'c:a', '																				', '1575540704', '1.00', '1.00', '0', '1', '1.00', '1.00', '0', '36', '1', '10001', '1575540704');
+INSERT INTO `bfb_order_goods` VALUES ('35', '11', '商品2', 'http://mbh.laoma-app.com/uploads/20191109180531dfbdf3505.jpg', '20', '3', '5', '3', '5', '																				', '1575542363', '100.00', '80.00', '0', '1', '100.00', '100.00', '0', '37', '1', '10001', '1575542363');
+INSERT INTO `bfb_order_goods` VALUES ('36', '27', '商品12333', 'http://mbh.laoma-app.com/uploads/20191129114151fe8a04803.png', '20', '5', '15', '5', '红色', '										暗示法撒旦法士大夫士大夫舒服舒服撒飞洒法萨芬撒地方撒放										', '1575713167', '123.00', '12.00', '0', '1', '123.00', '123.00', '1', '38', '1', '10001', '1575713167');
+INSERT INTO `bfb_order_goods` VALUES ('37', '30', '测试商品1', 'http://mbh.laoma-app.com/uploads/20191210113101365796608.png', '20', '2', '7', '2', '100KG', '										阿士大夫撒地方士大夫撒地方三房										', '1576055525', '132.00', '12.00', '0', '1', '132.00', '132.00', '0', '39', '1', '10001', '1576055525');
+INSERT INTO `bfb_order_goods` VALUES ('38', '29', '美容四件套', 'http://mbh.com/uploads/20191210094223b04e59698.jpg', '20', '2', '5_10', '2', '白色', '																																																																																																																																																																																				<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																												', '1576638898', '1321.00', '32.00', '0', '1', '1321.00', '1321.00', '0', '40', '1', '10001', '1576638898');
+INSERT INTO `bfb_order_goods` VALUES ('39', '31', '熏蒸药包', 'http://mbh.laoma-app.com/uploads/201912160927401d2747455.jpg', '20', '3', '23', '3', '200KG', '																																																		<img src=\"http://mbh.laoma-app.com/uploads/20191216\\c346d469e0a04179e4265225c6a54eef.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\aaa2b57b97d9d4b79d77159f2d321a5a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\0096d43863da95c6ccd416bc00c37b4c.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\7db8b2c82504b7d2f49e4143dc45533a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\b4dc7538ae4665743c5e948467bee15d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\fd5c3a80f68194619a5c04fe0bb32cc6.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\c4337f72e3ee3a32d2cee8338fc01e68.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\271d96a880c04811b8669b62b55bb12d.jpg\" alt=\"\">																																																																						', '1576911305', '500.00', '350.00', '200', '1', '500.00', '500.00', '0', '43', '1', '10001', '1576911305');
+INSERT INTO `bfb_order_goods` VALUES ('40', '30', '测试商品1', 'http://mbh.laoma-app.com/uploads/20191210113101365796608.png', '20', '2', '4', '2', '红色', '																																																																																																																																												阿士大夫撒地方士大夫撒地方三房																																																																																																																																												', '1576914567', '100.00', '90.00', '0', '1', '100.00', '100.00', '0', '44', '1', '10001', '1576914567');
+INSERT INTO `bfb_order_goods` VALUES ('41', '29', '美容四件套', 'http://mbh.laoma-app.com/uploads/20191210094223b04e59698.jpg', '20', '3', '22_26', '3', '100KG', '																																																																																																																																																																																														<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																																						', '1577170953', '120.00', '70.00', '0', '1', '120.00', '120.00', '0', '45', '1', '10001', '1577170953');
+INSERT INTO `bfb_order_goods` VALUES ('42', '29', '美容四件套', 'http://mbh.laoma-app.com/uploads/20191210094223b04e59698.jpg', '20', '3', '22_26', '3', '100KG', '																																																																																																																																																																																														<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																																						', '1577170959', '120.00', '70.00', '0', '1', '120.00', '120.00', '0', '46', '1', '10001', '1577170959');
+INSERT INTO `bfb_order_goods` VALUES ('43', '29', '美容四件套', 'http://mbh.laoma-app.com/uploads/20191210094223b04e59698.jpg', '20', '3', '22_26', '3', '100KG', '																																																																																																																																																																																														<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																																						', '1577170960', '120.00', '70.00', '0', '1', '120.00', '120.00', '0', '47', '1', '10001', '1577170960');
+INSERT INTO `bfb_order_goods` VALUES ('44', '29', '美容四件套', 'http://mbh.laoma-app.com/uploads/20191210094223b04e59698.jpg', '20', '3', '22_26', '3', '100KG', '																																																																																																																																																																																														<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																																						', '1577170961', '120.00', '70.00', '0', '1', '120.00', '120.00', '0', '48', '1', '10001', '1577170961');
+INSERT INTO `bfb_order_goods` VALUES ('45', '29', '美容四件套', 'http://mbh.laoma-app.com/uploads/20191210094223b04e59698.jpg', '20', '3', '22_26', '3', '100KG', '																																																																																																																																																																																														<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																																						', '1577170961', '120.00', '70.00', '0', '1', '120.00', '120.00', '0', '49', '1', '10001', '1577170961');
+INSERT INTO `bfb_order_goods` VALUES ('46', '29', '美容四件套', 'http://mbh.laoma-app.com/uploads/20191210094223b04e59698.jpg', '20', '3', '22_26', '3', '100KG', '																																																																																																																																																																																														<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																																						', '1577170962', '120.00', '70.00', '0', '1', '120.00', '120.00', '0', '50', '1', '10001', '1577170962');
+INSERT INTO `bfb_order_goods` VALUES ('47', '29', '美容四件套', 'http://mbh.laoma-app.com/uploads/20191210094223b04e59698.jpg', '20', '3', '22_26', '3', '100KG', '																																																																																																																																																																																														<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																																						', '1577170962', '120.00', '70.00', '0', '1', '120.00', '120.00', '0', '51', '1', '10001', '1577170962');
+INSERT INTO `bfb_order_goods` VALUES ('48', '29', '美容四件套', 'http://mbh.laoma-app.com/uploads/20191210094223b04e59698.jpg', '20', '3', '22_26', '3', '100KG', '																																																																																																																																																																																														<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																																						', '1577170963', '120.00', '70.00', '0', '1', '120.00', '120.00', '0', '52', '1', '10001', '1577170963');
+INSERT INTO `bfb_order_goods` VALUES ('49', '29', '美容四件套', 'http://mbh.laoma-app.com/uploads/20191210094223b04e59698.jpg', '20', '3', '22_26', '3', '100KG', '																																																																																																																																																																																														<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																																						', '1577170963', '120.00', '70.00', '0', '1', '120.00', '120.00', '0', '53', '1', '10001', '1577170963');
+INSERT INTO `bfb_order_goods` VALUES ('50', '29', '美容四件套', 'http://mbh.laoma-app.com/uploads/20191210094223b04e59698.jpg', '20', '3', '22_26', '3', '100KG', '																																																																																																																																																																																														<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																																						', '1577170964', '120.00', '70.00', '0', '1', '120.00', '120.00', '0', '54', '1', '10001', '1577170964');
+INSERT INTO `bfb_order_goods` VALUES ('51', '29', '美容四件套', 'http://mbh.laoma-app.com/uploads/20191210094223b04e59698.jpg', '20', '3', '22_26', '3', '100KG', '																																																																																																																																																																																														<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																																						', '1577170965', '120.00', '70.00', '0', '1', '120.00', '120.00', '0', '55', '1', '10001', '1577170965');
+INSERT INTO `bfb_order_goods` VALUES ('52', '29', '美容四件套', 'http://mbh.laoma-app.com/uploads/20191210094223b04e59698.jpg', '20', '3', '22_26', '3', '100KG', '																																																																																																																																																																																														<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																																						', '1577170965', '120.00', '70.00', '0', '1', '120.00', '120.00', '0', '56', '1', '10001', '1577170965');
+INSERT INTO `bfb_order_goods` VALUES ('53', '29', '美容四件套', 'http://mbh.laoma-app.com/uploads/20191210094223b04e59698.jpg', '20', '3', '23_27', '3', '200KG', '																																																																																																																																																																																														<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																																						', '1577439804', '100.00', '80.00', '0', '4', '400.00', '400.00', '0', '57', '1', '10001', '1577439804');
+INSERT INTO `bfb_order_goods` VALUES ('54', '28', '商品66', 'http://mbh.laoma-app.com/uploads/201912091011533404a0618.jpg', '20', '2', '4', '2', '红色', '										<p>																														事实上																														</p><p><img src=\"http://mbh.laoma-app.com/uploads/20191216\\975a99687f6ae139de0552caa5441be5.jpg\" alt=\"\"><br></p><p><img src=\"http://mbh.laoma-app.com/uploads/20191216/4c8a6974fb0b3e8433c2dc743e0e827f.jpg\" alt=\"\"><br></p>										', '1577606378', '200.00', '160.00', '0', '1', '200.00', '200.00', '0', '58', '1', '10001', '1577606378');
+INSERT INTO `bfb_order_goods` VALUES ('55', '28', '商品66', 'http://mbh.laoma-app.com/uploads/201912091011533404a0618.jpg', '20', '2', '4', '2', '红色', '										<p>																														事实上																														</p><p><img src=\"http://mbh.laoma-app.com/uploads/20191216\\975a99687f6ae139de0552caa5441be5.jpg\" alt=\"\"><br></p><p><img src=\"http://mbh.laoma-app.com/uploads/20191216/4c8a6974fb0b3e8433c2dc743e0e827f.jpg\" alt=\"\"><br></p>										', '1577606379', '200.00', '160.00', '0', '1', '200.00', '200.00', '0', '59', '1', '10001', '1577606379');
+INSERT INTO `bfb_order_goods` VALUES ('56', '40', '超细纤维美容毛巾 10条', 'http://mbh.laoma-app.com/uploads/2019122615385695dcf2356.jpg', '20', '15', '142', '15', '中厚款 灰色', '																																																																						<p><img src=\"http://mbh.laoma-app.com/uploads/1577428334404541.jpg\" style=\"max-width:100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334667745.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334898541.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334231149.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334549533.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334922079.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334241696.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334759729.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334359140.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334698068.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334327142.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><img src=\"http://mbh.laoma-app.com/uploads/1577428334380838.jpg\" style=\"font-size: 1.3rem; max-width: 100%;\"><br></p>																																																		', '1577687323', '75745.00', '1.00', '150', '1', '75745.00', '75745.00', '0', '60', '1', '10001', '1577687323');
+INSERT INTO `bfb_order_goods` VALUES ('57', '31', '熏蒸药包', 'http://mbh.laoma-app.com/uploads/201912160927401d2747455.jpg', '20', '3', '23', '3', '200KG', '																																																		<img src=\"http://mbh.laoma-app.com/uploads/20191216\\c346d469e0a04179e4265225c6a54eef.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\aaa2b57b97d9d4b79d77159f2d321a5a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\0096d43863da95c6ccd416bc00c37b4c.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\7db8b2c82504b7d2f49e4143dc45533a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\b4dc7538ae4665743c5e948467bee15d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\fd5c3a80f68194619a5c04fe0bb32cc6.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\c4337f72e3ee3a32d2cee8338fc01e68.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\271d96a880c04811b8669b62b55bb12d.jpg\" alt=\"\">																																																																						', '1577691327', '500.00', '350.00', '200', '5', '2500.00', '2500.00', '0', '61', '1', '10001', '1577691327');
+INSERT INTO `bfb_order_goods` VALUES ('58', '31', '熏蒸药包', 'http://mbh.laoma-app.com/uploads/201912160927401d2747455.jpg', '20', '3', '23', '3', '200KG', '																																																		<img src=\"http://mbh.laoma-app.com/uploads/20191216\\c346d469e0a04179e4265225c6a54eef.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\aaa2b57b97d9d4b79d77159f2d321a5a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\0096d43863da95c6ccd416bc00c37b4c.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\7db8b2c82504b7d2f49e4143dc45533a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\b4dc7538ae4665743c5e948467bee15d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\fd5c3a80f68194619a5c04fe0bb32cc6.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\c4337f72e3ee3a32d2cee8338fc01e68.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191216\\271d96a880c04811b8669b62b55bb12d.jpg\" alt=\"\">																																																																						', '1577694496', '500.00', '350.00', '200', '1', '500.00', '500.00', '0', '62', '1', '10001', '1577694496');
+INSERT INTO `bfb_order_goods` VALUES ('59', '29', '美容四件套', 'http://mbh.laoma-app.com/uploads/20191210094223b04e59698.jpg', '20', '3', '22_26', '3', '100KG', '																																																																																																																																																																																														<img src=\"http://mbh.laoma-app.com/uploads/20191210/c2036624be76b8791615b780a4e4360e.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2a8540d2d4afcc105a3aa4800b452fb9.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/784894d4be42addc2420f285b939bd45.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/537834cfdcbc57192cdc66cd448e23fe.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0659505932b6491a901759036e6d3da3.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2fd64354499e44114c743205ddb5bf2b.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/1292637f5eddcd58d8516ab64ede34da.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/30794f2b94dd8ea0dcd74ff5eb57f60d.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2c45e176b5f711574b9317d3d127f26a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/2f12372a23ee5fa8f70f78f3349024dd.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/36ca4f381137c0d50a681a017b511f2a.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/dbaa57193bced1686ccbdf5fa516bd96.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/0a0a64a60fde2005c1984b2e30e108a4.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/4b57a3da7e0ae78405278c1809d99aee.jpg\" alt=\"\"><img src=\"http://mbh.laoma-app.com/uploads/20191210/7b1ca3c1d7e8bd7c4dc3b4bb17f11a86.jpg\" alt=\"\">																																																																																																																																																																																																																																						', '1577695464', '120.00', '70.00', '0', '10', '1200.00', '1200.00', '0', '63', '1', '10001', '1577695464');
 
 -- ----------------------------
 -- Table structure for bfb_order_supplier_by_plat
@@ -1296,17 +1852,54 @@ CREATE TABLE `bfb_order_supplier_by_plat` (
   `sub_type` int(7) DEFAULT NULL COMMENT '售后方式1为退款2为换货',
   PRIMARY KEY (`order_id`),
   UNIQUE KEY `order_no` (`order_no`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COMMENT='平台下订订单记录表';
+) ENGINE=MyISAM AUTO_INCREMENT=93 DEFAULT CHARSET=utf8 COMMENT='平台下订订单记录表';
 
 -- ----------------------------
 -- Records of bfb_order_supplier_by_plat
 -- ----------------------------
-INSERT INTO `bfb_order_supplier_by_plat` VALUES ('50', '12', '2019112752991005', '4000.00', '0', '0.00', '4000.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '1574838020', '1574838020', '0', '0', '0', '1', '1', '0', '0', '16', '0', '0', '0', '0', '10', '1');
-INSERT INTO `bfb_order_supplier_by_plat` VALUES ('51', '12', '2019112751985110', '20865.00', '0', '0.00', '20865.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '1574840003', '1574840003', '0', '0', '0', '1', '1', '0', '0', '17', '0', '0', '0', '0', '10', '1');
-INSERT INTO `bfb_order_supplier_by_plat` VALUES ('52', '12', '2019112754974856', '1476.00', '0', '0.00', '1476.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '17', '0', '0', '0', '0', null, null);
-INSERT INTO `bfb_order_supplier_by_plat` VALUES ('53', '12', '2019112754100985', '17334.00', '0', '0.00', '17334.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '17', '0', '0', '0', '0', null, null);
-INSERT INTO `bfb_order_supplier_by_plat` VALUES ('54', '12', '2019112797100495', '15129.00', '0', '0.00', '15129.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '17', '16', '123', '0', '0', null, null);
-INSERT INTO `bfb_order_supplier_by_plat` VALUES ('55', '12', '2019112798489952', '10272.00', '0', '0.00', '10272.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '17', '15', '32', '0', '0', null, null);
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('50', '12', '2019112752991005', '4000.00', '0', '0.00', '4000.00', '0.00', '', '10', '0', '0.00', '10', '10', '20', '', '0', '0', '10001', '1574838020', '1574838020', '0', '0', '0', '1', '1', '0', '0', '16', '0', '0', '0', '0', '20', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('51', '12', '2019112751985110', '20865.00', '0', '0.00', '20865.00', '0.00', '', '10', '0', '0.00', '10', '10', '20', '', '0', '0', '10001', '1574840003', '1574840003', '0', '0', '0', '1', '1', '0', '0', '17', '0', '0', '0', '0', '20', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('52', '12', '2019112754974856', '1476.00', '0', '0.00', '1476.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '17', '0', '0', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('53', '12', '2019112754100985', '17334.00', '0', '0.00', '17334.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '17', '0', '0', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('54', '12', '2019112797100495', '15129.00', '0', '0.00', '15129.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '17', '16', '123', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('55', '12', '2019112798489952', '10272.00', '0', '0.00', '10272.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '17', '15', '32', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('56', '1', '', '0.00', '0', '0.00', '0.00', '0.00', '', '10', '0', '0.00', '10', '10', '20', '', '0', '0', '0', '1575527432', '1575527432', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', null, null);
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('57', '0', '2019121248565655', '1320.00', '0', '0.00', '1320.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '30', '7', '10', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('58', '0', '2019121248569952', '4560.00', '0', '0.00', '4560.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '30', '8', '10', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('59', '0', '2019121950991025', '2400.00', '0', '0.00', '2400.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '31', '10', '24', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('60', '0', '2019121956559852', '10000.00', '0', '0.00', '10000.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '31', '10', '100', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('61', '0', '2019121949100514', '12000.00', '0', '0.00', '12000.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '28', '4', '60', '0', '30', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('62', '0', '2019121910298489', '10000.00', '0', '0.00', '10000.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '31', '10', '100', '0', '0', null, null);
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('63', '0', '2019121957979910', '1000.00', '0', '0.00', '1000.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '30', '4', '10', '0', '0', null, null);
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('64', '0', '2019121910152504', '346653.00', '0', '0.00', '346653.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '29', '6', '111', '0', '150', null, null);
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('65', '0', '2019121910152531', '3531.00', '0', '0.00', '3531.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '29', '5', '11', '0', '150', null, null);
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('66', '0', '2019121951485610', '0.00', '0', '0.00', '0.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '29', '6', '0', '0', '150', null, null);
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('67', '0', '2019121951489997', '0.00', '0', '0.00', '0.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '29', '5', '0', '0', '150', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('68', '0', '2019121953101571', '2000.00', '0', '0.00', '2000.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '30', '4', '20', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('69', '0', '2019121950985652', '1100.00', '0', '0.00', '1100.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '30', '4', '11', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('70', '0', '2019121952484951', '1000.00', '0', '0.00', '1000.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '31', '10', '10', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('71', '0', '2019121956534950', '100.00', '0', '0.00', '100.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '0', '0', '0', '0', '0', '1', '1', '0', '0', '31', '10', '1', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('72', '0', '2019121998521015', '1000.00', '0', '0.00', '1000.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '1576737147', '1576737147', '0', '0', '0', '1', '1', '0', '0', '31', '10', '10', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('73', '12', '2019121956545749', '32100.00', '0', '0.00', '32100.00', '0.00', '', '10', '0', '0.00', '10', '10', '20', '', '0', '0', '10001', '1576737592', '1576737592', '0', '0', '0', '1', '1', '0', '0', '17', '6', '100', '0', '0', '20', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('74', '0', '2019121949575050', '100.00', '0', '0.00', '100.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '1576737585', '1576737585', '0', '0', '0', '1', '1', '0', '0', '31', '10', '1', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('75', '0', '2019121998495252', '1000.00', '0', '0.00', '1000.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '1576737659', '1576737659', '0', '0', '0', '1', '1', '0', '0', '31', '10', '10', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('76', '12', '2019121998565499', '32100.00', '0', '0.00', '32100.00', '0.00', '', '10', '0', '0.00', '10', '10', '20', '', '0', '0', '10001', '1576744667', '1576744667', '0', '0', '0', '1', '1', '0', '0', '17', '6', '100', '0', '0', '20', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('77', '2', '2019122357495252', '30000.00', '0', '0.00', '30000.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '1577071817', '1577071817', '0', '0', '0', '1', '1', '0', '0', '32', '33', '60', '0', '100', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('78', '12', '2019122398519754', '6741.00', '0', '0.00', '6741.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '1577072379', '1577072379', '0', '0', '0', '1', '1', '0', '0', '17', '6', '21', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('79', '12', '2019122650551024', '32100.00', '0', '0.00', '32100.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '1577340866', '1577340866', '0', '0', '0', '1', '1', '0', '0', '17', '6', '100', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('80', '0', '2019123099555555', '3465.00', '0', '0.00', '3465.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '1577698556', '1577698556', '0', '0', '0', '1', '1', '0', '0', '40', '143', '77', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('81', '0', '2019123099559852', '0.00', '0', '0.00', '0.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '1577698556', '1577698556', '0', '0', '0', '1', '1', '0', '0', '40', '142', '0', '0', '0', null, null);
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('82', '0', '2019123099551024', '0.00', '0', '0.00', '0.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '1577698556', '1577698556', '0', '0', '0', '1', '1', '0', '0', '40', '144', '0', '0', '0', null, null);
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('83', '0', '2019123099565010', '0.00', '0', '0.00', '0.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '1577698556', '1577698556', '0', '0', '0', '1', '1', '0', '0', '40', '146', '0', '0', '0', null, null);
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('84', '12', '2019123110297495', '32100.00', '0', '0.00', '32100.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '1577763567', '1577763567', '0', '0', '0', '1', '1', '0', '0', '17', '6', '100', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('85', '0', '2019123157545254', '4500.00', '0', '0.00', '4500.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '1577770937', '1577770937', '0', '0', '0', '1', '1', '0', '0', '40', '143', '100', '0', '0', null, null);
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('86', '0', '2019123157545651', '0.00', '0', '0.00', '0.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '1577770937', '1577770937', '0', '0', '0', '1', '1', '0', '0', '40', '142', '0', '0', '0', null, null);
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('87', '3', '2019123156565498', '3250.00', '0', '0.00', '3250.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '1577770952', '1577770952', '0', '0', '0', '1', '1', '0', '0', '41', '110', '100', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('88', '12', '2019123148979757', '32100.00', '0', '0.00', '32100.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '1577772784', '1577772784', '0', '0', '0', '1', '1', '0', '0', '17', '6', '100', '0', '0', null, null);
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('89', '12', '2019123150575510', '32100.00', '0', '0.00', '32100.00', '0.00', '', '10', '0', '0.00', '10', '10', '40', '', '0', '0', '10001', '1577772962', '1577772962', '0', '0', '0', '1', '1', '0', '0', '17', '6', '100', '0', '0', '10', '1');
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('90', '0', '2020010352101999', '450.00', '0', '0.00', '450.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '1578043844', '1578043844', '0', '0', '0', '1', '1', '0', '0', '40', '143', '10', '0', '0', null, null);
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('91', '0', '2020010353509749', '1514900.00', '0', '0.00', '1514900.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '1578043845', '1578043845', '0', '0', '0', '1', '1', '0', '0', '40', '142', '20', '0', '0', null, null);
+INSERT INTO `bfb_order_supplier_by_plat` VALUES ('92', '0', '2020010450975399', '22500.00', '0', '0.00', '22500.00', '0.00', '', '10', '0', '0.00', '10', '10', '10', '', '0', '0', '10001', '1578123042', '1578123042', '0', '0', '0', '1', '1', '0', '0', '40', '143', '500', '0', '0', null, null);
 
 -- ----------------------------
 -- Table structure for bfb_order_supplier_by_user
@@ -1378,7 +1971,7 @@ CREATE TABLE `bfb_pay_info` (
 -- Records of bfb_pay_info
 -- ----------------------------
 INSERT INTO `bfb_pay_info` VALUES ('1', '12', '12345', '1507493', '', '', '', '12345', '10001', '1574155575', '1574155608');
-INSERT INTO `bfb_pay_info` VALUES ('2', '3', '林少红', '123456789', '广州分行', '58966555', '987456321111', 'whs5289', '10001', '1574324099', '1574849258');
+INSERT INTO `bfb_pay_info` VALUES ('2', '3', '林少红', '123456789', '广州分行', '58966555', '987456321111', 'whs5289', '10001', '1574324099', '1575458875');
 
 -- ----------------------------
 -- Table structure for bfb_prize
@@ -5309,15 +5902,41 @@ CREATE TABLE `bfb_returnbuy` (
   PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`) USING BTREE,
   KEY `order_no` (`order_no`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='退款记录表';
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='退款记录表';
 
 -- ----------------------------
 -- Records of bfb_returnbuy
 -- ----------------------------
-INSERT INTO `bfb_returnbuy` VALUES ('1', '1', '我不要了', '21', '', '1', '1', '10001', '0', '1573610190', '1573610190');
-INSERT INTO `bfb_returnbuy` VALUES ('2', '1', '平台下订，不要了', '50', '2019112752991005', '1', '0', '0', '0', '1574911384', '1574911384');
-INSERT INTO `bfb_returnbuy` VALUES ('3', '2', '平台下订，不要了', '50', '2019112752991005', '1', '0', '0', '0', '1574911622', '1574911622');
-INSERT INTO `bfb_returnbuy` VALUES ('4', '2', '平台下订，不要了', '51', '2019112751985110', '1', '0', '0', '0', '1574911646', '1574911646');
+INSERT INTO `bfb_returnbuy` VALUES ('1', '1', '我不要了', '21', '', '2', '1', '10001', '0', '1573610190', '1573610190');
+INSERT INTO `bfb_returnbuy` VALUES ('2', '1', '平台下订，不要了', '50', '2019112752991005', '2', '0', '10001', '0', '1574911384', '1574911384');
+INSERT INTO `bfb_returnbuy` VALUES ('3', '2', '平台下订，不要了', '50', '2019112752991005', '2', '0', '10001', '0', '1574911622', '1574911622');
+INSERT INTO `bfb_returnbuy` VALUES ('4', '2', '平台下订，不要了', '51', '2019112751985110', '2', '0', '10001', '0', '1574911646', '1574911646');
+INSERT INTO `bfb_returnbuy` VALUES ('5', '2', '平台下订，不要了', '52', '2019112754974856', '1', '0', '0', '0', '1576736614', '1576736614');
+INSERT INTO `bfb_returnbuy` VALUES ('6', '2', '平台下订，不要了', '70', '2019121952484951', '1', '0', '0', '0', '1576736697', '1576736697');
+INSERT INTO `bfb_returnbuy` VALUES ('7', '2', '平台下订，不要了', '57', '2019121248565655', '1', '0', '0', '0', '1576736818', '1576736818');
+INSERT INTO `bfb_returnbuy` VALUES ('8', '2', '平台下订，不要了', '53', '2019112754100985', '1', '0', '0', '0', '1576737519', '1576737519');
+INSERT INTO `bfb_returnbuy` VALUES ('9', '2', '平台下订，不要了', '58', '2019121248569952', '1', '0', '0', '0', '1576737533', '1576737533');
+INSERT INTO `bfb_returnbuy` VALUES ('10', '2', '平台下订，不要了', '54', '2019112797100495', '1', '0', '0', '0', '1576737561', '1576737561');
+INSERT INTO `bfb_returnbuy` VALUES ('11', '2', '平台下订，不要了', '61', '2019121949100514', '1', '0', '0', '0', '1576737568', '1576737568');
+INSERT INTO `bfb_returnbuy` VALUES ('12', '2', '平台下订，不要了', '74', '2019121949575050', '1', '0', '0', '0', '1576737608', '1576737608');
+INSERT INTO `bfb_returnbuy` VALUES ('13', '2', '平台下订，不要了', '75', '2019121998495252', '1', '0', '0', '0', '1576737691', '1576737691');
+INSERT INTO `bfb_returnbuy` VALUES ('14', '2', '平台下订，不要了', '59', '2019121950991025', '1', '0', '0', '0', '1576744310', '1576744310');
+INSERT INTO `bfb_returnbuy` VALUES ('15', '2', '平台下订，不要了', '55', '2019112798489952', '1', '0', '0', '0', '1576744644', '1576744644');
+INSERT INTO `bfb_returnbuy` VALUES ('16', '2', '平台下订，不要了', '76', '2019121998565499', '1', '0', '0', '0', '1576744685', '1576744685');
+INSERT INTO `bfb_returnbuy` VALUES ('17', '2', '平台下订，不要了', '73', '2019121956545749', '1', '0', '0', '0', '1576825804', '1576825804');
+INSERT INTO `bfb_returnbuy` VALUES ('18', '2', '平台下订，不要了', '72', '2019121998521015', '1', '0', '0', '0', '1577069074', '1577069074');
+INSERT INTO `bfb_returnbuy` VALUES ('19', '2', '平台下订，不要了', '71', '2019121956534950', '1', '0', '0', '0', '1577069154', '1577069154');
+INSERT INTO `bfb_returnbuy` VALUES ('20', '2', '平台下订，不要了', '77', '2019122357495252', '1', '0', '0', '0', '1577071829', '1577071829');
+INSERT INTO `bfb_returnbuy` VALUES ('21', '2', '平台下订，不要了', '78', '2019122398519754', '1', '0', '0', '0', '1577081732', '1577081732');
+INSERT INTO `bfb_returnbuy` VALUES ('22', '2', '平台下订，不要了', '60', '2019121956559852', '1', '0', '0', '0', '1577092369', '1577092369');
+INSERT INTO `bfb_returnbuy` VALUES ('23', '2', '平台下订，不要了', '69', '2019121950985652', '1', '0', '0', '0', '1577094008', '1577094008');
+INSERT INTO `bfb_returnbuy` VALUES ('24', '2', '平台下订，不要了', '68', '2019121953101571', '1', '0', '0', '0', '1577340551', '1577340551');
+INSERT INTO `bfb_returnbuy` VALUES ('25', '2', '平台下订，不要了', '79', '2019122650551024', '1', '0', '0', '0', '1577340949', '1577340949');
+INSERT INTO `bfb_returnbuy` VALUES ('26', '2', '平台下订，不要了', '67', '2019121951489997', '1', '0', '0', '0', '1577698495', '1577698495');
+INSERT INTO `bfb_returnbuy` VALUES ('27', '2', '平台下订，不要了', '80', '2019123099555555', '1', '0', '0', '0', '1577698809', '1577698809');
+INSERT INTO `bfb_returnbuy` VALUES ('28', '2', '平台下订，不要了', '84', '2019123110297495', '1', '0', '0', '0', '1577770867', '1577770867');
+INSERT INTO `bfb_returnbuy` VALUES ('29', '2', '平台下订，不要了', '87', '2019123156565498', '1', '0', '0', '0', '1577770977', '1577770977');
+INSERT INTO `bfb_returnbuy` VALUES ('30', '2', '平台下订，不要了', '89', '2019123150575510', '1', '0', '0', '0', '1577772982', '1577772982');
 
 -- ----------------------------
 -- Table structure for bfb_robbuy
@@ -5363,9 +5982,9 @@ CREATE TABLE `bfb_setting` (
 -- ----------------------------
 -- Records of bfb_setting
 -- ----------------------------
-INSERT INTO `bfb_setting` VALUES ('1', 'store', '商城设置', '\"a:7:{s:9:\\\"record_no\\\";s:17:\\\"\\u7ca400-86140485\\u53f7\\\";s:4:\\\"name\\\";s:18:\\\"\\u5174\\u53d1\\u7f8e\\u535a\\u5546\\u57ce\\\";s:11:\\\"store_title\\\";s:24:\\\"http:\\/\\/mbh.laoma-app.com\\\";s:10:\\\"store_desc\\\";s:24:\\\"http:\\/\\/mbh.laoma-app.com\\\";s:7:\\\"contact\\\";s:15:\\\"\\u8d85\\u7ea7\\u8d5b\\u5916\\u4eba\\\";s:5:\\\"phone\\\";s:0:\\\"\\\";s:7:\\\"address\\\";s:0:\\\"\\\";}\"', '10001', '1574910800');
-INSERT INTO `bfb_setting` VALUES ('2', 'trade', '交易设置', '\"a:1:{s:5:\\\"order\\\";a:3:{s:10:\\\"close_days\\\";s:1:\\\"0\\\";s:12:\\\"receive_days\\\";s:1:\\\"0\\\";s:4:\\\"sale\\\";s:1:\\\"0\\\";}}\"', '10001', '0');
-INSERT INTO `bfb_setting` VALUES ('3', 'sms', '短信通知', '\"a:2:{s:7:\\\"default\\\";s:6:\\\"aliyun\\\";s:6:\\\"engine\\\";a:1:{s:6:\\\"aliyun\\\";a:4:{s:11:\\\"AccessKeyId\\\";s:0:\\\"\\\";s:15:\\\"AccessKeySecret\\\";s:0:\\\"\\\";s:4:\\\"sign\\\";s:0:\\\"\\\";s:9:\\\"order_pay\\\";a:2:{s:13:\\\"template_code\\\";s:0:\\\"\\\";s:12:\\\"accept_phone\\\";s:0:\\\"\\\";}}}}\"', '10001', '0');
+INSERT INTO `bfb_setting` VALUES ('1', 'store', '商城设置', '\"a:7:{s:9:\\\"record_no\\\";s:17:\\\"\\u7ca400-86140485\\u53f7\\\";s:4:\\\"name\\\";s:18:\\\"\\u5174\\u53d1\\u7f8e\\u535a\\u5546\\u57ce\\\";s:11:\\\"store_title\\\";s:24:\\\"http:\\/\\/mbh.laoma-app.com\\\";s:10:\\\"store_desc\\\";s:24:\\\"http:\\/\\/mbh.laoma-app.com\\\";s:7:\\\"contact\\\";s:9:\\\"\\u6881\\u5148\\u751f\\\";s:5:\\\"phone\\\";s:0:\\\"\\\";s:7:\\\"address\\\";s:0:\\\"\\\";}\"', '10001', '1575943582');
+INSERT INTO `bfb_setting` VALUES ('2', 'trade', '交易设置', '\"a:2:{s:5:\\\"order\\\";a:3:{s:10:\\\"close_days\\\";s:2:\\\"15\\\";s:12:\\\"receive_days\\\";s:2:\\\"15\\\";s:4:\\\"sale\\\";s:2:\\\"15\\\";}s:12:\\\"freight_rule\\\";s:2:\\\"10\\\";}\"', '10001', '1575279457');
+INSERT INTO `bfb_setting` VALUES ('3', 'sms', '短信通知', '\"a:2:{s:7:\\\"default\\\";s:6:\\\"aliyun\\\";s:6:\\\"engine\\\";a:1:{s:6:\\\"aliyun\\\";a:4:{s:11:\\\"AccessKeyId\\\";s:24:\\\"LTAI4FwXwYqgQEhR4io3fqiS\\\";s:15:\\\"AccessKeySecret\\\";s:30:\\\"FHiUpEDArpL58rFTduJAD0D9YuTCH7\\\";s:4:\\\"sign\\\";s:12:\\\"meibohui2019\\\";s:9:\\\"order_pay\\\";a:2:{s:13:\\\"template_code\\\";s:0:\\\"\\\";s:12:\\\"accept_phone\\\";s:0:\\\"\\\";}}}}\"', '10001', '1576660645');
 INSERT INTO `bfb_setting` VALUES ('4', 'tplMsg', '模板消息', '\"a:2:{s:7:\\\"payment\\\";a:1:{s:11:\\\"template_id\\\";s:0:\\\"\\\";}s:8:\\\"delivery\\\";a:1:{s:11:\\\"template_id\\\";s:0:\\\"\\\";}}\"', '10001', '0');
 INSERT INTO `bfb_setting` VALUES ('5', 'storage', '上传设置', '\"a:2:{s:7:\\\"default\\\";s:5:\\\"local\\\";s:6:\\\"engine\\\";a:3:{s:5:\\\"qiniu\\\";a:4:{s:6:\\\"bucket\\\";s:0:\\\"\\\";s:10:\\\"access_key\\\";s:0:\\\"\\\";s:10:\\\"secret_key\\\";s:0:\\\"\\\";s:6:\\\"domain\\\";s:0:\\\"\\\";}s:6:\\\"aliyun\\\";a:4:{s:6:\\\"bucket\\\";s:0:\\\"\\\";s:13:\\\"access_key_id\\\";s:0:\\\"\\\";s:17:\\\"access_key_secret\\\";s:0:\\\"\\\";s:6:\\\"domain\\\";s:0:\\\"\\\";}s:6:\\\"qcloud\\\";a:5:{s:6:\\\"bucket\\\";s:0:\\\"\\\";s:6:\\\"region\\\";s:0:\\\"\\\";s:9:\\\"secret_id\\\";s:0:\\\"\\\";s:10:\\\"secret_key\\\";s:0:\\\"\\\";s:6:\\\"domain\\\";s:0:\\\"\\\";}}}\"', '10001', '0');
 INSERT INTO `bfb_setting` VALUES ('6', 'basic', '基础设置', '\"a:2:{s:7:\\\"is_open\\\";s:1:\\\"2\\\";s:5:\\\"level\\\";s:1:\\\"1\\\";}\"', '10001', '1574042072');
@@ -5410,10 +6029,116 @@ CREATE TABLE `bfb_sign` (
   `app_id` int(7) DEFAULT NULL,
   `bit_log` varchar(31) NOT NULL COMMENT '签到记录',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bfb_sign
+-- ----------------------------
+INSERT INTO `bfb_sign` VALUES ('1', '1', '2019', '12', '3', '5', '1575682798', '1575961802', '10001', '01101110110');
+
+-- ----------------------------
+-- Table structure for bfb_sign_log
+-- ----------------------------
+DROP TABLE IF EXISTS `bfb_sign_log`;
+CREATE TABLE `bfb_sign_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `create_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of bfb_sign_log
+-- ----------------------------
+INSERT INTO `bfb_sign_log` VALUES ('1', '1', '签到成功，获取1积分', '1575274482');
+INSERT INTO `bfb_sign_log` VALUES ('2', '1', '签到成功，获取1积分', '1575360882');
+INSERT INTO `bfb_sign_log` VALUES ('3', '1', '签到成功，获取1积分', '1575533682');
+INSERT INTO `bfb_sign_log` VALUES ('4', '1', '签到成功，获取1积分', '1575620082');
+INSERT INTO `bfb_sign_log` VALUES ('5', '1', '签到成功，获取1积分', '1575706482');
+INSERT INTO `bfb_sign_log` VALUES ('6', '1', '签到成功，获取1积分', '1575882532');
+INSERT INTO `bfb_sign_log` VALUES ('7', '1', '签到成功，获取1积分', '1575961802');
+
+-- ----------------------------
+-- Table structure for bfb_sms_log
+-- ----------------------------
+DROP TABLE IF EXISTS `bfb_sms_log`;
+CREATE TABLE `bfb_sms_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '表id',
+  `mobile` varchar(11) DEFAULT '' COMMENT '手机号',
+  `session_id` varchar(128) DEFAULT '' COMMENT 'session_id',
+  `add_time` int(11) DEFAULT '0' COMMENT '发送时间',
+  `code` varchar(10) DEFAULT '' COMMENT '验证码',
+  `status` int(1) NOT NULL DEFAULT '0' COMMENT '发送状态,1:成功,0:失败',
+  `scene` int(1) DEFAULT '0' COMMENT '发送场景,1:用户注册,2:找回密码,3:客户下单,4:客户支付,5:商家发货,6:身份验证',
+  `error_msg` text COMMENT '发送短信异常内容',
+  `message` varchar(255) DEFAULT NULL,
+  `bizid` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of bfb_sms_log
+-- ----------------------------
+INSERT INTO `bfb_sms_log` VALUES ('6', '15074937445', '418C7515-CB03-486C-A58B-24FEDC6F2A40', '1576467006', '900564', '0', '1', '触发小时级流控Permits:5', null, null);
+INSERT INTO `bfb_sms_log` VALUES ('7', '15074937445', 'B224034F-C9DD-4E43-BABF-A0DB3D3C5315', '1576467058', '256867', '0', '1', null, '触发小时级流控Permits:5', null);
+INSERT INTO `bfb_sms_log` VALUES ('8', '15074937445', '7343920D-216E-4DBD-A94E-38DEBF148B0D', '1576467064', '243742', '0', '1', null, '触发小时级流控Permits:5', null);
+INSERT INTO `bfb_sms_log` VALUES ('9', '15074937445', 'F44E0D8E-2BAD-41B7-AC04-1A7BB16D4556', '1576467124', '482887', '0', '1', 'isv.BUSINESS_LIMIT_CONTROL', '触发小时级流控Permits:5', null);
+INSERT INTO `bfb_sms_log` VALUES ('10', '15074937445', '5AD1CA4B-05A9-4E07-AC27-BC42E67E1EBC', '1576467130', '785950', '0', '1', 'isv.BUSINESS_LIMIT_CONTROL', '触发小时级流控Permits:5', null);
+INSERT INTO `bfb_sms_log` VALUES ('11', '15074937445', '1230500D-16B2-4A5D-9EBA-D6B8D8108A22', '1576474738', '643108', '2', '1', 'OK', 'OK', '159000876474733576^0');
+INSERT INTO `bfb_sms_log` VALUES ('12', '321', '8DED7965-B80B-4348-85C8-EF4C40F42725', '1576659689', '424305', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('13', '321', '1995695A-469E-42A1-B2A7-ADF8274BCC71', '1576659691', '992408', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('14', '13266766285', '73370F5D-2C38-424D-89D2-29234C510D15', '1576660122', '715333', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('15', '13266766285', 'B97753D3-41EA-466D-B59C-D332316DA800', '1576660164', '123284', '1', '1', 'OK', 'OK', '232721676660163937^0');
+INSERT INTO `bfb_sms_log` VALUES ('16', '13266766285', 'B08CB661-08F9-4A2D-882F-22B3E2DF5562', '1576660426', '423692', '1', '1', 'OK', 'OK', '606205176660426086^0');
+INSERT INTO `bfb_sms_log` VALUES ('17', '13266766285', 'B1A65DF7-E45D-4CE4-957D-E9266D75B152', '1576660610', '470484', '2', '1', 'OK', 'OK', '957304076660610009^0');
+INSERT INTO `bfb_sms_log` VALUES ('18', '13349188887', 'BDC8909C-CC5E-4B68-AB62-F409CE1FD2E8', '1577175179', '958725', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('19', '13349188887', '5E5B4CA5-095E-464E-844A-2096CEE37D87', '1577175186', '962817', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('20', '13349188887', 'BA3C989C-CBA6-48A1-B198-F71C85D7DFB4', '1577175187', '981859', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('21', '13349188887', '7F7A5652-D2D1-4FEF-A0F3-748FA51183CE', '1577175188', '505904', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('22', '13349188887', '08088076-089B-44AA-A836-2A63E69426FB', '1577175188', '382445', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('23', '13349188887', '1E44919D-AA2B-453C-8FE4-7D350906A0A0', '1577175189', '583025', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('24', '13349188887', 'F86F39CD-8FCA-4DA6-A557-2AC497133E48', '1577175189', '887708', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('25', '13349188887', 'C346CA75-CD7A-4ED0-94C0-1D4C127E3616', '1577175193', '379533', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('26', '13349188887', '6CF1AEFA-2620-4EDE-8C1D-37394DB597C2', '1577175195', '500791', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('27', '15017029100', '08824469-7A8E-48B5-A6CF-454CC962753E', '1577175280', '639329', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('28', '15017029100', 'AE37095D-3B0B-47A9-BC39-B0A26FD1764A', '1577175283', '262584', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('29', '15017029100', 'DE0B5483-3AAC-414C-8193-273CFA7D74C7', '1577175283', '648548', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('30', '15017029100', '44D7C8DC-0AEA-43E7-B88D-5BC03AFCFA38', '1577175286', '114421', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('31', '15017029100', 'FC01CD92-9E5F-4204-916B-F42C304BBAC7', '1577175384', '464351', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('32', '13349188887', '9B7482B1-50D6-4F72-9052-9AE2D613C848', '1577175410', '775874', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('33', '15017029100', '7F27912B-FD45-4350-A364-2648ACC4C40C', '1577175426', '138223', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('34', '15017029100', '54EC85B7-067F-4F6F-9183-C570774A1ECD', '1577175428', '709965', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('35', '13349188887', 'B11D2737-0CDF-40BB-8A31-9E360F88E4FC', '1577176663', '881837', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('36', '13349188887', '4F153640-FA6C-45BF-B2BC-7216A587F9A5', '1577176664', '515467', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('37', '13349188887', '59D60371-B5C3-493C-A066-565C40B4B15C', '1577176664', '388636', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('38', '13349188887', '9E169AF6-D74E-4025-8E1C-B429FE2BA818', '1577176664', '340647', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('39', '13349188887', '3593E548-7138-4A50-BF83-7F5FF38E4017', '1577176665', '695594', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('40', '13349188887', 'E229F2AD-0869-488C-BBED-A132EE5A10A3', '1577176666', '235338', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('41', '13349188887', 'EB8E1E40-B101-4877-A5D9-22C33B1B6462', '1577178457', '984794', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('42', '13349188887', '14564EEE-6820-4019-BD38-116C5AB796DA', '1577178458', '860854', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('43', '15016832577', '79B1829E-642D-4613-9138-0DFEEA74B866', '1577179695', '203973', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('44', '15017029100', 'DD301772-EF13-4E1D-A537-94BCE5A617E0', '1577268532', '673927', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('45', '13868788998', '325D7FD8-A1BF-42C3-A60C-38BDE8424587', '1577356370', '870690', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+INSERT INTO `bfb_sms_log` VALUES ('46', '15016832577', 'A06D7F7A-B899-4E6B-AA3B-87099DFDE01C', '1577684986', '910956', '0', '1', 'isv.SMS_SIGNATURE_ILLEGAL', '签名不合法(不存在或被拉黑)', null);
+
+-- ----------------------------
+-- Table structure for bfb_sole_log
+-- ----------------------------
+DROP TABLE IF EXISTS `bfb_sole_log`;
+CREATE TABLE `bfb_sole_log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `order_no` varchar(255) DEFAULT NULL,
+  `desc` varchar(500) DEFAULT NULL,
+  `type` varchar(255) DEFAULT '1',
+  `add_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='独家商品日志表';
+
+-- ----------------------------
+-- Records of bfb_sole_log
 -- ----------------------------
 
 -- ----------------------------
@@ -5430,15 +6155,20 @@ CREATE TABLE `bfb_spec` (
   `create_time` int(11) NOT NULL,
   `update_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bfb_spec
 -- ----------------------------
-INSERT INTO `bfb_spec` VALUES ('4', '3', '44', '50', '0', '10001', '1573294396', null);
-INSERT INTO `bfb_spec` VALUES ('5', '3', '55', '50', '0', '10001', '1573294471', null);
-INSERT INTO `bfb_spec` VALUES ('6', '3', '66', '50', '0', '10001', '1573294498', null);
-INSERT INTO `bfb_spec` VALUES ('8', '5', ' 红色L码', '50', '0', '10001', '1574062658', null);
+INSERT INTO `bfb_spec` VALUES ('10', '14', '颜色', '50', '0', '10001', '1577424315', null);
+INSERT INTO `bfb_spec` VALUES ('3', '3', '体积', '50', '0', '10001', '1575944407', null);
+INSERT INTO `bfb_spec` VALUES ('7', '3', '尺寸', '50', '0', '10001', '1577068206', null);
+INSERT INTO `bfb_spec` VALUES ('5', '3', '颜色', '50', '0', '10001', '1576728319', null);
+INSERT INTO `bfb_spec` VALUES ('8', '3', '化妆包', '50', '0', '10001', '1577068922', null);
+INSERT INTO `bfb_spec` VALUES ('9', '5', '大小', '50', '0', '10001', '1577080794', null);
+INSERT INTO `bfb_spec` VALUES ('11', '14', '平方克', '50', '0', '10001', '1577425767', null);
+INSERT INTO `bfb_spec` VALUES ('12', '14', '品名', '50', '0', '10001', '1577426231', null);
+INSERT INTO `bfb_spec` VALUES ('13', '15', '款式颜色', '50', '0', '10001', '1577430192', null);
 
 -- ----------------------------
 -- Table structure for bfb_spec_item
@@ -5446,28 +6176,71 @@ INSERT INTO `bfb_spec` VALUES ('8', '5', ' 红色L码', '50', '0', '10001', '157
 DROP TABLE IF EXISTS `bfb_spec_item`;
 CREATE TABLE `bfb_spec_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '规格项id',
-  `spec_id` int(11) DEFAULT NULL COMMENT '规格id',
+  `spec_id` varchar(255) DEFAULT '' COMMENT '规格id',
   `item` varchar(54) DEFAULT NULL COMMENT '规格项',
   `app_id` int(8) NOT NULL,
   `create_time` int(11) NOT NULL,
   `update_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=147 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bfb_spec_item
 -- ----------------------------
-INSERT INTO `bfb_spec_item` VALUES ('1', '0', '暗室逢灯', '10001', '1573294471', null);
-INSERT INTO `bfb_spec_item` VALUES ('2', '0', '阿斯蒂芬', '10001', '1573294498', null);
-INSERT INTO `bfb_spec_item` VALUES ('4', '5', 'b:a', '10001', '1573295626', null);
-INSERT INTO `bfb_spec_item` VALUES ('5', '4', 'c:a', '10001', '1573295632', null);
-INSERT INTO `bfb_spec_item` VALUES ('7', '6', '中等\n\n高等', '10001', '1574059451', null);
-INSERT INTO `bfb_spec_item` VALUES ('8', '0', '红色*1000', '10001', '1574062238', null);
-INSERT INTO `bfb_spec_item` VALUES ('9', '0', '绿色*2000', '10001', '1574062238', null);
-INSERT INTO `bfb_spec_item` VALUES ('10', '0', '红色', '10001', '1574062658', null);
-INSERT INTO `bfb_spec_item` VALUES ('11', '0', 'L', '10001', '1574062658', null);
-INSERT INTO `bfb_spec_item` VALUES ('16', '8', '绿色', '10001', '1574062949', null);
-INSERT INTO `bfb_spec_item` VALUES ('15', '8', '红色', '10001', '1574062949', null);
+INSERT INTO `bfb_spec_item` VALUES ('1', '1', '100g', '10001', '1575942193', null);
+INSERT INTO `bfb_spec_item` VALUES ('2', '1', '200g', '10001', '1575942193', null);
+INSERT INTO `bfb_spec_item` VALUES ('4', '2', '红色', '10001', '1575942737', null);
+INSERT INTO `bfb_spec_item` VALUES ('5', '2', '白色', '10001', '1575942737', null);
+INSERT INTO `bfb_spec_item` VALUES ('6', '2', '蓝色', '10001', '1575942737', null);
+INSERT INTO `bfb_spec_item` VALUES ('23', '3', '200KG', '10001', '1576894523', null);
+INSERT INTO `bfb_spec_item` VALUES ('22', '3', '100KG', '10001', '1576894523', null);
+INSERT INTO `bfb_spec_item` VALUES ('20', '4', '', '10001', '1576809713', null);
+INSERT INTO `bfb_spec_item` VALUES ('25', '5', '红', '10001', '1576894538', null);
+INSERT INTO `bfb_spec_item` VALUES ('26', '5', '黄', '10001', '1576894538', null);
+INSERT INTO `bfb_spec_item` VALUES ('24', '3', '300KG', '10001', '1576894523', null);
+INSERT INTO `bfb_spec_item` VALUES ('27', '5', '蓝', '10001', '1576894538', null);
+INSERT INTO `bfb_spec_item` VALUES ('28', '5', '绿', '10001', '1576894538', null);
+INSERT INTO `bfb_spec_item` VALUES ('91', '9', '五号', '10001', '1577094407', null);
+INSERT INTO `bfb_spec_item` VALUES ('70', '7', '小', '10001', '1577084013', null);
+INSERT INTO `bfb_spec_item` VALUES ('69', '7', '中', '10001', '1577084013', null);
+INSERT INTO `bfb_spec_item` VALUES ('68', '7', '大', '10001', '1577084013', null);
+INSERT INTO `bfb_spec_item` VALUES ('85', '8', '流星雨', '10001', '1577093964', null);
+INSERT INTO `bfb_spec_item` VALUES ('84', '8', '变色彩格', '10001', '1577093964', null);
+INSERT INTO `bfb_spec_item` VALUES ('83', '8', '报纸文', '10001', '1577093964', null);
+INSERT INTO `bfb_spec_item` VALUES ('76', '6', '圆管13#\r\n圆管4#\r\n圆管5#\r\n圆管12#', '10001', '1577084167', null);
+INSERT INTO `bfb_spec_item` VALUES ('90', '9', '四号', '10001', '1577094407', null);
+INSERT INTO `bfb_spec_item` VALUES ('89', '9', '三号', '10001', '1577094407', null);
+INSERT INTO `bfb_spec_item` VALUES ('88', '9', '二号', '10001', '1577094407', null);
+INSERT INTO `bfb_spec_item` VALUES ('87', '9', '一号', '10001', '1577094407', null);
+INSERT INTO `bfb_spec_item` VALUES ('106', '11', '150g', '10001', '1577425767', null);
+INSERT INTO `bfb_spec_item` VALUES ('105', '11', '140g', '10001', '1577425767', null);
+INSERT INTO `bfb_spec_item` VALUES ('104', '11', '100g', '10001', '1577425767', null);
+INSERT INTO `bfb_spec_item` VALUES ('118', '10', '玫红', '10001', '1577426332', null);
+INSERT INTO `bfb_spec_item` VALUES ('116', '10', '白色', '10001', '1577426332', null);
+INSERT INTO `bfb_spec_item` VALUES ('117', '10', '粉色', '10001', '1577426332', null);
+INSERT INTO `bfb_spec_item` VALUES ('107', '11', '250g', '10001', '1577425767', null);
+INSERT INTO `bfb_spec_item` VALUES ('108', '11', '300g', '10001', '1577425767', null);
+INSERT INTO `bfb_spec_item` VALUES ('109', '11', '400g', '10001', '1577425767', null);
+INSERT INTO `bfb_spec_item` VALUES ('110', '12', '003#中厚', '10001', '1577426231', null);
+INSERT INTO `bfb_spec_item` VALUES ('111', '12', '09A#加厚', '10001', '1577426231', null);
+INSERT INTO `bfb_spec_item` VALUES ('112', '12', '09#特厚', '10001', '1577426231', null);
+INSERT INTO `bfb_spec_item` VALUES ('113', '12', '烫边款', '10001', '1577426231', null);
+INSERT INTO `bfb_spec_item` VALUES ('114', '12', '包边款', '10001', '1577426231', null);
+INSERT INTO `bfb_spec_item` VALUES ('115', '12', '菠萝纹高密珊瑚绒', '10001', '1577426231', null);
+INSERT INTO `bfb_spec_item` VALUES ('119', '10', '黄色', '10001', '1577426332', null);
+INSERT INTO `bfb_spec_item` VALUES ('120', '10', '蓝色', '10001', '1577426332', null);
+INSERT INTO `bfb_spec_item` VALUES ('121', '10', '紫色', '10001', '1577426332', null);
+INSERT INTO `bfb_spec_item` VALUES ('122', '10', '紫红', '10001', '1577426332', null);
+INSERT INTO `bfb_spec_item` VALUES ('123', '10', '浅紫', '10001', '1577426332', null);
+INSERT INTO `bfb_spec_item` VALUES ('124', '10', '咖色', '10001', '1577426332', null);
+INSERT INTO `bfb_spec_item` VALUES ('125', '10', '灰色', '10001', '1577426332', null);
+INSERT INTO `bfb_spec_item` VALUES ('126', '10', '绿色', '10001', '1577426332', null);
+INSERT INTO `bfb_spec_item` VALUES ('146', '13', '中厚款 蓝色', '10001', '1577431761', null);
+INSERT INTO `bfb_spec_item` VALUES ('145', '13', '中厚款 紫色', '10001', '1577431761', null);
+INSERT INTO `bfb_spec_item` VALUES ('144', '13', '中厚款 玫红', '10001', '1577431761', null);
+INSERT INTO `bfb_spec_item` VALUES ('141', '13', '中厚款 咖色', '10001', '1577431761', null);
+INSERT INTO `bfb_spec_item` VALUES ('142', '13', '中厚款 灰色', '10001', '1577431761', null);
+INSERT INTO `bfb_spec_item` VALUES ('143', '13', '中厚款 白色', '10001', '1577431761', null);
 
 -- ----------------------------
 -- Table structure for bfb_spec_item_price
@@ -5480,6 +6253,8 @@ CREATE TABLE `bfb_spec_item_price` (
   `shop_price` decimal(8,2) DEFAULT NULL COMMENT '规格键名中文',
   `price` decimal(10,2) DEFAULT NULL COMMENT '价格',
   `store_count` int(11) unsigned DEFAULT '10' COMMENT '库存数量',
+  `item_pic` varchar(255) DEFAULT NULL,
+  `item_pic_id` int(11) DEFAULT NULL,
   `sku` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT 'SKU',
   `app_id` int(7) DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -5487,19 +6262,39 @@ CREATE TABLE `bfb_spec_item_price` (
 -- ----------------------------
 -- Records of bfb_spec_item_price
 -- ----------------------------
-INSERT INTO `bfb_spec_item_price` VALUES ('3', '3', '3', '123.00', '12.00', '431', '789', '10001');
-INSERT INTO `bfb_spec_item_price` VALUES ('4', '5', '5', '789.00', '78.00', '999', '333', '10001');
-INSERT INTO `bfb_spec_item_price` VALUES ('10', '6', '6', '99.00', '99.00', '9999', '', '10001');
-INSERT INTO `bfb_spec_item_price` VALUES ('11', '5', '5', '100.00', '80.00', '20', '123456', '10001');
-INSERT INTO `bfb_spec_item_price` VALUES ('12', '5_4', '5_4', '456.00', '45.00', '999', '654321', '10001');
-INSERT INTO `bfb_spec_item_price` VALUES ('16', '15', '绿色', '200.00', '80.00', '4400', '123456', '10001');
-INSERT INTO `bfb_spec_item_price` VALUES ('16', '16', '红色', '200.00', '80.00', '3660', '456789', '10001');
-INSERT INTO `bfb_spec_item_price` VALUES ('17', '16', '绿色', '123.00', '45.00', '642', '456', '10001');
-INSERT INTO `bfb_spec_item_price` VALUES ('17', '15', '红色', '321.00', '54.00', '638', '45', '10001');
-INSERT INTO `bfb_spec_item_price` VALUES ('18', '16', '绿色', '123.00', '45.00', '999', '456', '10001');
-INSERT INTO `bfb_spec_item_price` VALUES ('19', '5', 'c:a', '123.00', '12.00', '456', '7894165', '10001');
-INSERT INTO `bfb_spec_item_price` VALUES ('20', '15', '红色', '134.00', '13.00', '999', '123456', '10001');
-INSERT INTO `bfb_spec_item_price` VALUES ('21', '5', 'c:a', '159.00', '15.00', '777', '123456', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('33', '51', '报纸文', '1250.00', '1100.00', '500', '20191223104628f1d346002.jpg', '181', '23658974', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('34', '70', '小', '150.00', '120.00', '100', '201912231732486bb6a4095.jpg', '189', '23658988', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('29', '22_27', '100KG', '150.00', '110.00', '70', null, '0', '12669', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('30', '23', '200KG', '100.00', '80.00', '20', '2019121210304387c230209.jpg', '56', '23233', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('32', '33', '大瓶', '500.00', '400.00', '8900', '201912231032419625d8184.jpg', '175', '12356987', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('29', '23_27', '200KG', '100.00', '80.00', '40', null, '0', '10022', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('29', '22_26', '100KG', '120.00', '70.00', '90', null, '0', '12008', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('31', '23', '200KG', '500.00', '350.00', '60', '20191212103330ff1829519.jpg', '58', '123456', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('29', '23_26', '200KG', '100.00', '80.00', '50', null, '0', '10021', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('17', '6', '蓝色', '321.00', '321.00', '300', '', '0', '0321', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('35', '87', '一号', '1.00', '1.00', '100', '2019122317512734c3b0989.jpg', '192', '1', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('35', '88', '二号', '2.00', '1.00', '100', '201912231751278e9405261.jpg', '193', '2', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('35', '89', '三号', '3.00', '2.00', '100', '201912231751278579b3544.jpg', '194', '3', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('35', '90', '四号', '4.00', '3.00', '100', '2019122317512822d562738.jpg', '196', '4', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('35', '91', '五号', '5.00', '4.00', '100', '20191223175127d9ba37937.jpg', '195', '5', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('36', '91', '五号', '12.00', '6.00', '1222', '20191226153857133253782.jpg', '300', '123', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('37', '92', '白', '15.00', '8.00', '120', '20191226153857133253782.jpg', '300', '1234', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('38', '102_106', '白', '120.00', '100.00', '10000', '20191227133318eb6721085.jpg', '302', '123456789', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('39', '118_106_110', '玫红', '150.00', '100.00', '1000', '201912271413047e02b7820.jpg', '304', '2569', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('39', '118_106_111', '玫红', '100.00', '100.00', '1000', null, '0', '123', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('39', '118_105_110', '玫红', '200.00', '100.00', '1000', null, '0', '1569', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('39', '118_105_111', '玫红', '200.00', '100.00', '1000', null, '0', '1563', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('39', '116_106_110', '白色', '100.00', '100.00', '1000', null, '0', '1842', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('39', '116_106_111', '白色', '100.00', '100.00', '1000', null, '0', '9621', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('39', '116_105_110', '白色', '100.00', '100.00', '100', null, '0', '4563', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('39', '116_105_111', '白色', '100.00', '100.00', '100', null, '0', '8858', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('28', '90', '四号', '120.00', '90.00', '30', '20191230134915ca3bc4784.jpg', '308', '89966555', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('41', '110', '003#中厚', '32.50', '22.30', '900', '201912271413047472a8312.jpg', '307', '1526942', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('40', '143', '中厚款 白色', '45.00', '1.00', '7090', '20191227133318eb6721085.jpg', '302', '3', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('40', '142', '中厚款 灰色', '75745.00', '1.00', '5232', '20191227141303432d39033.jpg', '303', '5', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('40', '144', '中厚款 玫红', '1454.00', '222.00', '100', '201912271413047e02b7820.jpg', '304', '2', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('40', '146', '中厚款 蓝色', '666.00', '51.00', '100', '20191227141304d83d59324.jpg', '306', '4', '10001');
+INSERT INTO `bfb_spec_item_price` VALUES ('28', '91', '五号', '100.00', '80.00', '20', '20191230134915ca3bc4784.jpg', '308', '12336666', '10001');
 
 -- ----------------------------
 -- Table structure for bfb_spike
@@ -5548,17 +6343,20 @@ CREATE TABLE `bfb_supplier` (
   `pass_time` int(11) NOT NULL DEFAULT '0' COMMENT '通过时间',
   `app_id` int(11) NOT NULL DEFAULT '10001',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0不可用，1可用',
+  `longitude` decimal(10,6) NOT NULL DEFAULT '0.000000' COMMENT '经度',
+  `latitude` decimal(10,6) DEFAULT '0.000000' COMMENT '维度',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`) USING BTREE,
   KEY `phone` (`phone`) USING BTREE,
   KEY `password` (`password`(250)) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='供应商表';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='供应商表';
 
 -- ----------------------------
 -- Records of bfb_supplier
 -- ----------------------------
-INSERT INTO `bfb_supplier` VALUES ('1', '0', '供应商1', '20191119133804daa452292.jpg', '详细地址1', '5,4', '0.10', '0.00', '0.00', '0.00', '收货人1', '15074937445', '0c284312a8db9d10b32fb8c40774ef5d', '1574143524', '1574143524', '10001', '1');
-INSERT INTO `bfb_supplier` VALUES ('2', '12', '供应商2', '20191119133804daa452292.jpg', '详细地址2', '5,4', '1.00', '0.00', '0.00', '0.00', '收货人2', '15074937447', '0c284312a8db9d10b32fb8c40774ef5d', '1574143796', '1574143796', '10001', '1');
+INSERT INTO `bfb_supplier` VALUES ('1', '0', '供应商1', '20191119133804daa452292.jpg', '详细地址1', '5,4', '0.10', '0.00', '0.00', '0.00', '收货人1', '15074937445', '0c284312a8db9d10b32fb8c40774ef5d', '1574143524', '1574143524', '10001', '1', '36.865550', '26.847500');
+INSERT INTO `bfb_supplier` VALUES ('2', '12', '供应商2', '20191119133804daa452292.jpg', '详细地址2', '5,4', '1.00', '0.00', '0.00', '0.00', '收货人2', '15074937447', '0c284312a8db9d10b32fb8c40774ef5d', '1574143796', '1574143796', '10001', '1', '36.865550', '26.856900');
+INSERT INTO `bfb_supplier` VALUES ('3', '20', '供应商3', '201912021448125ab1d8598.jpg', '广东省广州市白云区景泰直街', '4,8', '1.00', '0.00', '0.00', '0.00', '王升', '13434118359', '0c284312a8db9d10b32fb8c40774ef5d', '1576141690', '1576141690', '10001', '1', '0.000000', '0.000000');
 
 -- ----------------------------
 -- Table structure for bfb_task
@@ -5568,18 +6366,20 @@ CREATE TABLE `bfb_task` (
   `task_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '推广员任务id',
   `content` varchar(255) NOT NULL COMMENT '任务内容',
   `bonus` decimal(6,2) NOT NULL COMMENT '任务奖金',
-  `app_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `app_id` int(11) unsigned NOT NULL DEFAULT '10001',
+  `is_del` int(255) NOT NULL,
   `create_time` int(11) NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`task_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of bfb_task
 -- ----------------------------
-INSERT INTO `bfb_task` VALUES ('1', '完成一个客户的注册', '10.00', '10001', '1573542341');
-INSERT INTO `bfb_task` VALUES ('2', '完成三个客户的注册', '30.00', '10001', '1573542341');
-INSERT INTO `bfb_task` VALUES ('3', '邀请用户完成一次下单', '10.00', '10001', '1573542341');
-INSERT INTO `bfb_task` VALUES ('4', '邀请用户完成三次下单', '30.00', '10001', '1573542341');
+INSERT INTO `bfb_task` VALUES ('1', '完成一个客户的注册', '10.00', '10001', '0', '1573542341');
+INSERT INTO `bfb_task` VALUES ('2', '完成三个客户的注册', '30.00', '10001', '0', '1573542341');
+INSERT INTO `bfb_task` VALUES ('3', '邀请用户完成一次下单', '10.00', '10001', '0', '1573542341');
+INSERT INTO `bfb_task` VALUES ('4', '邀请用户完成三次下单', '30.00', '10001', '0', '1573542341');
+INSERT INTO `bfb_task` VALUES ('6', '推广3个新商家', '50.00', '10001', '0', '1577071916');
 
 -- ----------------------------
 -- Table structure for bfb_upload_file
@@ -5600,8 +6400,8 @@ CREATE TABLE `bfb_upload_file` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `user_id` int(7) NOT NULL COMMENT '用户I',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `path_idx` (`file_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='文件库记录表';
+  KEY `path_idx` (`file_name`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=332 DEFAULT CHARSET=utf8 COMMENT='文件库记录表';
 
 -- ----------------------------
 -- Records of bfb_upload_file
@@ -5621,6 +6421,322 @@ INSERT INTO `bfb_upload_file` VALUES ('12', 'local', '0', '', '201911291141505a0
 INSERT INTO `bfb_upload_file` VALUES ('13', 'local', '0', '', '20191129114151542204866.jpg', '49924', 'image', 'jpg', '0', '0', '0', '1574998911', '10001');
 INSERT INTO `bfb_upload_file` VALUES ('14', 'local', '0', '', '201911291141519d3d01371.jpg', '125953', 'image', 'jpg', '0', '0', '0', '1574998911', '10001');
 INSERT INTO `bfb_upload_file` VALUES ('15', 'local', '0', '', '20191129114151fe8a04803.png', '8899', 'image', 'png', '0', '0', '0', '1574998911', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('16', 'local', '0', '', '201912021448125ab1d8598.jpg', '82897', 'image', 'jpg', '0', '0', '0', '1575269292', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('17', 'local', '0', '', 'QQ图片20191206133205.jpg', '42754', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('18', 'local', '0', '', '201904241503574d3599978.jpg', '739206', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('19', 'local', '0', '', 'QQ图片20191206133205.jpg', '42754', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('20', 'local', '0', '', 'QQ图片20191206133205.jpg', '42754', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('21', 'local', '0', '', '201904241503574d3599978.jpg', '739206', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('22', 'local', '0', '', '201911291141505a0510689.jpg', '27054', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('23', 'local', '0', '', 'QQ图片20191206133205.jpg', '42754', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('24', 'local', '0', '', 'QQ图片20191206133205.jpg', '42754', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('25', 'local', '0', '', 'QQ图片20191206133205.jpg', '42754', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('26', 'local', '0', '', 'QQ图片20191206133205.jpg', '42754', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('27', 'local', '0', '', '20191209101152ca0fb9035.jpg', '264781', 'image', 'jpg', '0', '0', '0', '1575857512', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('28', 'local', '0', '', '201912091011522fad69670.jpg', '128840', 'image', 'jpg', '0', '0', '0', '1575857512', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('29', 'local', '0', '', '20191209101153a3def8354.jpg', '230898', 'image', 'jpg', '0', '0', '0', '1575857513', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('30', 'local', '0', '', '20191209101153e7d3f4071.jpg', '190177', 'image', 'jpg', '0', '0', '0', '1575857513', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('31', 'local', '0', '', '201912091011533404a0618.jpg', '210674', 'image', 'jpg', '0', '0', '0', '1575857513', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('32', 'local', '0', '', '20191210094222c0bfe3057.jpg', '549938', 'image', 'jpg', '0', '0', '0', '1575942142', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('33', 'local', '0', '', '20191210094223254f85759.jpg', '456843', 'image', 'jpg', '0', '0', '0', '1575942143', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('34', 'local', '0', '', '20191210094223b04e59698.jpg', '435823', 'image', 'jpg', '0', '0', '0', '1575942143', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('35', 'local', '0', '', '201912100942236185a2657.jpg', '437683', 'image', 'jpg', '0', '0', '0', '1575942143', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('36', 'local', '0', '', '2019121009422442a921054.jpg', '475641', 'image', 'jpg', '0', '0', '0', '1575942144', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('37', 'local', '0', '', '2019121011310074b8e1574.jpg', '13753', 'image', 'jpg', '0', '0', '0', '1575948660', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('38', 'local', '0', '', '20191210113100549d65691.png', '1497', 'image', 'png', '0', '0', '0', '1575948660', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('39', 'local', '0', '', '20191210113101bd5b10706.png', '1342', 'image', 'png', '0', '0', '0', '1575948661', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('40', 'local', '0', '', '20191210113101365796608.png', '1628', 'image', 'png', '0', '0', '0', '1575948661', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('41', 'local', '0', '', '20191211112001621ba4264.jpg', '435823', 'image', 'jpg', '0', '0', '0', '1576034401', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('42', 'local', '0', '', '201912111120525142b4313.jpg', '475641', 'image', 'jpg', '0', '0', '0', '1576034452', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('43', 'local', '0', '', '20191211112052108e95763.jpg', '435823', 'image', 'jpg', '0', '0', '0', '1576034452', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('44', 'local', '0', '', '2019121111205336f928479.jpg', '456843', 'image', 'jpg', '0', '0', '0', '1576034453', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('45', 'local', '0', '', '20191211112053303381335.jpg', '437683', 'image', 'jpg', '0', '0', '0', '1576034453', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('46', 'local', '0', '', '201912111120532fe7b2581.jpg', '549938', 'image', 'jpg', '0', '0', '0', '1576034453', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('47', 'local', '0', '', '2019121111210972e248183.jpg', '636813', 'image', 'jpg', '0', '0', '0', '1576034469', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('48', 'local', '0', '', '201912111121253aff86058.jpg', '538135', 'image', 'jpg', '0', '0', '0', '1576034485', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('49', 'local', '0', '', '20191211112136e68446931.jpg', '565544', 'image', 'jpg', '0', '0', '0', '1576034496', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('50', 'local', '0', '', '201912111126486682b4201.jpg', '636813', 'image', 'jpg', '0', '0', '0', '1576034808', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('51', 'local', '0', '', '20191211112652bc4622916.jpg', '538135', 'image', 'jpg', '0', '0', '0', '1576034812', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('52', 'local', '0', '', '20191211112657a96455719.jpg', '565544', 'image', 'jpg', '0', '0', '0', '1576034817', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('53', 'local', '0', '', 'image_picker3215073314673197095.png', '334499', 'application/octet-st', 'png', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('54', 'local', '0', '', 'image_picker5845805031215644434.png', '334499', 'application/octet-st', 'png', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('55', 'local', '0', '', 'image_picker2111267746400092459.png', '334499', 'application/octet-st', 'png', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('56', 'local', '0', '', '2019121210304387c230209.jpg', '144380', 'image', 'jpg', '0', '0', '0', '1576117843', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('57', 'local', '0', '', '20191212103136d334c4938.jpg', '224384', 'image', 'jpg', '0', '0', '0', '1576117896', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('58', 'local', '0', '', '20191212103330ff1829519.jpg', '99506', 'image', 'jpg', '0', '0', '0', '1576118010', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('59', 'local', '0', '', '20191212103824206cb8819.jpg', '339050', 'image', 'jpg', '0', '0', '0', '1576118304', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('60', 'local', '0', '', '9QDW{VT(O_GZPTF6L0F_%XM.jpg', '18929', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('61', 'local', '0', '', '9QDW{VT(O_GZPTF6L0F_%XM.jpg', '18929', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('62', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('63', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('64', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('65', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('66', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('67', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('68', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('69', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('70', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('71', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('72', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('73', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('74', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('75', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('76', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('77', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('78', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('79', 'local', '0', '', 'mmexport1576228244205.jpg', '33214', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('80', 'local', '0', '', 'QQ图片20191206133205.jpg', '42754', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('81', 'local', '0', '', 'QQ图片20191206133205.jpg', '42754', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('82', 'local', '0', '', 'QQ图片20191206133205.jpg', '42754', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('83', 'local', '0', '', 'QQ图片20191206133205.jpg', '42754', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('84', 'local', '0', '', '2019121609273975e0f0494.jpg', '388103', 'image', 'jpg', '0', '0', '0', '1576459659', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('85', 'local', '0', '', '20191216092739f7d728574.jpg', '276691', 'image', 'jpg', '0', '0', '0', '1576459659', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('86', 'local', '0', '', '20191216092739c52963409.jpg', '226104', 'image', 'jpg', '0', '0', '0', '1576459659', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('87', 'local', '0', '', '201912160927401d2747455.jpg', '539567', 'image', 'jpg', '0', '0', '0', '1576459660', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('88', 'local', '0', '', '20191216092740ea41a2113.jpg', '402336', 'image', 'jpg', '0', '0', '0', '1576459660', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('89', 'local', '0', '', '20191216092936ab1b29130.jpg', '267387', 'image', 'jpg', '0', '0', '0', '1576459776', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('90', 'local', '0', '', '2019121609293655b908707.jpg', '298641', 'image', 'jpg', '0', '0', '0', '1576459776', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('91', 'local', '0', '', '2019121609293628a987334.jpg', '424203', 'image', 'jpg', '0', '0', '0', '1576459776', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('92', 'local', '0', '', '9QDW{VT(O_GZPTF6L0F_%XM.jpg', '3700', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('93', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('94', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('95', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('96', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('97', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('98', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('99', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('100', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('101', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('102', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('103', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('104', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('105', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('106', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('107', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('108', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('109', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('110', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('111', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('112', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('113', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('114', 'local', '0', '', '2019121911504316a641531.jpg', '364602', 'image', 'jpg', '0', '0', '0', '1576727443', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('115', 'local', '0', '', '20191219115044c8e591983.jpg', '189073', 'image', 'jpg', '0', '0', '0', '1576727444', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('116', 'local', '0', '', '20191219115044a0d2f5939.jpg', '365822', 'image', 'jpg', '0', '0', '0', '1576727444', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('117', 'local', '0', '', '20191219115044baaeb7314.jpg', '422015', 'image', 'jpg', '0', '0', '0', '1576727444', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('118', 'local', '0', '', '201912191150447d5af3018.jpg', '225818', 'image', 'jpg', '0', '0', '0', '1576727444', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('119', 'local', '0', '', '201912191150443ffe74048.jpg', '261390', 'image', 'jpg', '0', '0', '0', '1576727444', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('120', 'local', '0', '', '20191219115201670857045.jpg', '364602', 'image', 'jpg', '0', '0', '0', '1576727521', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('121', 'local', '0', '', '20191219121309c35875271.jpg', '300604', 'image', 'jpg', '0', '0', '0', '1576728789', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('122', 'local', '0', '', '201912191213097c52c9194.jpg', '216390', 'image', 'jpg', '0', '0', '0', '1576728789', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('123', 'local', '0', '', '20191219121310687530102.jpg', '192999', 'image', 'jpg', '0', '0', '0', '1576728790', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('124', 'local', '0', '', '20191219121310ca4604090.jpg', '310337', 'image', 'jpg', '0', '0', '0', '1576728790', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('125', 'local', '0', '', '2019121912131060ba46380.jpg', '260828', 'image', 'jpg', '0', '0', '0', '1576728790', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('126', 'local', '0', '', '2019121912195662d259302.jpg', '473431', 'image', 'jpg', '0', '0', '0', '1576729196', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('127', 'local', '0', '', '20191219122129987f13966.jpg', '466191', 'image', 'jpg', '0', '0', '0', '1576729289', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('128', 'local', '0', '', '201912191256536ab395615.jpg', '113254', 'image', 'jpg', '0', '0', '0', '1576731413', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('129', 'local', '0', '', '20191219125700e68262743.jpg', '90194', 'image', 'jpg', '0', '0', '0', '1576731420', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('130', 'local', '0', '', '201912191257008d4053410.jpg', '171806', 'image', 'jpg', '0', '0', '0', '1576731420', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('131', 'local', '0', '', '20191219125701cb7b45748.jpg', '183250', 'image', 'jpg', '0', '0', '0', '1576731421', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('132', 'local', '0', '', '201912191257016115a2560.jpg', '222726', 'image', 'jpg', '0', '0', '0', '1576731421', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('133', 'local', '0', '', '20191219135011163094517.jpg', '438309', 'image', 'jpg', '0', '0', '0', '1576734611', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('134', 'local', '0', '', '9QDW{VT(O_GZPTF6L0F_%XM.jpg', '3700', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('135', 'local', '0', '', '9QDW{VT(O_GZPTF6L0F_%XM.jpg', '3700', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('136', 'local', '0', '', '9QDW{VT(O_GZPTF6L0F_%XM.jpg', '3700', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('137', 'local', '0', '', '9QDW{VT(O_GZPTF6L0F_%XM.jpg', '3700', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('138', 'local', '0', '', 'http://localhost/uploads/主图1.jpg', '230524', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('139', 'local', '0', '', 'http://localhost/uploads/主图3.jpg', '138773', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('140', 'local', '0', '', 'http://localhost/uploads/主图2.jpg', '196692', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('141', 'local', '0', '', 'http://localhost/uploads/主图2.jpg', '196692', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('142', 'local', '0', '', 'http://localhost/uploads/主图3.jpg', '138773', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('143', 'local', '0', '', 'http://localhost/uploads/主图1.jpg', '230524', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('144', 'local', '0', '', 'http://localhost/uploads/主图1.jpg', '230524', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('145', 'local', '0', '', 'http://localhost/uploads/主图2.jpg', '196692', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('146', 'local', '0', '', 'http://localhost/uploads/主图4.jpg', '170435', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('147', 'local', '0', '', 'http://localhost/uploads/主图3.jpg', '138773', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('148', 'local', '0', '', 'http://localhost/uploads/1576924963', '138773', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('149', 'local', '0', '', 'http://localhost/uploads/1576924963', '196692', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('150', 'local', '0', '', 'http://localhost/uploads/1576924963', '230524', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('151', 'local', '0', '', 'http://localhost/uploads/157692524820258', '196692', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('152', 'local', '0', '', 'http://localhost/uploads/1576925248138444', '170435', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('153', 'local', '0', '', 'http://localhost/uploads/157692524866227', '230524', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('154', 'local', '0', '', 'http://localhost/uploads/157692524847083', '138773', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('155', 'local', '0', '', 'http://mbh.laoma-app.com/uploads/1576925317249276', '196692', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('156', 'local', '0', '', 'http://mbh.laoma-app.com/uploads/1576925317401547', '204332', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('157', 'local', '0', '', 'http://mbh.laoma-app.com/uploads/1576925317725314', '170435', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('158', 'local', '0', '', 'http://mbh.laoma-app.com/uploads/1576925317874288', '230524', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('159', 'local', '0', '', 'http://mbh.laoma-app.com/uploads/1576925317325411', '138773', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('160', 'local', '0', '', 'http://mbh.laoma-app.com/uploads/1576925327840176', '196692', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('161', 'local', '0', '', 'http://mbh.laoma-app.com/uploads/1576925327216702', '138773', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('162', 'local', '0', '', 'http://mbh.laoma-app.com/uploads/1576925327865527', '230524', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('163', 'local', '0', '', 'http://mbh.laoma-app.com/uploads/1576925327655798', '170435', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('164', 'local', '0', '', 'http://mbh.laoma-app.com/uploads/15769261430.jpg', '138773', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('165', 'local', '0', '', 'http://mbh.laoma-app.com/uploads/15769261431.jpg', '230524', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('166', 'local', '0', '', 'http://mbh.laoma-app.com/uploads/15769261432.jpg', '196692', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('167', 'local', '0', '', 'http://localhost/uploads/15769276460.jpg', '138773', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('168', 'local', '0', '', 'http://localhost/uploads/15769276461.jpg', '230524', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('169', 'local', '0', '', 'http://localhost/uploads/15769276462.jpg', '196692', 'image/jpeg', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('170', 'local', '0', '', '20191223103145225487376.jpg', '131232', 'image', 'jpg', '0', '0', '0', '1577068305', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('171', 'local', '0', '', '2019122310314571d566088.jpg', '138612', 'image', 'jpg', '0', '0', '0', '1577068305', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('172', 'local', '0', '', '201912231031459339d9423.jpg', '195705', 'image', 'jpg', '0', '0', '0', '1577068305', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('173', 'local', '0', '', '20191223103146b28bb8159.jpg', '300749', 'image', 'jpg', '0', '0', '0', '1577068306', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('174', 'local', '0', '', '20191223103146385455508.jpg', '154364', 'image', 'jpg', '0', '0', '0', '1577068306', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('175', 'local', '0', '', '201912231032419625d8184.jpg', '258046', 'image', 'jpg', '0', '0', '0', '1577068361', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('176', 'local', '0', '', '20191223103840a14a34823.jpg', '138773', 'image', 'jpg', '0', '0', '0', '1577068720', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('177', 'local', '0', '', '20191223103840b02ec3855.jpg', '196692', 'image', 'jpg', '0', '0', '0', '1577068720', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('178', 'local', '0', '', '20191223103840d81b45785.jpg', '230524', 'image', 'jpg', '0', '0', '0', '1577068720', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('179', 'local', '0', '', '20191223103840d9f092022.jpg', '170435', 'image', 'jpg', '0', '0', '0', '1577068720', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('180', 'local', '0', '', '20191223103840c7cde0966.jpg', '204332', 'image', 'jpg', '0', '0', '0', '1577068720', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('181', 'local', '0', '', '20191223104628f1d346002.jpg', '207334', 'image', 'jpg', '0', '0', '0', '1577069188', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('182', 'local', '0', '', '20191223141423b1fc20131.jpg', '189450', 'image', 'jpg', '0', '0', '0', '1577081663', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('183', 'local', '0', '', '201912231414236cc186630.jpg', '122724', 'image', 'jpg', '0', '0', '0', '1577081663', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('184', 'local', '0', '', '201912231414236a40d2433.jpg', '123787', 'image', 'jpg', '0', '0', '0', '1577081663', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('185', 'local', '0', '', '20191223141424a4ebe4916.jpg', '118712', 'image', 'jpg', '0', '0', '0', '1577081664', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('186', 'local', '0', '', '20191223141424577662934.jpg', '152455', 'image', 'jpg', '0', '0', '0', '1577081664', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('187', 'local', '0', '', '20191223173248694bb3243.jpg', '178286', 'image', 'jpg', '0', '0', '0', '1577093568', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('188', 'local', '0', '', '20191223173248e26003370.jpg', '406272', 'image', 'jpg', '0', '0', '0', '1577093568', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('189', 'local', '0', '', '201912231732486bb6a4095.jpg', '359800', 'image', 'jpg', '0', '0', '0', '1577093568', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('190', 'local', '0', '', '20191223173248ce92c1018.jpg', '336559', 'image', 'jpg', '0', '0', '0', '1577093568', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('191', 'local', '0', '', '20191223173248a5f0b3103.jpg', '222463', 'image', 'jpg', '0', '0', '0', '1577093568', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('192', 'local', '0', '', '2019122317512734c3b0989.jpg', '304152', 'image', 'jpg', '0', '1', '0', '1577094687', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('193', 'local', '0', '', '201912231751278e9405261.jpg', '305750', 'image', 'jpg', '0', '1', '0', '1577094687', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('194', 'local', '0', '', '201912231751278579b3544.jpg', '306243', 'image', 'jpg', '0', '1', '0', '1577094687', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('195', 'local', '0', '', '20191223175127d9ba37937.jpg', '306520', 'image', 'jpg', '0', '1', '0', '1577094687', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('196', 'local', '0', '', '2019122317512822d562738.jpg', '306298', 'image', 'jpg', '0', '1', '0', '1577094688', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('197', 'local', '0', '', '8FB2E274B683F66863A1EC970E0D3089.png', '2990', 'application/octet-st', 'png', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('198', 'local', '0', '', 'mmexport1576027058862.jpg', '29287', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('199', 'local', '0', '', 'wx_camera_1577092209974.jpg', '143147', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('200', 'local', '0', '', 'Screenshot_2019-12-23-14-21-33-12.png', '1268645', 'application/octet-st', 'png', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('201', 'local', '0', '', 'Screenshot_2019-12-24-16-13-15-20.png', '86783', 'application/octet-st', 'png', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('202', 'local', '0', '', 'Screenshot_2019-12-24-15-43-03-97.png', '155298', 'application/octet-st', 'png', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('203', 'local', '0', '', 'mmexport1577006867950.jpg', '1320983', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('204', 'local', '0', '', 'mmexport1577006867950.jpg', '1320983', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('205', 'local', '0', '', 'Screenshot_2019-12-24-16-13-15-20.png', '86783', 'application/octet-st', 'png', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('206', 'local', '0', '', 'Screenshot_2019-12-24-15-43-03-97.png', '155298', 'application/octet-st', 'png', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('207', 'local', '0', '', 'mmexport1577006867950.jpg', '1320983', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('208', 'local', '0', '', 'mmexport1577006867950.jpg', '1320983', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('209', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('210', 'local', '0', '', 'IMG_20190701_120120.jpg', '1484741', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('211', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('212', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('213', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('214', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('215', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('216', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('217', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('218', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('219', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('220', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('221', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('222', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('223', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('224', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('225', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('226', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('227', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('228', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('229', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('230', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('231', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('232', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('233', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('234', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('235', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('236', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('237', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('238', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('239', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('240', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('241', 'local', '0', '', 'Screenshot_20191224_104629_com.Majiang.tcmj.lm.jpg', '763827', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('242', 'local', '0', '', 'Screenshot_20191224_174049_com.lm.meibohui.jpg', '261404', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('243', 'local', '0', '', 'Screenshot_20191224_174049_com.lm.meibohui.jpg', '261404', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('244', 'local', '0', '', 'Screenshot_20191224_174049_com.lm.meibohui.jpg', '261404', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('245', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('246', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('247', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('248', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('249', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('250', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('251', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('252', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('253', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('254', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('255', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('256', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('257', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('258', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('259', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('260', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('261', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('262', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('263', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('264', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('265', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('266', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('267', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('268', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('269', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('270', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('271', 'local', '0', '', 'IMG_20190701_120120.jpg', '1484741', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('272', 'local', '0', '', 'IMG_20190701_120120.jpg', '1484741', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('273', 'local', '0', '', 'IMG_20190701_120120.jpg', '1484741', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('274', 'local', '0', '', 'IMG_20190701_120120.jpg', '1484741', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('275', 'local', '0', '', 'IMG_20190701_120120.jpg', '1484741', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('276', 'local', '0', '', 'IMG_20190701_120120.jpg', '1484741', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('277', 'local', '0', '', 'IMG_20190701_120120.jpg', '1484741', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('278', 'local', '0', '', 'IMG_20190701_120120.jpg', '1484741', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('279', 'local', '0', '', 'IMG_20190701_120120.jpg', '1484741', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('280', 'local', '0', '', 'IMG_20190701_120120.jpg', '1484741', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('281', 'local', '0', '', 'IMG_20190701_120120.jpg', '1484741', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('282', 'local', '0', '', 'IMG_20190701_120120.jpg', '1484741', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('283', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('284', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('285', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('286', 'local', '0', '', 'IMG_20191210_155414.jpg', '1549932', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('287', 'local', '0', '', '2019122615384603cfd2549.jpg', '305837', 'image', 'jpg', '0', '0', '0', '1577345926', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('288', 'local', '0', '', '20191226153846b3aed3079.jpg', '449906', 'image', 'jpg', '0', '0', '0', '1577345926', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('289', 'local', '0', '', '20191226153846a352a4741.jpg', '312611', 'image', 'jpg', '0', '0', '0', '1577345926', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('290', 'local', '0', '', '201912261538467d72b0990.jpg', '327999', 'image', 'jpg', '0', '0', '0', '1577345926', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('291', 'local', '0', '', '201912261538461907c0255.jpg', '490980', 'image', 'jpg', '0', '0', '0', '1577345926', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('292', 'local', '0', '', '20191226153846b928e8103.jpg', '352866', 'image', 'jpg', '0', '0', '0', '1577345926', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('293', 'local', '0', '', '201912261538469a1ad0805.jpg', '450979', 'image', 'jpg', '0', '0', '0', '1577345926', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('294', 'local', '0', '', '20191226153846e9b063204.jpg', '297352', 'image', 'jpg', '0', '0', '0', '1577345926', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('295', 'local', '0', '', '201912261538462592e7100.jpg', '320120', 'image', 'jpg', '0', '0', '0', '1577345926', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('296', 'local', '0', '', '20191226153847fd5f50428.jpg', '470078', 'image', 'jpg', '0', '0', '0', '1577345927', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('297', 'local', '0', '', '2019122615385695dcf2356.jpg', '414715', 'image', 'jpg', '0', '0', '0', '1577345936', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('298', 'local', '0', '', '201912261538565d38e0657.jpg', '450054', 'image', 'jpg', '0', '0', '0', '1577345936', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('299', 'local', '0', '', '201912261538577e6256486.jpg', '547570', 'image', 'jpg', '0', '0', '0', '1577345937', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('300', 'local', '0', '', '20191226153857133253782.jpg', '451816', 'image', 'jpg', '0', '0', '0', '1577345937', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('301', 'local', '0', '', '201912261538578fb5b4632.jpg', '452673', 'image', 'jpg', '0', '0', '0', '1577345937', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('302', 'local', '0', '', '20191227133318eb6721085.jpg', '300999', 'image', 'jpg', '0', '0', '0', '1577424798', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('303', 'local', '0', '', '20191227141303432d39033.jpg', '397810', 'image', 'jpg', '0', '0', '0', '1577427183', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('304', 'local', '0', '', '201912271413047e02b7820.jpg', '452344', 'image', 'jpg', '0', '0', '0', '1577427184', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('305', 'local', '0', '', '20191227141304021d41510.jpg', '443511', 'image', 'jpg', '0', '0', '0', '1577427184', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('306', 'local', '0', '', '20191227141304d83d59324.jpg', '491102', 'image', 'jpg', '0', '0', '0', '1577427184', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('307', 'local', '0', '', '201912271413047472a8312.jpg', '422309', 'image', 'jpg', '0', '0', '0', '1577427184', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('308', 'local', '0', '', '20191230134915ca3bc4784.jpg', '196692', 'image', 'jpg', '0', '0', '0', '1577684955', '10001');
+INSERT INTO `bfb_upload_file` VALUES ('309', 'local', '0', '', '1577624786617.jpg', '149405', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('310', 'local', '0', '', '1577624786617.jpg', '149405', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('311', 'local', '0', '', '1577624786617.jpg', '149405', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('312', 'local', '0', '', '1577624786617.jpg', '149405', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('313', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('314', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('315', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('316', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('317', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('318', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('319', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('320', 'local', '0', '', 'QQ图片20191206133205.jpg', '15817', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('321', 'local', '0', '', '9QDW{VT(O_GZPTF6L0F_%XM.jpg', '3700', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('322', 'local', '0', '', '678FD0F42847BE0DB4CA6242854159F3.jpg', '64455', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('323', 'local', '0', '', '50D5EC958B310978E17DCBD062959FD0.jpg', '280647', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('324', 'local', '0', '', 'FF95E7B0A533268F4B55F63D670630F4.jpg', '348505', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('325', 'local', '0', '', '1F526D399DE8B6C7CC7B85B1CE82147F.jpg', '623829', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('326', 'local', '0', '', 'E94EA5E807AEB9A1BB462CD2B7015C24.jpg', '644939', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('327', 'local', '0', '', '50D5EC958B310978E17DCBD062959FD0.jpg', '280647', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('328', 'local', '0', '', 'FF95E7B0A533268F4B55F63D670630F4.jpg', '348505', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('329', 'local', '0', '', '1F526D399DE8B6C7CC7B85B1CE82147F.jpg', '623829', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('330', 'local', '0', '', 'E94EA5E807AEB9A1BB462CD2B7015C24.jpg', '644939', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
+INSERT INTO `bfb_upload_file` VALUES ('331', 'local', '0', '', '1F526D399DE8B6C7CC7B85B1CE82147F.jpg', '623829', 'application/octet-st', 'jpg', '0', '0', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for bfb_upload_group
@@ -5655,7 +6771,7 @@ CREATE TABLE `bfb_upload_type` (
   `image_id` int(10) DEFAULT NULL,
   `link_id` int(8) NOT NULL COMMENT '关联产品或其他id',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=396 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bfb_upload_type
@@ -5674,7 +6790,64 @@ INSERT INTO `bfb_upload_type` VALUES ('30', 'item', '10001', '1574839423', '1574
 INSERT INTO `bfb_upload_type` VALUES ('31', 'item', '10001', '1574850131', '1574850131', '10', '18');
 INSERT INTO `bfb_upload_type` VALUES ('32', 'item', '10001', '1574850781', '1574850781', '10', '19');
 INSERT INTO `bfb_upload_type` VALUES ('33', 'item', '10001', '1574999344', '1574999344', '11', '20');
-INSERT INTO `bfb_upload_type` VALUES ('34', 'item', '10001', '1574999453', '1574999453', '12', '21');
+INSERT INTO `bfb_upload_type` VALUES ('35', 'item', '10001', '1575269339', '1575269339', '12', '21');
+INSERT INTO `bfb_upload_type` VALUES ('36', 'item', '10001', '1575272757', '1575272757', '15', '22');
+INSERT INTO `bfb_upload_type` VALUES ('37', 'item', '10001', '1575540560', '1575540560', '15', '23');
+INSERT INTO `bfb_upload_type` VALUES ('38', 'item', '10001', '1575540755', '1575540755', '13', '24');
+INSERT INTO `bfb_upload_type` VALUES ('39', 'item', '10001', '1575542395', '1575542395', '14', '25');
+INSERT INTO `bfb_upload_type` VALUES ('40', 'item', '10001', '1575542443', '1575542443', '15', '26');
+INSERT INTO `bfb_upload_type` VALUES ('46', 'item', '10001', '1575704628', '1575704628', '13', '27');
+INSERT INTO `bfb_upload_type` VALUES ('45', 'item', '10001', '1575704628', '1575704628', '14', '27');
+INSERT INTO `bfb_upload_type` VALUES ('44', 'item', '10001', '1575704628', '1575704628', '15', '27');
+INSERT INTO `bfb_upload_type` VALUES ('386', 'item', '10001', '1577787062', '1577787062', '31', '28');
+INSERT INTO `bfb_upload_type` VALUES ('387', 'item', '10001', '1577787062', '1577787062', '30', '28');
+INSERT INTO `bfb_upload_type` VALUES ('388', 'item', '10001', '1577787062', '1577787062', '29', '28');
+INSERT INTO `bfb_upload_type` VALUES ('267', 'item', '10001', '1576894651', '1576894651', '34', '29');
+INSERT INTO `bfb_upload_type` VALUES ('268', 'item', '10001', '1576894651', '1576894651', '36', '29');
+INSERT INTO `bfb_upload_type` VALUES ('269', 'item', '10001', '1576894651', '1576894651', '32', '29');
+INSERT INTO `bfb_upload_type` VALUES ('270', 'item', '10001', '1576894651', '1576894651', '33', '29');
+INSERT INTO `bfb_upload_type` VALUES ('296', 'item', '10001', '1577065983', '1577065983', '40', '30');
+INSERT INTO `bfb_upload_type` VALUES ('297', 'item', '10001', '1577065983', '1577065983', '39', '30');
+INSERT INTO `bfb_upload_type` VALUES ('271', 'item', '10001', '1576894651', '1576894651', '35', '29');
+INSERT INTO `bfb_upload_type` VALUES ('298', 'item', '10001', '1577065983', '1577065983', '37', '30');
+INSERT INTO `bfb_upload_type` VALUES ('389', 'item', '10001', '1577787062', '1577787062', '28', '28');
+INSERT INTO `bfb_upload_type` VALUES ('286', 'item', '10001', '1576909370', '1576909370', '89', '31');
+INSERT INTO `bfb_upload_type` VALUES ('285', 'item', '10001', '1576909370', '1576909370', '88', '31');
+INSERT INTO `bfb_upload_type` VALUES ('284', 'item', '10001', '1576909369', '1576909369', '85', '31');
+INSERT INTO `bfb_upload_type` VALUES ('283', 'item', '10001', '1576909369', '1576909369', '84', '31');
+INSERT INTO `bfb_upload_type` VALUES ('282', 'item', '10001', '1576909369', '1576909369', '87', '31');
+INSERT INTO `bfb_upload_type` VALUES ('308', 'item', '10001', '1577068471', '1577068471', '170', '32');
+INSERT INTO `bfb_upload_type` VALUES ('307', 'item', '10001', '1577068471', '1577068471', '171', '32');
+INSERT INTO `bfb_upload_type` VALUES ('306', 'item', '10001', '1577068471', '1577068471', '172', '32');
+INSERT INTO `bfb_upload_type` VALUES ('305', 'item', '10001', '1577068471', '1577068471', '173', '32');
+INSERT INTO `bfb_upload_type` VALUES ('304', 'item', '10001', '1577068471', '1577068471', '174', '32');
+INSERT INTO `bfb_upload_type` VALUES ('318', 'item', '10001', '1577069192', '1577069192', '176', '33');
+INSERT INTO `bfb_upload_type` VALUES ('317', 'item', '10001', '1577069192', '1577069192', '177', '33');
+INSERT INTO `bfb_upload_type` VALUES ('316', 'item', '10001', '1577069192', '1577069192', '178', '33');
+INSERT INTO `bfb_upload_type` VALUES ('315', 'item', '10001', '1577069192', '1577069192', '179', '33');
+INSERT INTO `bfb_upload_type` VALUES ('314', 'item', '10001', '1577069192', '1577069192', '180', '33');
+INSERT INTO `bfb_upload_type` VALUES ('319', 'item', '10001', '1577093920', '1577093920', '191', '34');
+INSERT INTO `bfb_upload_type` VALUES ('320', 'item', '10001', '1577093920', '1577093920', '190', '34');
+INSERT INTO `bfb_upload_type` VALUES ('321', 'item', '10001', '1577093920', '1577093920', '189', '34');
+INSERT INTO `bfb_upload_type` VALUES ('322', 'item', '10001', '1577093920', '1577093920', '188', '34');
+INSERT INTO `bfb_upload_type` VALUES ('332', 'item', '10001', '1577173477', '1577173477', '191', '35');
+INSERT INTO `bfb_upload_type` VALUES ('331', 'item', '10001', '1577173477', '1577173477', '188', '35');
+INSERT INTO `bfb_upload_type` VALUES ('330', 'item', '10001', '1577173477', '1577173477', '187', '35');
+INSERT INTO `bfb_upload_type` VALUES ('329', 'item', '10001', '1577173477', '1577173477', '190', '35');
+INSERT INTO `bfb_upload_type` VALUES ('328', 'item', '10001', '1577173477', '1577173477', '189', '35');
+INSERT INTO `bfb_upload_type` VALUES ('333', 'item', '10001', '1577415015', '1577415015', '299', '36');
+INSERT INTO `bfb_upload_type` VALUES ('334', 'item', '10001', '1577425073', '1577425073', '300', '37');
+INSERT INTO `bfb_upload_type` VALUES ('335', 'item', '10001', '1577426023', '1577426023', '302', '38');
+INSERT INTO `bfb_upload_type` VALUES ('344', 'item', '10001', '1577427889', '1577427889', '305', '39');
+INSERT INTO `bfb_upload_type` VALUES ('345', 'item', '10001', '1577427889', '1577427889', '307', '39');
+INSERT INTO `bfb_upload_type` VALUES ('346', 'item', '10001', '1577427889', '1577427889', '304', '39');
+INSERT INTO `bfb_upload_type` VALUES ('347', 'item', '10001', '1577427889', '1577427889', '305', '39');
+INSERT INTO `bfb_upload_type` VALUES ('395', 'item', '10001', '1577787154', '1577787154', '298', '40');
+INSERT INTO `bfb_upload_type` VALUES ('394', 'item', '10001', '1577787154', '1577787154', '299', '40');
+INSERT INTO `bfb_upload_type` VALUES ('393', 'item', '10001', '1577787154', '1577787154', '300', '40');
+INSERT INTO `bfb_upload_type` VALUES ('392', 'item', '10001', '1577787154', '1577787154', '301', '40');
+INSERT INTO `bfb_upload_type` VALUES ('391', 'item', '10001', '1577787154', '1577787154', '297', '40');
+INSERT INTO `bfb_upload_type` VALUES ('390', 'item', '10001', '1577787128', '1577787128', '307', '41');
 
 -- ----------------------------
 -- Table structure for bfb_user
@@ -5682,6 +6855,7 @@ INSERT INTO `bfb_upload_type` VALUES ('34', 'item', '10001', '1574999453', '1574
 DROP TABLE IF EXISTS `bfb_user`;
 CREATE TABLE `bfb_user` (
   `user_id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `organization_code` varchar(255) NOT NULL DEFAULT '' COMMENT '组织机构代码',
   `type` tinyint(1) DEFAULT '1' COMMENT '1商户2供应商3推广员',
   `phone` varchar(15) NOT NULL,
   `open_id` varchar(255) NOT NULL DEFAULT '' COMMENT '微信openid(唯一标示)',
@@ -5691,7 +6865,9 @@ CREATE TABLE `bfb_user` (
   `country` varchar(50) NOT NULL DEFAULT '' COMMENT '国家',
   `province` varchar(50) NOT NULL DEFAULT '' COMMENT '省份',
   `city` varchar(50) NOT NULL DEFAULT '' COMMENT '城市',
+  `store_address` varchar(255) DEFAULT NULL COMMENT '门店地址',
   `address_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '默认收货地址',
+  `industry_id` varchar(255) NOT NULL,
   `money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '用户余额',
   `shop_money` float(8,2) NOT NULL DEFAULT '0.00' COMMENT '消费金额',
   `count_shop_money` float(10,2) DEFAULT '0.00' COMMENT '总消费金额',
@@ -5712,30 +6888,41 @@ CREATE TABLE `bfb_user` (
   `aid` int(11) DEFAULT '0' COMMENT '推广员id',
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态(0为审核中，1为通过，2为未通过)	',
   `is_agree` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否签到协议（0为未1为是）',
+  `footprint` text COMMENT '足迹',
   PRIMARY KEY (`user_id`),
   KEY `openid` (`open_id`),
   KEY `open_id` (`open_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='用户记录表';
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='用户记录表';
 
 -- ----------------------------
 -- Records of bfb_user
 -- ----------------------------
-INSERT INTO `bfb_user` VALUES ('1', '1', '15074937445', '', '', '', '0', '', '', '', '4', '995572.00', '369.00', '2583.00', '0.00', '0', '10001', '1573292838', '1574047159', '0c284312a8db9d10b32fb8c40774ef5d', '0c284312a8db9d10b32fb8c40774ef5d', '0', '2', '0', '0', '2583', '0', '9.50', '3', '0', '1');
-INSERT INTO `bfb_user` VALUES ('2', '1', '15074937446', '', '', '', '0', '', '', '', '4', '20.00', '0.00', null, '0.00', '1', '10001', '1573437148', '1574147420', null, null, '0', '1', '0', '0', '0', null, '10.00', '3', '0', '0');
-INSERT INTO `bfb_user` VALUES ('3', '3', '13434118351', '', '冷酷的路灯', '/assets/user/img/head_img.jpg', '0', '', '', '', '0', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1573437148', '1574849191', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '10.00', '0', '0', '1');
-INSERT INTO `bfb_user` VALUES ('4', '1', '13811112222', '', '', '', '0', '', '', '', '0', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1574043344', '1574043344', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0');
-INSERT INTO `bfb_user` VALUES ('5', '1', '13811112223', '', '', '', '0', '', '', '', '0', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1574043448', '1574043448', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0');
-INSERT INTO `bfb_user` VALUES ('6', '1', '13811112224', '', '', '', '0', '', '', '', '0', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0');
-INSERT INTO `bfb_user` VALUES ('7', '1', '13811112225', '', '', '', '0', '', '', '', '0', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0');
-INSERT INTO `bfb_user` VALUES ('8', '1', '13811112226', '', '', '', '0', '', '', '', '0', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0');
-INSERT INTO `bfb_user` VALUES ('9', '1', '13811112227', '', '', '', '0', '', '', '', '0', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0');
-INSERT INTO `bfb_user` VALUES ('10', '1', '13811112228', '', '', '', '0', '', '', '', '0', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0');
-INSERT INTO `bfb_user` VALUES ('11', '1', '13811112229', '', '', '', '0', '', '', '', '0', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0');
-INSERT INTO `bfb_user` VALUES ('12', '2', '15074937447', '', '', '', '0', '', '', '', '0', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0');
-INSERT INTO `bfb_user` VALUES ('13', '3', '18888888888', '', '', '/assets/user/img/head_img.jpg', '0', '', '', '', '0', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1574387346', '1574387346', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0');
-INSERT INTO `bfb_user` VALUES ('14', '3', '18888888889', '', '冷酷的路灯', '/assets/user/img/head_img.jpg', '1', '', '', '', '0', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1574387712', '1574387712', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0');
-INSERT INTO `bfb_user` VALUES ('15', '3', '13434118352', '', '冷酷的路灯', '/assets/user/img/head_img.jpg', '1', '', '', '', '0', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1574388443', '1574388443', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0');
-INSERT INTO `bfb_user` VALUES ('16', '3', '13434118353', '', '冷酷的路灯', '/assets/user/img/head_img.jpg', '2', '', '', '', '0', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1574390996', '1574390996', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0');
+INSERT INTO `bfb_user` VALUES ('1', '1111111111111111', '1', '15074937445', '', '王生生2', '1F526D399DE8B6C7CC7B85B1CE82147F.jpg', '1', '中国', '广东省', '白云区', null, '18', '1,2', '995572.00', '1373.00', '2583.00', '0.00', '0', '10001', '1573292838', '1577932507', '0c284312a8db9d10b32fb8c40774ef5d', '0c284312a8db9d10b32fb8c40774ef5d', '0', '2', '0', '0', '3589', '0', '9.50', '3', '1', '1', '3,1,2,32,31,33,37,29,40,39');
+INSERT INTO `bfb_user` VALUES ('2', '', '1', '15074937446', '', '快乐的凉面', 'user/head_img.jpg', '2', '', '', '', null, '4', '', '20.00', '0.00', null, '0.00', '1', '10001', '1573437148', '1574147420', null, null, '0', '1', '0', '0', '0', null, '10.00', '3', '1', '0', null);
+INSERT INTO `bfb_user` VALUES ('3', '', '3', '13434118351', '', '漫天的星光', '678FD0F42847BE0DB4CA6242854159F3.jpg', '1', '中国', '广东省', '白云区', null, '5', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1573437148', '1577770119', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '10.00', '0', '0', '1', null);
+INSERT INTO `bfb_user` VALUES ('4', '', '1', '13811112222', '', '沉默的蚂蚁', 'user/head_img.jpg', '1', '', '', '', null, '0', '1,2,3', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1574043344', '1575960207', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '1.00', '0', '2', '0', null);
+INSERT INTO `bfb_user` VALUES ('5', '', '1', '13811112223', '', '', 'user/head_img.jpg', '1', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1574043448', '1574043448', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('6', '', '1', '13811112224', '', '', 'user/head_img.jpg', '1', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('7', '', '1', '13811112225', '', '', 'user/head_img.jpg', '1', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '1', '10001', '0', '1575960245', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '2', '0', null);
+INSERT INTO `bfb_user` VALUES ('8', '', '1', '13811112226', '', '', 'user/head_img.jpg', '1', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('9', '', '1', '13811112227', '', '', 'user/head_img.jpg', '1', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('10', '', '1', '13811112228', '', '', 'user/head_img.jpg', '2', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('11', '', '1', '13811112229', '', '冷静的玫瑰', 'user/head_img.jpg', '1', '', '', '', null, '11', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '1576032031', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '1', '0', null);
+INSERT INTO `bfb_user` VALUES ('12', '', '2', '15074937447', '', '', 'user/head_img.jpg', '1', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '1577773358', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('13', '', '3', '18888888888', '', '沉默的佳人', 'user/head_img.jpg', '1', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1574387346', '1575946143', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('14', '', '3', '18888888889', '', '冷酷的路灯', 'user/head_img.jpg', '1', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1574387712', '1574387712', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('15', '', '3', '13434118352', '', '冷酷的路灯', 'user/head_img.jpg', '1', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '1', '10001', '1574388443', '1575946152', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('16', '', '3', '13434118353', '', '冷酷的路灯', 'user/head_img.jpg', '2', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1574390996', '1574390996', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('17', '', '1', '', '', '', 'user/head_img.jpg', '1', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('18', '', '3', '12345678966', '', '魁梧的蚂蚁', 'user/head_img.jpg', '1', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1575871710', '1575871710', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('19', '', '3', '13434118358', '', '幽默的裙子', 'user/head_img.jpg', '1', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1575944568', '1575944568', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('20', '', '2', '13434118359', '', '', '', '1', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('21', '', '1', '13266766285', '', '', '', '1', '', '', '', '321321', '16', '1,2,3', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '1577706645', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '1.00', '0', '1', '0', '33,29,32,14');
+INSERT INTO `bfb_user` VALUES ('23', '', '1', '13349188887', '', '', '', '1', '', '', '', null, '0', '1', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('22', '', '3', '121212', '', '冷静的外套', 'user/head_img.jpg', '1', '', '', '', null, '0', '', '0.00', '0.00', '0.00', '0.00', '0', '10001', '1576908892', '1576908892', '0c284312a8db9d10b32fb8c40774ef5d', null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('24', '123', '1', '13811112220', '', '', '', '1', '', '', '', null, '0', '1,2,3', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
+INSERT INTO `bfb_user` VALUES ('25', '4452833266615663548668', '1', '15017029100', '', '', '', '1', '', '', '', '朝阳东大桥', '17', '1', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '1577268864', null, null, '0', '1', '0', '0', '0', null, '1.00', '0', '1', '0', null);
+INSERT INTO `bfb_user` VALUES ('26', '123456M', '1', '15016832588', '', '', '', '1', '', '', '', null, '0', '1', '0.00', '0.00', '0.00', '0.00', '0', '10001', '0', '0', '123456', null, '0', '1', '0', '0', '0', null, '1.00', '0', '0', '0', null);
 
 -- ----------------------------
 -- Table structure for bfb_user_address
@@ -5750,16 +6937,25 @@ CREATE TABLE `bfb_user_address` (
   `region_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '所在区id',
   `detail` varchar(255) NOT NULL DEFAULT '' COMMENT '详细地址',
   `user_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
-  `app_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '小程序id',
+  `app_id` int(11) unsigned NOT NULL DEFAULT '10001' COMMENT '小程序id',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`address_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='用户收货地址表';
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='用户收货地址表';
 
 -- ----------------------------
 -- Records of bfb_user_address
 -- ----------------------------
-INSERT INTO `bfb_user_address` VALUES ('4', '收货人1', '15074937445', '1', '2', '7', '吉旅大酒店', '1', '10001', '1573444405', '1573444405');
+INSERT INTO `bfb_user_address` VALUES ('18', '林先生', '13200000000', '0', '0', '0', '东门', '1', '10001', '1577932017', '1577932017');
+INSERT INTO `bfb_user_address` VALUES ('5', '王生', '15074937448', '1', '2', '7', '老家', '3', '10001', '1573444405', '1573444405');
+INSERT INTO `bfb_user_address` VALUES ('7', '312', '321', '1', '1', '1', '321', '1', '10001', '1575973841', '1575973841');
+INSERT INTO `bfb_user_address` VALUES ('12', '', '', '3325', '3632', '3661', '', '1', '10001', '1576140798', '1576140798');
+INSERT INTO `bfb_user_address` VALUES ('9', '111', '11', '1', '1', '1', '1', '1', '10001', '1575973870', '1575973870');
+INSERT INTO `bfb_user_address` VALUES ('16', '', '13266766285', '801', '0', '806', '321321', '21', '10001', '0', '0');
+INSERT INTO `bfb_user_address` VALUES ('11', '收货人', '13811112229', '1', '3', '2', '维度确定的位置', '11', '10001', '1576032031', '1576032031');
+INSERT INTO `bfb_user_address` VALUES ('13', '', '', '1375', '1476', '1478', '', '1', '10001', '1576141028', '1576141028');
+INSERT INTO `bfb_user_address` VALUES ('17', '', '15017029100', '1', '0', '3', '朝阳东大桥', '25', '10001', '0', '0');
+INSERT INTO `bfb_user_address` VALUES ('20', '', '', '0', '0', '0', '广东省广州市', '1', '10001', '1577932243', '1577932243');
 
 -- ----------------------------
 -- Table structure for bfb_user_coupon
@@ -5799,35 +6995,63 @@ DROP TABLE IF EXISTS `bfb_user_info`;
 CREATE TABLE `bfb_user_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商户信息表',
   `user_id` int(11) NOT NULL COMMENT '商户ID',
+  `organization_code` varchar(255) NOT NULL DEFAULT '' COMMENT '组织机构代码',
   `license_pic` varchar(255) NOT NULL COMMENT '营业执照',
   `store_pic` varchar(255) NOT NULL COMMENT '店面门头照片',
+  `store_info_pic` varchar(255) NOT NULL,
   `principal_pic` varchar(255) NOT NULL COMMENT '负责人照片',
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态(0为审核中，1为通过，2为未通过)',
-  `category` varchar(100) NOT NULL DEFAULT '0' COMMENT '用户选择的经营项目',
+  `industry` varchar(100) NOT NULL DEFAULT '0' COMMENT '用户选择的经营项目',
   `reason` varchar(255) DEFAULT '0' COMMENT '审核失败原因',
   `store_address` text NOT NULL COMMENT '门面地址',
-  `contact_name` varchar(30) NOT NULL COMMENT '收货人',
-  `contact_address` text NOT NULL COMMENT '收货地址',
+  `contact_name` varchar(30) NOT NULL COMMENT '联系人',
   `contact_phone` varchar(20) NOT NULL COMMENT '收货电话',
   `latitude` decimal(13,7) unsigned NOT NULL DEFAULT '0.0000000' COMMENT '坐标',
   `longitude` decimal(13,7) unsigned NOT NULL DEFAULT '0.0000000' COMMENT '坐标',
   `site` varchar(255) NOT NULL COMMENT '维度确定的位置',
   `province_id` int(11) NOT NULL COMMENT '所属省份',
+  `city_id` int(11) NOT NULL,
+  `region_id` int(11) NOT NULL,
   `review_time` int(11) NOT NULL COMMENT '审核时间',
-  `pass_time` int(11) DEFAULT NULL COMMENT '审核结果时间',
+  `pass_time` int(11) DEFAULT '0' COMMENT '审核结果时间',
+  `app_id` int(11) NOT NULL DEFAULT '10001',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='供应商信息审核表';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COMMENT='供应商信息审核表';
 
 -- ----------------------------
 -- Records of bfb_user_info
 -- ----------------------------
-INSERT INTO `bfb_user_info` VALUES ('1', '1', '', '', '', '0', '0,', '0', '', '', '', '0', '0.0000000', '0.0000000', '', '0', '0', null);
-INSERT INTO `bfb_user_info` VALUES ('2', '1', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '0', '1,2,3', '0', '门面地址1', '收货人', '收货地址', '2147483647', '0.0000000', '0.0000000', '维度确定的位置', '0', '1574043344', null);
-INSERT INTO `bfb_user_info` VALUES ('3', '7', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '0', '1,2,3', '0', '门面地址1', '收货人', '收货地址', '2147483647', '0.0000000', '0.0000000', '维度确定的位置', '0', '1574043570', null);
-INSERT INTO `bfb_user_info` VALUES ('4', '9', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '0', '1,2,3', '0', '门面地址1', '收货人', '收货地址', '214748368', '0.0000000', '0.0000000', '维度确定的位置', '0', '1574043694', null);
-INSERT INTO `bfb_user_info` VALUES ('5', '10', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '0', '1,2,3', '0', '门面地址1', '收货人', '收货地址', '13811112228', '0.0000000', '0.0000000', '维度确定的位置', '0', '1574044018', null);
-INSERT INTO `bfb_user_info` VALUES ('6', '11', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '0', '1,2,3', '0', '门面地址1', '收货人', '收货地址', '13811112229', '0.0000000', '0.0000000', '维度确定的位置', '0', '1574044074', null);
-INSERT INTO `bfb_user_info` VALUES ('7', '0', '15074937446', '15074937446', '15074937446', '0', '1,2,3', '0', '门面地址1', '收货人', '收货地址', '13811112229', '0.0000000', '0.0000000', '维度确定的位置', '0', '1574850595', null);
+INSERT INTO `bfb_user_info` VALUES ('1', '1', '', '', '', '', '', '0', '1,2', '0', '', '', '0', '0.0000000', '0.0000000', '广州白云区', '0', '0', '0', '0', '1575460924', '10001');
+INSERT INTO `bfb_user_info` VALUES ('2', '2', '', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '', '20191109180531dfbdf3505.jpg', '0', '1,2,3', '0', '门面地址1', '收货人', '2147483647', '0.0000000', '0.0000000', '广州天河区', '0', '0', '0', '1574043344', '1575460924', '10001');
+INSERT INTO `bfb_user_info` VALUES ('3', '7', '', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '', '20191109180531dfbdf3505.jpg', '0', '1,2,3', '信息不正确', '门面地址1', '收货人', '2147483647', '0.0000000', '0.0000000', '维度确定的位置', '0', '0', '0', '1574043570', '0', '10001');
+INSERT INTO `bfb_user_info` VALUES ('4', '9', '', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '', '20191109180531dfbdf3505.jpg', '0', '1,2,3', '0', '门面地址1', '收货人', '214748368', '0.0000000', '0.0000000', '维度确定的位置', '0', '0', '0', '1574043694', '0', '10001');
+INSERT INTO `bfb_user_info` VALUES ('5', '10', '', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '', '20191109180531dfbdf3505.jpg', '0', '1,2,3', '0', '门面地址1', '收货人', '13811112228', '0.0000000', '0.0000000', '维度确定的位置', '0', '0', '0', '1574044018', '0', '10001');
+INSERT INTO `bfb_user_info` VALUES ('6', '11', '', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '', '20191109180531dfbdf3505.jpg', '0', '1,2,3', '0', '门面地址1', '收货人', '13811112229', '0.0000000', '0.0000000', '维度确定的位置', '1', '3', '2', '1574044074', '0', '10001');
+INSERT INTO `bfb_user_info` VALUES ('8', '17', '', '', '', '', '', '0', '3', '0', '', '', '', '0.0000000', '0.0000000', '', '0', '0', '0', '1575634265', '0', '10001');
+INSERT INTO `bfb_user_info` VALUES ('15', '0', '', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '', '20191109180531dfbdf3505.jpg', '0', '1,2,3', '0', '门面地址1', '联系人', '13811112229', '0.0000000', '0.0000000', '维度确定的位置', '1', '2', '7', '1576029708', '0', '10001');
+INSERT INTO `bfb_user_info` VALUES ('16', '21', '', '[QQ图片20191206133205.jpg]', '[QQ图片20191206133205.jpg]', '', '[QQ图片20191206133205.jpg]', '0', '1,2,3', '0', '321321', '', '13266766285', '0.0000000', '0.0000000', '', '801', '0', '806', '1576662147', '0', '10001');
+INSERT INTO `bfb_user_info` VALUES ('17', '23', '54845461961785733', '', '', '', '', '0', '1', '0', '永泰510', '', '13349188887', '0.0000000', '0.0000000', '', '1964', '1965', '1970', '1577175248', '0', '10001');
+INSERT INTO `bfb_user_info` VALUES ('18', '24', '123', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '20191109180531dfbdf3505.jpg', '0', '1,2,3', '0', '门面地址1', '联系人', '13811112220', '0.0000000', '0.0000000', '维度确定的位置', '0', '0', '0', '1577175826', '0', '10001');
+INSERT INTO `bfb_user_info` VALUES ('19', '25', '4452833266615663548668', '', '', '', '', '0', '1', '0', '朝阳东大桥', '', '15017029100', '0.0000000', '0.0000000', '', '1', '0', '3', '1577268589', '0', '10001');
+INSERT INTO `bfb_user_info` VALUES ('20', '26', '123456M', '', '', '', '', '0', '1', '0', '凤城2号', '', '15016832588', '0.0000000', '0.0000000', '', '1', '0', '3', '1577775177', '0', '10001');
+
+-- ----------------------------
+-- Table structure for bfb_version
+-- ----------------------------
+DROP TABLE IF EXISTS `bfb_version`;
+CREATE TABLE `bfb_version` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `version` varchar(255) NOT NULL,
+  `path` varchar(1000) NOT NULL,
+  `force` tinyint(4) NOT NULL,
+  `message` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of bfb_version
+-- ----------------------------
+INSERT INTO `bfb_version` VALUES ('8', '1.0.8', 'uploads/version/1.0.8.apk', '1', null);
 
 -- ----------------------------
 -- Table structure for bfb_web_user
@@ -5851,12 +7075,13 @@ CREATE TABLE `bfb_web_user` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_name` (`user_name`),
   KEY `id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10099 DEFAULT CHARSET=utf8 COMMENT='商家用户记录表';
+) ENGINE=MyISAM AUTO_INCREMENT=10100 DEFAULT CHARSET=utf8 COMMENT='商家用户记录表';
 
 -- ----------------------------
 -- Records of bfb_web_user
 -- ----------------------------
 INSERT INTO `bfb_web_user` VALUES ('10001', 'admin', '0c284312a8db9d10b32fb8c40774ef5d', '10001', '1542015252', '1555749817', '0', '阿莫之家网', '0', '0', '10093', '13098881688', 'www.0766city.com', '0');
+INSERT INTO `bfb_web_user` VALUES ('10099', 'admin2', '0c284312a8db9d10b32fb8c40774ef5d', '10001', '1576129536', '1576129536', '0', 'ffff', '10001', '0', '10108', '1312345678', 'ffff', '0');
 
 -- ----------------------------
 -- Table structure for bfb_withdraw_money_log
