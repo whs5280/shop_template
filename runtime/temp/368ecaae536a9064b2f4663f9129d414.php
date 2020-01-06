@@ -1,4 +1,4 @@
-<?php /*a:2:{s:68:"/var/www/html/www.0766city.com/application/user/view/user/index.html";i:1556090954;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1574238926;}*/ ?>
+<?php /*a:2:{s:68:"/var/www/html/www.0766city.com/application/user/view/user/index.html";i:1577669506;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1577669503;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -128,30 +128,21 @@
 	<div class="layui-col-md12 layui-col-xs12 widget-body ">
 		<form class="layui-form"  method="post" action="<?php echo url("","",true,false);?>"> 
 		    <div class="layui-u-sm-12 layui-u-md-12 layui-col-lg12">
-			    <div class="layui-form-item "> 
-			        <div class="layui-col-md4 layui-col-flex">				
-						<label class="layui-form-label">性别：</label>
-					   <?php echo htmlentities($gender = $request->get('gender')); ?>
-						<select class="form-control" name="gender"
-								data-layer-selected="{btnSize: 'sm', placeholder: '性别'}">
-							<option value="-1"
-								<?php echo $gender==='-1' ? 'selected'  :  ''; ?>>全部
-							</option>
-							<option value="1"
-								<?php echo $gender==='1' ? 'selected'  :  ''; ?>>男
-							</option>
-							<option value="2"
-								<?php echo $gender==='2' ? 'selected'  :  ''; ?>>女
-							</option>
-							<option value="0"
-								<?php echo $gender==='0' ? 'selected'  :  ''; ?>>未知
-							</option>
+			    <div class="layui-form-item ">
+					<div class="layui-col-md4 layui-col-flex">
+						<label class="layui-form-label">行业：</label>
+						<?php echo htmlentities($industry = $request->get('industry')); ?>
+						<select class="form-control" name="industry"
+								data-layer-selected="{btnSize: 'sm', placeholder: '行业'}">
+							<?php foreach($industry_list as $item): ?>
+							<option value="<?php echo htmlentities($item['id']); ?>"><?php echo htmlentities($item['name']); ?></option>
+							<?php endforeach; ?>
 						</select>
 					</div>
 					<div class="layui-col-md3">
-						<label class="layui-form-label">微信昵称：</label>
+						<label class="layui-form-label">昵称：</label>
 						<div class="layui-input-inline">
-							<input name="nickName" type="text"  class="layui-input" placeholder="请输入微信昵称" value="<?php echo htmlentities($request->get('nickName ')); ?>">	
+							<input name="nickName" type="text"  class="layui-input" placeholder="请输入昵称" value="<?php echo htmlentities($request->get('nickName')); ?>">
 						</div>
 					</div>
 					<div class="layui-col-md3 laui-col-width" >
@@ -168,11 +159,12 @@
 						<th>头像</th>
 						<th>昵称</th>
 						<th>性别</th>
-						<th>省市</th>
-						<th>上级</th>
+						<th>经营行业</th>
+						<!--<th>上级</th>-->
 						<th>消费</th>
-						<th>余额</th>
+						<!--<th>余额</th>-->
 						<th>积分</th>
+						<th>VIP</th>
 						<th>注册时间</th>
 						<th>操作</th>
 					</tr> 
@@ -182,21 +174,22 @@
 					<tr>
 						<td><?php echo htmlentities($item['user_id']); ?></td>
 						<td>
-							<a href="<?php echo htmlentities($item['avatarUrl']); ?>" title="点击查看大图" target="_blank">
-								<img src="<?php echo htmlentities($item['avatarUrl']); ?>" width="50" height="50" alt="">
+							<a href="/uploads/<?php echo htmlentities($item['avatarUrl']); ?>" title="点击查看大图" target="_blank">
+								<img src="/uploads/<?php echo htmlentities($item['avatarUrl']); ?>" width="50" height="50" alt="">
 							</a>
 						</td>
 						<td><?php echo htmlentities($item['nickName']); ?></td>
 						<td><?php echo htmlentities($item['gender']); ?></td>
-						<td><?php echo htmlentities($item['country']); ?><?php echo !empty($item['province']) ? htmlentities($item['province']) : ''; ?><?php echo !empty($item['city']) ? htmlentities($item['city']) : '--'; ?></td>
-						<td><?php echo !empty($item['users']['nickName']) ? htmlentities($item['users']['nickName']) : '无'; ?></td>
+						<td><?php echo htmlentities(industry($item['industry'])); ?></td>
+						<!--<td><?php echo !empty($item['users']['nickName']) ? htmlentities($item['users']['nickName']) : '无'; ?></td>-->
 						<td><?php echo htmlentities($item['shop_money']); ?></td>
-						<td><?php echo htmlentities($item['money']); ?></td>
+						<!--<td><?php echo htmlentities($item['money']); ?></td>-->
 						<td><?php echo htmlentities($item['integral']); ?></td>
+						<td><?php echo htmlentities(is_vip($item['is_vip'])); ?></td>
 						<td><?php echo htmlentities($item['create_time']); ?></td>
 						<td>
 							<div class="tpl-table-black-operation">
-								<a class="tpl-table-black-operation-warning" href="<?php echo url('order/allList',
+								<!--<a class="tpl-table-black-operation-warning" href="<?php echo url('order/allList',
 									['user_id' => $item['user_id']]); ?>"
 								   class="tpl-table-black-operation-del"
 								   data-id="<?php echo htmlentities($item['user_id']); ?>">
@@ -219,7 +212,7 @@
 								   class="tpl-table-black-operation-del"
 								   data-id="<?php echo htmlentities($item['user_id']); ?>">
 									<i class="mdi menu-icon mdi-telegram"></i> 收益
-								</a>
+								</a>-->
 								 <a href="javascript:void(0);"
 								   class="item-delete tpl-table-black-operation-del"
 								   data-id="<?php echo htmlentities($item['user_id']); ?>">

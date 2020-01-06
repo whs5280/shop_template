@@ -100,4 +100,34 @@ class UploadFile extends BaseModel
     {
         return $this->where('id', 'in', $fileIds)->update(compact('group_id'));
     }
+    
+    /**
+     * 根据where条件返回数据
+     * @param unknown $where
+     * @return unknown|boolean
+     */
+    public function getDataByWhere($where){
+    	if ($where){
+    		$data = $this->where($where)->value('file_name');
+    		if ($data){
+    			return $data;
+    		}
+    	}
+    	return false;
+    }
+	
+	/**
+	 * 根据where条件修改数据
+	 * @param unknown $where
+	 * @return unknown|boolean
+	 */
+	public function upFieldByWhere($where,$data){
+		if (is_array($where) && is_array($data)){
+			$res = $this->where($where)->update($data);
+			if ($res){
+				return $res;
+			}
+		}
+		return false;
+	}
 }

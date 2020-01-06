@@ -1,15 +1,15 @@
-<?php /*a:2:{s:78:"/var/www/html/www.0766city.com/application/user/view/setting/express/edit.html";i:1556090954;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1556090954;}*/ ?>
+<?php /*a:2:{s:78:"/var/www/html/www.0766city.com/application/user/view/setting/express/edit.html";i:1576565466;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1576554474;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>小程序商城</title>
+    <title>兴发美博汇商城系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <meta name="apple-mobile-web-app-title" content="小程序商城"/>
+    <meta name="apple-mobile-web-app-title" content="兴发美博汇商城系统"/>
     <link rel="icon" type="image/png" href="assets/user/i/favicon.ico"/>
     <link rel="stylesheet" href="assets/user/css/wy_modality.css"/>
     <link rel="stylesheet" href="/assets/user/vendors/iconfonts/mdi/css/materialdesignicons.min.css"/>
@@ -131,7 +131,7 @@
 							<div class="layui-col-sm9 layer-midd-left ">
 								<input type="text" class="layui-input" name="express[express_name]"
 									   value="<?php echo isset($express['express_name']) ? htmlentities($express['express_name']) : ''; ?>" required>
-								<small>请对照 <a href="<?php echo url('setting/company'); ?>" target="_blank">物流公司编码表</a> 填写</small>
+								<small>请对照 <a href="<?php echo url('setting/company'); ?>" target="_blank" style="color: red">物流公司编码表</a> 填写</small>
 							</div>
 						</div>
 						<div class="layui-form-item">

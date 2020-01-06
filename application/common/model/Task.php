@@ -127,12 +127,13 @@ class Task extends BaseModel
      * @return false|static[]
      * @throws \think\exception\DbException
      */
-    public function getList($agent_id)
+    public function getList($agent_id, $status)
     {
         return $this->alias('a')
             ->field('a.*,t.*')
             ->join('task t', 'a.task_id=t.task_id', 'left')
             ->where('agent_id', $agent_id)
+            ->where('status', $status)
             ->order('id', 'asc')
             ->select();
     }
@@ -172,11 +173,23 @@ class Task extends BaseModel
      * @return bool
      * @throws \think\Exception
      */
-    public function pass($id){
+    public function pass($id)
+    {
         // 完成任务
         $this->allowField(true)->save(['status' => 3],['id' => $id]);
         $obj = self::get($id);
         return $this->after_update($obj);
+    }
+    /**
+     * 任务审核失败
+     * @param $id
+     * @param $reason
+     * @return false|int
+     */
+    public function refuse($id, $reason)
+    {
+        // 审核失败
+        return $this->allowField(true)->save(['status' => 3, 'reason' => $reason],['id' => $id]);
     }
     /**
      * 注册时自动创建任务列表
@@ -220,5 +233,91 @@ class Task extends BaseModel
             ->paginate($listRows, false, [
                 'query' => Request::instance()->request()
             ]);
+    }
+
+    /**
+     * 分类统计
+     * @param $agent_id
+     * @param $status
+     * @return float|string
+     */
+    public function CountByStatus($agent_id, $status)
+    {
+        return $this->alias('a')
+            ->field('a.*,t.*')
+            ->join('task t', 'a.task_id=t.task_id', 'left')
+            ->where('agent_id', $agent_id)
+            ->where('status', $status)
+            ->order('id', 'asc')
+            ->count();
+    }
+
+    /**
+     * 新增任务之后同步所有的推广员列表
+     * @param $task_id
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function updateTaskByInsert($task_id)
+    {
+        // 新增任务之后同步所有的推广员列表
+        $info = Db::name('task')->where('task_id', $task_id)->find();
+
+        // 找出所有的推广员
+        $agent = Db::name('user')->where('type', 3)->select();
+        foreach ($agent as $item) {
+            $this->isUpdate(false)->save([
+                'agent_id' => $item['user_id'],
+                'task_id' => $info['task_id'],
+                'bonus' => $info['bonus'],
+                'create_time' => time()
+            ]);
+        }
+        return true;
+    }
+
+    /**
+     * 更新任务之后同步所有的推广员列表
+     * @param $task_id
+     * @return bool
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
+     */
+    public function updateTaskByUpdate($task_id)
+    {
+        // 更新任务之后同步所有的推广员列表
+        $info = Db::name('task')->where('task_id', $task_id)->find();
+
+        // 找出该任务的列表
+        $list = Db::name('agent_task')->where('task_id', $task_id)->select();
+        foreach ($list as $item) {
+            $this->where(['id' => $item['id']])->update(['bonus' => $info['bonus']]);
+        }
+        return true;
+    }
+
+    /**
+     * 删除任务之后同步所有的推广员列表
+     * @param $task_id
+     * @return bool
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
+     */
+    public function deleteTaskByDelete($task_id)
+    {
+        // 删除任务之后同步所有的推广员列表
+        $list = Db::name('agent_task')->where('task_id', $task_id)->select();
+        foreach ($list as $item) {
+            $this->where('id', $item['id'])->delete();
+        }
+        return true;
     }
 }

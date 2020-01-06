@@ -43,7 +43,7 @@ class Agent extends BaseModel
             $this->token = $this->token($user['phone']);
             // 记录缓存, 7天
             Cache::set($this->token, $user, 86400 * 7);
-            return $user['user_id'];
+            return $user;
         }
     }
     /**
@@ -95,11 +95,24 @@ class Agent extends BaseModel
      * @throws \app\common\exception\BaseException
      * @throws \think\exception\DbException
      */
-    public function invite_lists($aid)
+    public function invite_lists($aid, $status = -1, $keyword = null, $start = '', $end = '')
     {
-        $where = ['aid' => $aid];
+        $where[] = ['aid', '=', $aid];
+        $status >= 0 && $where[] = ['u.status', '=', $status];
+        $keyword != null && $where[] = ['u.nickName', 'like', "%".$keyword."%"];
+
+        if (isset($start) && trim($start) != '' ) {
+            $where[] = ['u.create_time', '>=', $start];
+        }
+        if (isset($end) && trim($end) != '' ) {
+            $where[] = ['u.create_time', '<=', $end];
+        }
+        if (isset($start) && trim($start) != '' && isset($end) && trim($end) != '') {
+            $where[] = ['u.create_time', 'between', [$start,$end]];
+        }
+
         return $this->alias('u')
-            ->field('u.user_id,u.nickName,u.status,i.site,i.reason')
+            ->field('u.user_id,u.nickName,u.status,u.create_time,i.site,i.reason,i.pass_time')
             ->join('user_info i', 'u.user_id=i.user_id', 'left')
             ->where($where)
             ->select();
@@ -136,5 +149,22 @@ class Agent extends BaseModel
     {
         // 同意协议
         return $this->allowField(true)->save(['is_agree' => 1],['user_id' => $data['user_id']]);
+    }
+    /**
+     * 状态统计
+     * @param $aid
+     * @param $status
+     * @return float|string
+     */
+    public function countByStatus($aid, $status)
+    {
+        $where[] = ['aid', '=', $aid];
+        $where[] = ['u.status', '=', $status];
+
+        return $this->alias('u')
+            ->field('u.user_id,u.nickName,u.status,u.create_time,i.site,i.reason,i.pass_time')
+            ->join('user_info i', 'u.user_id=i.user_id', 'left')
+            ->where($where)
+            ->count();
     }
 }

@@ -280,3 +280,134 @@ function random_nickname()
     $wei = rand(0,50);
     return $nickname_tou[$tou] . $nickname_wei[$wei];
 }
+
+function is_delete($is_delete){
+	if ($is_delete == 0){
+		return '显示';
+	}
+	return '已删除';
+}
+
+/**
+ * 生成签到数组
+ */
+function str_to_array($index, $str)
+{
+    $len = strlen($str);
+    $arr = [];
+    for($i=0; $i<$len; $i++) {
+        $arr[$index+$i]['data'] = $index+$i+1;
+        $arr[$index+$i]['is_sign'] = substr($str, $i, 1);
+    }
+    return $arr;
+}
+
+// 行业字段多选显示
+function industry($str='')
+{
+    if ($str != ''){
+        $id = explode(',', $str);
+        $data = Db::name('industry')->where(['is_show'=>1])->where('id','in',$id)->column('name');
+        if ($data){
+            $industry = implode('、', $data);
+            return $industry;
+        }
+    }
+    return '';
+}
+
+// 是否为VIP
+function is_vip($is_vip)
+{
+    if ($is_vip == 1){
+        return '是';
+    }
+    return '否';
+}
+/**
+ * 计算出两个经纬度之间的距离（单位：米）
+ */
+function getdistanceAction($arr1,$arr2)
+{
+	$lng1=$arr1['lng'];  //经度1
+	$lat1=$arr1['lat'];   //纬度1
+	$lng2=$arr2['lng'];  //经度2
+	$lat2=$arr2['lat'];   //纬度2
+
+	$EARTH_RADIUS = 6378137;   //地球半径
+	$RAD = pi() / 180.0;
+
+	$radLat1 = $lat1 * $RAD;
+	$radLat2 = $lat2 * $RAD;
+	$a = $radLat1 - $radLat2;    // 两点纬度差
+	$b = ($lng1 - $lng2) * $RAD;  // 两点经度差
+	$s = 2 * asin(sqrt(pow(sin($a / 2), 2) + cos($radLat1) * cos($radLat2) * pow(sin($b / 2), 2)));
+	$s = $s * $EARTH_RADIUS;
+	$s = round($s * 10000) / 10000;
+	return $s;
+	// print_r($s);   //正确答案：330518.674
+}
+// 根据地址获取经纬度
+function get_lat_and_log($address)
+{
+    //$address = '北京市海淀区上地十街10号';
+    $url = 'http://api.map.baidu.com/geocoding/v3/?address='. $address. '&output=json&ak=uT6skjzHGvh2q9xFKCAajAxquvkzjG0d&callback=showLocation'; // 配额(0.6w次/日)
+    $rs = file_get_contents($url);
+
+    $rs2 = str_replace('showLocation&&showLocation(','',$rs);
+    $rs2 = str_replace(')','',$rs2);
+
+    $json_data = json_decode($rs2,true);
+
+    $lng = $json_data['result']['location']['lng'];
+    $lat = $json_data['result']['location']['lat'];
+    $data['lat'] =$lat;
+    $data['log'] =$lng;
+
+    return $data;
+}
+
+/**
+ * 独家商品日志
+ * @param unknown $type
+ * @param unknown $user_id
+ * @param unknown $order_id
+ * @return number|string|boolean
+ */
+function soleLog($type,$user_id,$order_id,$order_no = ''){
+	// 新增独家商品
+	if ($type == 1){
+		$desc = '购买独家商品';
+	// 独家商品退款
+	}elseif ($type == 2){
+		$desc = '独家商品退款';
+	// 自动取消独家
+	}elseif ($type == 3){
+		$desc = '自动取消独家';
+	}
+	$data = [
+			'user_id'=>$user_id,
+			'order_id'=>$order_id,
+			'order_no'=>$order_no,
+			'desc'=>$desc,
+			'type'=>$type,
+			'add_time'=>time(),
+	];
+	$res = Db::name('sloe_log')->insertGetId($data);
+	if ($res){
+		return $res;
+	}
+	return false;
+}
+
+/*
+ * 数组的最小值和最大值
+ */
+function array_min_max($arr)
+{
+    $min_pos = array_search(min($arr), $arr);
+    $max_pos = array_search(max($arr), $arr);
+    $res['min_value'] = $arr[$min_pos];
+    $res['max_value'] = $arr[$max_pos];
+    return $res;
+}

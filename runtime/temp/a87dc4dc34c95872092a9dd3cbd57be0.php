@@ -1,4 +1,4 @@
-<?php /*a:2:{s:69:"/var/www/html/www.0766city.com/application/user/view/order/index.html";i:1574911219;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1574911218;}*/ ?>
+<?php /*a:2:{s:69:"/var/www/html/www.0766city.com/application/user/view/order/index.html";i:1578043216;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1578043214;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -141,7 +141,7 @@
                                         <button type="submit" class="layui-btn" lay-submit lay-filter="formDemo">搜索</button>
                                     </div>
                                 <div class="layui-col-md3">
-                                    <a class="j-export layui-btn "
+                                    <!--<a class="j-export layui-btn "
                                        href="javascript:void(0);">
                                         <i class="mdi menu-icon mdi-logout"></i>订单导出
                                     </a>
@@ -150,7 +150,7 @@
                                            href="<?php echo url('order/give'); ?>">
                                             <i class="mdi menu-icon mdi-export"></i>批量发货
                                         </a>
-                                    <?php endif; ?>
+                                    <?php endif; ?>-->
                                 </div>
                         </div>
                     </form>
@@ -233,6 +233,12 @@
                                                        href="<?php echo url('order/detail#delivery',
                                                            ['order_id' => $order['order_id']]); ?>">
                                                         去发货</a>
+                                                <?php endif; if(($order['pay_status']['value'] === 20
+                                                && $order['delivery_status']['value'] === 20)): ?>
+                                                <a class="tpl-table-black-operation"
+                                                   href="<?php echo url('order/export',
+                                                           ['order_id' => $order['order_id']]); ?>">
+                                                    出库清单</a>
                                                 <?php endif; ?>
                                             </div>
                                         </td>

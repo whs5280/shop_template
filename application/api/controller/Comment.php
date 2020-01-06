@@ -29,7 +29,6 @@ class Comment extends Controller
     
     /**
      * 评论
-     * @todo 先放着
      */
     public function comment(){
     	$order_id = input('post.order_id');
@@ -48,9 +47,16 @@ class Comment extends Controller
     	}
     	// 提交商品评价
     	if ($this->request->isPost()) {
-    		$formData = $this->request->post('formData', '', null);
-    		$formData_OrderGoodsId = array_column(json_decode($formData, true), null, 'order_goods_id');
-    		if ($model->addForOrder($order, $goodsList, $formData)) {
+    		// $formData = $this->request->post('formData', '', null);
+    		$formData['order_goods_id'] = input('post.order_goods_id');
+    		$formData['item_id'] = input('post.item_id');
+    		$formData['uploaded'] = input('post.uploaded');
+    		$formData['score'] = input('post.score');
+    		$formData['content'] = input('post.content');
+    		$formData['image_list'] = input('post.image_list');
+    		// $formData_OrderGoodsId = array_column(json_decode($formData, true), null, 'order_goods_id');
+    		$res = $model->addForOrder($order, $goodsList, $formData);
+    		if ($res) {
     			return $this->renderSuccess([], '评价发表成功');
     		}
     		return $this->renderError($model->getError() ?: '评价发表失败');
@@ -58,9 +64,9 @@ class Comment extends Controller
     	return $this->renderSuccess(compact('goodsList'));
     }
 
-	 public function order($order_id)
+	 public function order()
      {
-		
+     	$order_id = input('post.order_id');
         // 用户信息
         $user = $this->getUser();
         // 订单信息

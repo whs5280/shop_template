@@ -1,0 +1,198 @@
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md12 layui-col-xs12">
+            <div class="widget-head">
+                <div class="widget-title">用户列表</div>
+            </div>
+        </div>
+        <div class="layui-col-md12 layui-col-xs12 widget-body ">
+            <form class="layui-form"  method="post" action="{Url('User/auditlist')}">
+                <div class="layui-u-sm-12 layui-u-md-12 layui-col-lg12">
+                    <div class="layui-form-item ">
+                        <div class="layui-col-md4 layui-col-flex">
+                            <label class="layui-form-label">状态：</label>
+                            {$status = $request->get('status')}
+                            <select class="form-control" name="status"
+                                    data-layer-selected="{btnSize: 'sm', placeholder: '状态'}">
+                                <option value="-1"
+                                        {$status === '-1' ? 'selected' : ''}>全部
+                                </option>
+                                <option value="0"
+                                        {$status === '0' ? 'selected' : ''}>审核中
+                                </option>
+                                <option value="1"
+                                        {$status === '1' ? 'selected' : ''}>已通过
+                                </option>
+                                <option value="2"
+                                        {$status === '2' ? 'selected' : ''}>未通过
+                                </option>
+                            </select>
+                        </div>
+                        <!--<div class="layui-col-md3">
+                            <label class="layui-form-label">昵称：</label>
+                            <div class="layui-input-inline">
+                                <input name="nickName" type="text"  class="layui-input" placeholder="请输入昵称" value="{$request->get('nickName')}">
+                            </div>
+                        </div>-->
+                        <div class="layui-col-md3 laui-col-width" >
+                            <button class="layui-btn" lay-submit lay-filter="formDemo">搜索</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="layui-col-md12" >
+                <table class="layui-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>账号</th>
+                        <th>营业执照</th>
+                        <th>店面门头照片</th>
+                        <th>店内照片</th>
+                        <th>负责人照片</th>
+                        <th>负责人姓名</th>
+                        <th>行业</th>
+                        <th>审核状态</th>
+                        <th>审核失败原因</th>
+                        <th>审核时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {if (!$list->isEmpty())}{foreach ($list as $item)}
+                    <tr>
+                        <td>{$item['user_id']}</td>
+                        <td>{$item['phone']}</td>
+                        <td>
+                            <a href="/uploads/{$item['license_pic']}" title="点击查看大图" target="_blank">
+                                <img src="/uploads/{$item['license_pic']}" width="50" height="50" alt="">
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/uploads/{$item['store_pic']}" title="点击查看大图" target="_blank">
+                                <img src="/uploads/{$item['store_pic']}" width="50" height="50" alt="">
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/uploads/{$item['store_info_pic']}" title="点击查看大图" target="_blank">
+                                <img src="/uploads/{$item['store_info_pic']}" width="50" height="50" alt="">
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/uploads/{$item['principal_pic']}" title="点击查看大图" target="_blank">
+                                <img src="/uploads/{$item['principal_pic']}" width="50" height="50" alt="">
+                            </a>
+                        </td>
+                        <td>{$item['contact_name']}</td>
+                        <td>{$item['industry']|industry}</td>
+                        <!---->
+                        {if ($item['status'] == 0)}
+                            <td>审核中</td>
+                        {elseif ($item['status'] == 1) /}
+                            <td>已通过</td>
+                        {else/}
+                            <td>未通过</td>
+                        {/if}
+                        <!---->
+                        {if $item['reason']=="0"}
+                            <td>--</td>
+                        {else/}
+                            <td>{$item['reason']}</td>
+                        {/if}
+                        <!---->
+                        {if $item['review_time']=="0"}
+                        <td>--</td>
+                        {else/}
+                        <td>{$item['review_time']|date="Y-m-d H:i"}</td>
+                        {/if}
+                        <td>
+                            <div class="tpl-table-black-operation">
+                                {if ($item['status'] == 0)}
+                                <div class="tpl-table-black-operation">
+                                    <a href="javascript:void(0);"
+                                       class="item-pass tpl-table-black-operation-primary"
+                                       data-id="{$item['user_id']}">
+                                        <i class="mdi menu-icon mdi-pencil-lock"></i> 通过
+                                    </a>
+                                    <a href="javascript:void(0);"
+                                       class="item-refuse"
+                                       data-id="{$item['user_id']}">
+                                        <i class="mdi menu-icon mdi-pencil-lock"></i> 拒绝
+                                    </a>
+                                </div>
+                                {else/}
+                                <span>---</span>
+                                {/if}
+                            </div>
+                        </td>
+                    </tr>
+                    {/foreach}{else/}
+                    <tr>
+                        <td colspan="12" class="layer-text-center" >暂无记录</td>
+                    </tr>
+                    {/if}
+                    </tbody>
+                </table>
+                <div class="layui-col-md12 layui-col-xs12">
+                    <div class="">{$page|raw} </div>
+                    <div class="pagination-total">
+                        <div class="">总记录：{$list->total()}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    /**
+     * 审核操作
+     */
+    $('.item-pass').click(function () {
+
+        var id = $(this).data('id');
+        var url = "{:url('user/user/pass')}";
+        layer.confirm('确定审核通过吗？', function (index) {
+            $.post(url, {user_id: id}, function (result) {
+                result.code === 1 ? $.show_success(result.msg, result.url)
+                    : $.show_error(result.msg);
+            });
+            layer.close(index);
+        });
+    });
+
+    /**
+     *
+     */
+    $('.item-refuse').click(function () {
+        var id = $(this).data('id');
+        layer.open({
+            type: 1,
+            title: '请输入审核失败的原因',
+            shadeClose: false,
+            maxmin: false,
+            zIndex: layer.zIndex,
+            area: ['300px', '250px'],
+            content: '<div style="padding: 10px;line-height: 30px;">' +
+                '失败原因：<input name="reason" id="reason" type="text" class="form-control">'+
+                '</div>',
+            btn: ['确认','取消'],
+            yes: function (index) {
+                $.ajax({
+                    url: "{:url('user/user/refuse')}",
+                    dataType: 'json',
+                    type: 'POST',
+                    data: {user_id: id, reason:$('#reason').val()},
+                    success: function (data) {
+                        if (data.code == 1) {
+                            layer.msg(data.msg, {icon: 1,time:1500,shade: 0.1},function () {
+                                window.location.reload();
+                            });
+                        } else {
+                            layer.msg(data.msg, {icon: 2,time:1500,shade: 0.1});
+                        }
+                    }
+                })
+            }
+        })
+    })
+</script>

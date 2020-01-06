@@ -1,4 +1,4 @@
-<?php /*a:2:{s:68:"/var/www/html/www.0766city.com/application/user/view/agent/task.html";i:1574394516;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1574238926;}*/ ?>
+<?php /*a:2:{s:68:"/var/www/html/www.0766city.com/application/user/view/agent/task.html";i:1576891629;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1576891629;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -158,6 +158,7 @@
                         <th>奖金</th>
                         <th>状态</th>
                         <th>完成时间</th>
+                        <th>失败原因</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -177,12 +178,17 @@
                             <?php elseif(($item['status'] == 2)): ?>
                             <p><span>待审核</span></p>
                             <?php elseif(($item['status'] == 3)): ?>
-                            <p><span>已完成</span></p>
+                            <p><span>已审核</span></p>
                             <?php else: ?>
                             <p><span>--</span></p>
                             <?php endif; ?>
                         </td>
                         <td><?php echo htmlentities($item['update_time']); ?></td>
+                        <?php if($item['reason'] == '0'): ?>
+                            <td>--</td>
+                        <?php else: ?>
+                            <td><?php echo htmlentities($item['reason']); ?></td>
+                        <?php endif; ?>
                         <td>
                             <?php if(($item['status'] == 2)): ?>
                             <div class="tpl-table-black-operation">
@@ -190,6 +196,11 @@
                                    class="item-pass tpl-table-black-operation-primary"
                                    data-id="<?php echo htmlentities($item['id']); ?>">
                                     <i class="mdi menu-icon mdi-pencil-lock"></i> 通过
+                                </a>
+                                <a href="javascript:void(0);"
+                                   class="item-refuse"
+                                   data-id="<?php echo htmlentities($item['id']); ?>">
+                                    <i class="mdi menu-icon mdi-pencil-lock"></i> 拒绝
                                 </a>
                             </div>
                             <?php else: ?>
@@ -230,6 +241,42 @@
             layer.close(index);
         });
     });
+
+    /**
+     *
+     */
+    $('.item-refuse').click(function () {
+        var id = $(this).data('id');
+        layer.open({
+            type: 1,
+            title: '请输入审核失败的原因',
+            shadeClose: false,
+            maxmin: false,
+            zIndex: layer.zIndex,
+            area: ['300px', '250px'],
+            content: '<div style="padding: 10px;line-height: 30px;">' +
+                    '失败原因：<input name="reason" id="reason" type="text" class="form-control">'+
+                    '</div>',
+            btn: ['确认','取消'],
+            yes: function (index) {
+                $.ajax({
+                    url: "<?php echo url('user/agent/refuse'); ?>",
+                    dataType: 'json',
+                    type: 'POST',
+                    data: {id: id, reason:$('#reason').val()},
+                    success: function (data) {
+                        if (data.code == 1) {
+                            layer.msg(data.msg, {icon: 1,time:1500,shade: 0.1},function () {
+                                window.location.reload();
+                            });
+                        } else {
+                            layer.msg(data.msg, {icon: 2,time:1500,shade: 0.1});
+                        }
+                    }
+                })
+            }
+        })
+    })
 </script>
     </div>
     <!-- 内容区域 end -->

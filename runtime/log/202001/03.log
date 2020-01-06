@@ -1,0 +1,1522 @@
+---------------------------------------------------------------
+
+[2020-01-03T17:22:14+08:00] ::1 GET localhost:200/
+[运行时间：0.074882s] [吞吐率：13.35req/s] [内存消耗：536.09kb] [文件加载：63]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'purpose' => 'prefetch',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+---------------------------------------------------------------
+
+[2020-01-03T17:22:14+08:00] ::1 GET localhost:200/index.php?s=/user/index/index.html
+[运行时间：0.006060s] [吞吐率：165.02req/s] [内存消耗：354.92kb] [文件加载：65]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'purpose' => 'prefetch',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+---------------------------------------------------------------
+
+[2020-01-03T17:22:14+08:00] ::1 GET localhost:200/index.php?s=/user/login/login.html
+[运行时间：0.012279s] [吞吐率：81.44req/s] [内存消耗：432.59kb] [文件加载：67]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'purpose' => 'prefetch',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/login/login.html [ array (
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:22:15+08:00] ::1 GET localhost:200/index.php?s=/user/login/login.html
+[运行时间：0.002639s] [吞吐率：378.92req/s] [内存消耗：353.88kb] [文件加载：65]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/login/login.html [ array (
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:22:20+08:00] ::1 POST localhost:200/index.php?s=/user/login/login.html
+[运行时间：0.285031s] [吞吐率：3.51req/s] [内存消耗：867.76kb] [文件加载：88]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/login/login.html',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://localhost:200',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'content-length' => '75',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+)
+[ info ] [ PARAM ] array (
+  'login' => 
+  array (
+    'user_name' => 'admin',
+    'password' => '123456',
+    'type' => 'login',
+  ),
+)
+[ info ] [ DB ] INIT mysql
+---------------------------------------------------------------
+
+[2020-01-03T17:22:22+08:00] ::1 GET localhost:200/index.php?s=/user/index/index.html
+[运行时间：1.074746s] [吞吐率：0.93req/s] [内存消耗：1,274.67kb] [文件加载：102]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/login/login.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/index/index.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'data',
+  8 => 'version',
+  9 => 'log',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:22:25+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/index.html
+[运行时间：0.390876s] [吞吐率：2.56req/s] [内存消耗：1,070.58kb] [文件加载：94]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/index/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/index.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'list',
+  8 => 'page',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:22:27+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/platorder.html
+[运行时间：0.452191s] [吞吐率：2.21req/s] [内存消耗：1,221.24kb] [文件加载：95]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/plat_order.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'list',
+  8 => 'page',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:22:31+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/suppliergoods.html
+[运行时间：0.731962s] [吞吐率：1.37req/s] [内存消耗：1,460.73kb] [文件加载：98]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/platorder.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/supplier_goods.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'list',
+  8 => 'catgory',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:22:34+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/goodssku/goods_id/40.html
+[运行时间：0.636369s] [吞吐率：1.57req/s] [内存消耗：1,235.53kb] [文件加载：99]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/suppliergoods.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'goods_id' => '40',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/goods_buy.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'data',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:22:42+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/suppliergoods.html
+[运行时间：0.644466s] [吞吐率：1.55req/s] [内存消耗：1,349.48kb] [文件加载：96]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/goodssku/goods_id/40.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/supplier_goods.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'list',
+  8 => 'catgory',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:23:41+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/goodssku/goods_id/41.html
+[运行时间：0.932987s] [吞吐率：1.07req/s] [内存消耗：1,164.58kb] [文件加载：97]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/suppliergoods.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Mobile Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'goods_id' => '41',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/goods_buy.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'data',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:24:46+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/goodssku/goods_id/41.html
+[运行时间：3.672904s] [吞吐率：0.27req/s] [内存消耗：1,228.56kb] [文件加载：97]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/suppliergoods.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Mobile Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'goods_id' => '41',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/goods_buy.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'data',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:25:00+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/index.html
+[运行时间：0.345883s] [吞吐率：2.89req/s] [内存消耗：952.04kb] [文件加载：92]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/goodssku/goods_id/41.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/index.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'list',
+  8 => 'page',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:25:03+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/suppliergoods.html
+[运行时间：0.821574s] [吞吐率：1.22req/s] [内存消耗：1,348.43kb] [文件加载：96]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/supplier_goods.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'list',
+  8 => 'catgory',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:25:04+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/addsupplier.html
+[运行时间：0.337516s] [吞吐率：2.96req/s] [内存消耗：987.24kb] [文件加载：92]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/suppliergoods.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/save.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'category',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:25:07+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/suppliergoods.html
+[运行时间：0.591736s] [吞吐率：1.69req/s] [内存消耗：1,348.43kb] [文件加载：96]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/addsupplier.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/supplier_goods.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'list',
+  8 => 'catgory',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:25:09+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/goodssku/goods_id/41.html
+[运行时间：0.729808s] [吞吐率：1.37req/s] [内存消耗：1,163.47kb] [文件加载：97]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/suppliergoods.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'goods_id' => '41',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/goods_buy.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'data',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:25:21+08:00] ::1 POST localhost:200/index.php?s=/user/supplier/goodsbuy.html
+[运行时间：0.259181s] [吞吐率：3.86req/s] [内存消耗：963.32kb] [文件加载：87]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/goodssku/goods_id/41.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://localhost:200',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'content-length' => '107',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+)
+[ info ] [ PARAM ] array (
+  'sku' => 
+  array (
+    1 => 
+    array (
+      'key' => '110',
+      'goods_id' => '41',
+      'store_count' => '900',
+      'number' => '',
+    ),
+  ),
+)
+[ info ] [ DB ] INIT mysql
+---------------------------------------------------------------
+
+[2020-01-03T17:25:27+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/goodssku/goods_id/41.html
+[运行时间：0.724062s] [吞吐率：1.38req/s] [内存消耗：1,163.47kb] [文件加载：97]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/suppliergoods.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'goods_id' => '41',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/goods_buy.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'data',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:25:29+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/addsupplier.html
+[运行时间：0.296152s] [吞吐率：3.38req/s] [内存消耗：940.77kb] [文件加载：90]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/goodssku/goods_id/41.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/save.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'category',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:25:31+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/suppliergoods.html
+[运行时间：0.690401s] [吞吐率：1.45req/s] [内存消耗：1,348.43kb] [文件加载：96]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/addsupplier.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/supplier_goods.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'list',
+  8 => 'catgory',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:25:36+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/goodssku/goods_id/40.html
+[运行时间：0.705397s] [吞吐率：1.42req/s] [内存消耗：1,136.71kb] [文件加载：97]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/suppliergoods.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'goods_id' => '40',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/goods_buy.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'data',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:25:50+08:00] ::1 POST localhost:200/index.php?s=/user/supplier/goodsbuy.html
+[运行时间：0.300352s] [吞吐率：3.33req/s] [内存消耗：967.04kb] [文件加载：87]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/goodssku/goods_id/40.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://localhost:200',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'content-length' => '436',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+)
+[ info ] [ PARAM ] array (
+  'sku' => 
+  array (
+    1 => 
+    array (
+      'key' => '143',
+      'goods_id' => '40',
+      'store_count' => '7600',
+      'number' => '10',
+    ),
+    2 => 
+    array (
+      'key' => '142',
+      'goods_id' => '40',
+      'store_count' => '5252',
+      'number' => '5',
+    ),
+    3 => 
+    array (
+      'key' => '144',
+      'goods_id' => '40',
+      'store_count' => '100',
+      'number' => '',
+    ),
+    4 => 
+    array (
+      'key' => '146',
+      'goods_id' => '40',
+      'store_count' => '100',
+      'number' => '',
+    ),
+  ),
+)
+[ info ] [ DB ] INIT mysql
+---------------------------------------------------------------
+
+[2020-01-03T17:29:00+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/goodssku/goods_id/40.html
+[运行时间：0.714227s] [吞吐率：1.40req/s] [内存消耗：1,201.79kb] [文件加载：97]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/suppliergoods.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'goods_id' => '40',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/goods_buy.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'data',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:29:04+08:00] ::1 POST localhost:200/index.php?s=/user/supplier/goodsbuy.html
+[运行时间：0.266815s] [吞吐率：3.75req/s] [内存消耗：955.89kb] [文件加载：88]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/goodssku/goods_id/40.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://localhost:200',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'content-length' => '436',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+)
+[ info ] [ PARAM ] array (
+  'sku' => 
+  array (
+    1 => 
+    array (
+      'key' => '143',
+      'goods_id' => '40',
+      'store_count' => '7600',
+      'number' => '10',
+    ),
+    2 => 
+    array (
+      'key' => '142',
+      'goods_id' => '40',
+      'store_count' => '5252',
+      'number' => '5',
+    ),
+    3 => 
+    array (
+      'key' => '144',
+      'goods_id' => '40',
+      'store_count' => '100',
+      'number' => '',
+    ),
+    4 => 
+    array (
+      'key' => '146',
+      'goods_id' => '40',
+      'store_count' => '100',
+      'number' => '',
+    ),
+  ),
+)
+[ info ] [ DB ] INIT mysql
+---------------------------------------------------------------
+
+[2020-01-03T17:29:10+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/goodssku/goods_id/40.html
+[运行时间：0.704453s] [吞吐率：1.42req/s] [内存消耗：1,136.71kb] [文件加载：97]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/suppliergoods.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'goods_id' => '40',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/goods_buy.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'data',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:29:14+08:00] ::1 POST localhost:200/index.php?s=/user/supplier/goodsbuy.html
+[运行时间：0.240584s] [吞吐率：4.16req/s] [内存消耗：956.32kb] [文件加载：88]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/goodssku/goods_id/40.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://localhost:200',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'content-length' => '437',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+)
+[ info ] [ PARAM ] array (
+  'sku' => 
+  array (
+    1 => 
+    array (
+      'key' => '143',
+      'goods_id' => '40',
+      'store_count' => '7600',
+      'number' => '10',
+    ),
+    2 => 
+    array (
+      'key' => '142',
+      'goods_id' => '40',
+      'store_count' => '5252',
+      'number' => '5',
+    ),
+    3 => 
+    array (
+      'key' => '144',
+      'goods_id' => '40',
+      'store_count' => '100',
+      'number' => '3',
+    ),
+    4 => 
+    array (
+      'key' => '146',
+      'goods_id' => '40',
+      'store_count' => '100',
+      'number' => '',
+    ),
+  ),
+)
+[ info ] [ DB ] INIT mysql
+---------------------------------------------------------------
+
+[2020-01-03T17:29:19+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/goodssku/goods_id/40.html
+[运行时间：2.677493s] [吞吐率：0.37req/s] [内存消耗：1,136.71kb] [文件加载：97]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/suppliergoods.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'goods_id' => '40',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/goods_buy.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'data',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:30:21+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/goodssku/goods_id/40.html
+[运行时间：0.674982s] [吞吐率：1.48req/s] [内存消耗：1,201.82kb] [文件加载：97]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/suppliergoods.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'goods_id' => '40',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/goods_buy.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'data',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:30:45+08:00] ::1 POST localhost:200/index.php?s=/user/supplier/goodsbuy.html
+[运行时间：1.034918s] [吞吐率：0.97req/s] [内存消耗：1,152.51kb] [文件加载：101]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/goodssku/goods_id/40.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://localhost:200',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'content-length' => '437',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+)
+[ info ] [ PARAM ] array (
+  'sku' => 
+  array (
+    1 => 
+    array (
+      'key' => '143',
+      'goods_id' => '40',
+      'store_count' => '7600',
+      'number' => '10',
+    ),
+    2 => 
+    array (
+      'key' => '142',
+      'goods_id' => '40',
+      'store_count' => '5252',
+      'number' => '20',
+    ),
+    3 => 
+    array (
+      'key' => '144',
+      'goods_id' => '40',
+      'store_count' => '100',
+      'number' => '',
+    ),
+    4 => 
+    array (
+      'key' => '146',
+      'goods_id' => '40',
+      'store_count' => '100',
+      'number' => '',
+    ),
+  ),
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/thinkphp/tpl/dispatch_jump.tpl [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'code',
+  8 => 'msg',
+  9 => 'data',
+  10 => 'wait',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:30:48+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/suppliergoods.html
+[运行时间：0.544370s] [吞吐率：1.84req/s] [内存消耗：1,348.43kb] [文件加载：96]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/goodsbuy.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/supplier_goods.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'list',
+  8 => 'catgory',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:30:57+08:00] ::1 GET localhost:200/index.php?s=/user/order/deliverylist.html
+[运行时间：0.443070s] [吞吐率：2.26req/s] [内存消耗：1,188.05kb] [文件加载：100]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/suppliergoods.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/order/index.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'title',
+  8 => 'dataType',
+  9 => 'list',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:31:01+08:00] ::1 GET localhost:200/index.php?s=/user/agent/index.html
+[运行时间：0.330933s] [吞吐率：3.02req/s] [内存消耗：1,131.99kb] [文件加载：94]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/order/deliverylist.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/agent/index.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'list',
+  8 => 'page',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:31:01+08:00] ::1 GET localhost:200/uploads/678FD0F42847BE0DB4CA6242854159F3.jpg
+[运行时间：0.010125s] [吞吐率：98.77req/s] [内存消耗：308.48kb] [文件加载：54]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+---------------------------------------------------------------
+
+[2020-01-03T17:31:33+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/index.html
+[运行时间：0.398812s] [吞吐率：2.51req/s] [内存消耗：950.95kb] [文件加载：92]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/agent/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/index.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'list',
+  8 => 'page',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T17:31:39+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/platorder.html
+[运行时间：0.470554s] [吞吐率：2.13req/s] [内存消耗：1,156.59kb] [文件加载：93]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; pmaUser-1=%7B%22iv%22%3A%22MeffKkGRCige6jS2%2BE9Ovg%3D%3D%22%2C%22mac%22%3A%22cd08c9e2c5f05cfc123e8bd2dc0d4694c90ff2c9%22%2C%22payload%22%3A%22NpvnU9CxHF1Gk%2B1shsOuJA%3D%3D%22%7D; PHPSESSID=7s1331evrighaob9995ag57u31',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/plat_order.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'list',
+  8 => 'page',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T18:01:12+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/platorder.html
+[运行时间：0.602408s] [吞吐率：1.66req/s] [内存消耗：1,221.33kb] [文件加载：93]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; PHPSESSID=7s1331evrighaob9995ag57u31; phpMyAdmin=ff9faa4vogasjm861bkplmei93d13kg9; pmaUser-1=%7B%22iv%22%3A%22paOwmbKhmgdQnIyQ%5C%2FhXEyw%3D%3D%22%2C%22mac%22%3A%2259b18898611f646cdb2f11a16aff5768bf031cad%22%2C%22payload%22%3A%22tg0z7kizsUDsN5kmpyM0Xg%3D%3D%22%7D; pmaAuth-1=%7B%22iv%22%3A%22%2B3gR6h2YfWnw8HY3BuxLFQ%3D%3D%22%2C%22mac%22%3A%2282434290d83c1b4bd18d9d5a788d1da1cdb1fe9c%22%2C%22payload%22%3A%22QCqRxWqN7j674op%5C%2FbsgGR5SNEQPqVAUkUEPbSBYlTuw%3D%22%7D',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/plat_order.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'list',
+  8 => 'page',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T18:51:25+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/suppliergoods.html
+[运行时间：0.680673s] [吞吐率：1.47req/s] [内存消耗：1,349.34kb] [文件加载：96]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; PHPSESSID=7s1331evrighaob9995ag57u31; thinkphp_show_page_trace=0|0; phpMyAdmin=at91iu9rd28slagl6v2k3m6ifdieroae; pmaUser-1=%7B%22iv%22%3A%22VDcWG9QxofGF4vo2YP3K7g%3D%3D%22%2C%22mac%22%3A%22f9afc21c8961e9be1c2700a388f9d007385e1baa%22%2C%22payload%22%3A%22pjV%2BVsYxa1SiJQvctZBZyQ%3D%3D%22%7D; pmaAuth-1=%7B%22iv%22%3A%22rjvMOinZ6qin8OCLSyMGHg%3D%3D%22%2C%22mac%22%3A%227a7a32573eace3e10f2e6e73353d4fc7fdcdb146%22%2C%22payload%22%3A%22E0Kp3pjiGZ%5C%2FOnICtTn3J%2BA4gtmU14bW9j0WqDB7PRLg%3D%22%7D',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/supplier/platorder.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/supplier_goods.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'list',
+  8 => 'catgory',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T19:09:51+08:00] ::1 GET localhost:200/
+[运行时间：0.079836s] [吞吐率：12.53req/s] [内存消耗：536.81kb] [文件加载：63]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; PHPSESSID=7s1331evrighaob9995ag57u31; thinkphp_show_page_trace=0|0; phpMyAdmin=at91iu9rd28slagl6v2k3m6ifdieroae; pmaUser-1=%7B%22iv%22%3A%22qe%2BE4BTYPjECTcUcsGhp%2Bw%3D%3D%22%2C%22mac%22%3A%22fffd5a3110bdb5c8cba588d7835536e710bbe047%22%2C%22payload%22%3A%22tQ5xksb2J70PTFfKlAANOw%3D%3D%22%7D; pmaAuth-1=%7B%22iv%22%3A%22aqdMfIVCiJ%5C%2FArAfrTeHPoA%3D%3D%22%2C%22mac%22%3A%22ccd93809117a3797984d0f0c13eefee6b56890c4%22%2C%22payload%22%3A%224rm5vzYqwy2Q0hxcKGvah2S0cweh4qROpyd8VO0l8rU%3D%22%7D',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'purpose' => 'prefetch',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+---------------------------------------------------------------
+
+[2020-01-03T19:09:52+08:00] ::1 GET localhost:200/index.php?s=/user/index/index.html
+[运行时间：1.029579s] [吞吐率：0.97req/s] [内存消耗：1,370.37kb] [文件加载：100]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; PHPSESSID=7s1331evrighaob9995ag57u31; thinkphp_show_page_trace=0|0; phpMyAdmin=at91iu9rd28slagl6v2k3m6ifdieroae; pmaUser-1=%7B%22iv%22%3A%22qe%2BE4BTYPjECTcUcsGhp%2Bw%3D%3D%22%2C%22mac%22%3A%22fffd5a3110bdb5c8cba588d7835536e710bbe047%22%2C%22payload%22%3A%22tQ5xksb2J70PTFfKlAANOw%3D%3D%22%7D; pmaAuth-1=%7B%22iv%22%3A%22aqdMfIVCiJ%5C%2FArAfrTeHPoA%3D%3D%22%2C%22mac%22%3A%22ccd93809117a3797984d0f0c13eefee6b56890c4%22%2C%22payload%22%3A%224rm5vzYqwy2Q0hxcKGvah2S0cweh4qROpyd8VO0l8rU%3D%22%7D',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'purpose' => 'prefetch',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/index/index.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'data',
+  8 => 'version',
+  9 => 'log',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T19:09:53+08:00] ::1 GET localhost:200/index.php?s=/user/index/index.html
+[运行时间：1.023062s] [吞吐率：0.98req/s] [内存消耗：1,175.62kb] [文件加载：100]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; PHPSESSID=7s1331evrighaob9995ag57u31; thinkphp_show_page_trace=0|0; phpMyAdmin=at91iu9rd28slagl6v2k3m6ifdieroae; pmaUser-1=%7B%22iv%22%3A%22qe%2BE4BTYPjECTcUcsGhp%2Bw%3D%3D%22%2C%22mac%22%3A%22fffd5a3110bdb5c8cba588d7835536e710bbe047%22%2C%22payload%22%3A%22tQ5xksb2J70PTFfKlAANOw%3D%3D%22%7D; pmaAuth-1=%7B%22iv%22%3A%22aqdMfIVCiJ%5C%2FArAfrTeHPoA%3D%3D%22%2C%22mac%22%3A%22ccd93809117a3797984d0f0c13eefee6b56890c4%22%2C%22payload%22%3A%224rm5vzYqwy2Q0hxcKGvah2S0cweh4qROpyd8VO0l8rU%3D%22%7D',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/index/index.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'data',
+  8 => 'version',
+  9 => 'log',
+) ]
+---------------------------------------------------------------
+
+[2020-01-03T19:09:59+08:00] ::1 GET localhost:200/index.php?s=/user/supplier/index.html
+[运行时间：0.364927s] [吞吐率：2.74req/s] [内存消耗：1,026.80kb] [文件加载：92]
+[ info ] [ LANG ] /var/www/html/www.0766city.com/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pma_lang=zh_CN; UM_distinctid=16f274b97a814d-027c84cfe3bfae-1a201708-1fa400-16f274b97a93ea; CNZZDATA1275375649=1808442092-1576912263-http%253A%252F%252Flocalhost%253A205%252F%7C1576912263; Phpstorm-a12c1476=ffbde8d2-db21-4c8d-b84e-c75c80b7792d; PHPSESSID=7s1331evrighaob9995ag57u31; thinkphp_show_page_trace=0|0; phpMyAdmin=at91iu9rd28slagl6v2k3m6ifdieroae; pmaUser-1=%7B%22iv%22%3A%22qe%2BE4BTYPjECTcUcsGhp%2Bw%3D%3D%22%2C%22mac%22%3A%22fffd5a3110bdb5c8cba588d7835536e710bbe047%22%2C%22payload%22%3A%22tQ5xksb2J70PTFfKlAANOw%3D%3D%22%7D; pmaAuth-1=%7B%22iv%22%3A%22aqdMfIVCiJ%5C%2FArAfrTeHPoA%3D%3D%22%2C%22mac%22%3A%22ccd93809117a3797984d0f0c13eefee6b56890c4%22%2C%22payload%22%3A%224rm5vzYqwy2Q0hxcKGvah2S0cweh4qROpyd8VO0l8rU%3D%22%7D',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost:200/index.php?s=/user/index/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+  'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost:200',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /var/www/html/www.0766city.com/application/user/view/supplier/index.html [ array (
+  0 => 'base_url',
+  1 => 'store_url',
+  2 => 'group',
+  3 => 'url',
+  4 => 'menu',
+  5 => 'store',
+  6 => 'request',
+  7 => 'list',
+  8 => 'page',
+) ]

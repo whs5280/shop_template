@@ -1,4 +1,4 @@
-<?php /*a:2:{s:72:"/var/www/html/www.0766city.com/application/user/view/supplier/index.html";i:1574911220;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1574911218;}*/ ?>
+<?php /*a:2:{s:72:"/var/www/html/www.0766city.com/application/user/view/supplier/index.html";i:1578043217;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1578043214;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -234,6 +234,12 @@
                                    data-id="<?php echo htmlentities($item['user_id']); ?>">
                                     <i class="mdi menu-icon mdi-telegram"></i> 商品
                                 </a>
+                                <a class="tpl-table-black-operation-primary" onclick="neighbor(this)" data-href="<?php echo url('Supplier/getNeighbor',
+									['user_id' => $item['user_id']]); ?>"
+                                   class="tpl-table-black-operation-del"
+                                   data-id="<?php echo htmlentities($item['user_id']); ?>">
+                                    <i class="mdi menu-icon mdi-telegram"></i> 查看附近
+                                </a>
                             </div>
                         </td>
                     </tr>
@@ -259,8 +265,39 @@
         // 删除元素
         var url = "index.php?s=/user/user/delete";
         $('.item-delete').delete('user_id', url, '确定要冻结此用户吗？');
-
     });
+
+    function neighbor(obj) {
+        var user_id = $(obj).data('id');
+        var url = "index.php?s=/user/supplier/getNeighbor";
+        $.ajax({
+            url: '<?php echo url("supplier/getNeighbor"); ?>',
+            type: 'GET',
+            dataType: 'json',
+            data: {"user_id": user_id},
+            success: function (data) {
+                let content = '';
+                for(var p in data){
+                    content += '<div style="padding: 10px;line-height: 30px;">' +
+                        /*'<span style="margin-left: 10px;">'+ p +'</span>' +*/
+                        '供应商名称：<span style="margin-right: 10px;">'+ data[p].name +'</span>' +
+                        '详细地址：<span style="margin-right: 10px;">'+ data[p].address + '</span>' +
+                        '距离：<span style="margin-right: 10px;">'+ parseInt(data[p].distance)/1000 + 'km</span>' +
+                        '</div>';
+                }
+                layer.open({
+                    type: 1,
+                    title: '附近5公里的供应商',
+                    shadeClose: false,
+                    maxmin: false,
+                    zIndex: layer.zIndex,
+                    area: ['500px', '500px'],
+                    content:  content,
+                    btn: ['确认'],
+                });
+            }
+        });
+    }
 </script>
     </div>
     <!-- 内容区域 end -->

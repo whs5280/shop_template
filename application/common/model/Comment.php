@@ -46,7 +46,7 @@ class Comment extends BaseModel
      */
     public function image()
     {
-        return $this->hasMany('CommentImage')->order(['id' => 'asc'])->with('file');
+       return $this->hasMany('CommentImage')->order(['id' => 'asc'])->with('file');
     }
     /**
      * 评价详情
@@ -56,7 +56,8 @@ class Comment extends BaseModel
      */
     public static function detail($comment_id)
     {
-        return self::get($comment_id, ['user', 'orderM', 'OrderGoods', 'image']);
+    	// return self::get($comment_id, ['user', 'orderM', 'OrderGoods']);
+		return self::get($comment_id, ['user', 'orderM', 'OrderGoods', 'image']);
     }
     /**
      * 更新记录
@@ -75,6 +76,7 @@ class Comment extends BaseModel
             // 是否为图片评价
             $data['is_picture'] = !$this->image()->select()->isEmpty();
             // 更新评论记录
+            $data['update_time'] = time();
             $this->allowField(true)->save($data);
             Db::commit();
             return true;
@@ -199,12 +201,12 @@ class Comment extends BaseModel
     public function checkOrderAllowComment($order)
     {
         // 验证订单是否已完成
-        if ($order['order_status']['value'] !== 30) {
+        if ($order['order_status']['value'] != 30) {
             $this->error = '该订单未完成，无法评价';
             return false;
         }
         // 验证订单是否已评价
-        if ($order['is_comment'] === 1) {
+        if ($order['is_comment'] == 1) {
             $this->error = '该订单已完成评价';
             return false;
         }
@@ -218,10 +220,11 @@ class Comment extends BaseModel
      * @return boolean
      * @throws \Exception
      */
-    public function addForOrder($order, $goodsList, $formJsonData)
+    public function addForOrder($order, $goodsList, $formData)
     {
         // 生成 formData
-        $formData = $this->formatFormData($formJsonData);
+        // $formData = $this->formatFormData($formJsonData);
+    	// $formData = json_decode($formJsonData, true);
         // 生成评价数据
         $data = $this->createCommentData($order['user_id'], $order['order_id'], $goodsList, $formData);
         if (empty($data)) {
@@ -232,12 +235,14 @@ class Comment extends BaseModel
         Db::startTrans();
         try {
             // 记录评价内容
-            $result = $this->isUpdate(false)->saveAll($data);
+        	$data['create_time'] = time();
+        	$data['update_time'] = time();
+            $result = $this->allowField(false)->insertGetId($data);
             // 记录评价图片
-            $this->saveAllImages($result, $formData);
+            $this->saveAllImages($result, $formData['image_list']);
             // 更新订单评价状态
-            $isComment = count($goodsList) === count($data);
-            $this->updateOrderIsComment($order, $isComment, $result);
+            // $isComment = count($goodsList) === count($data);
+            $this->updateOrderIsComment($order,$formData['order_goods_id']);
             Db::commit();
             return true;
         } catch (\Exception $e) {
@@ -246,6 +251,7 @@ class Comment extends BaseModel
             return false;
         }
     }
+    
     /**
      * 更新订单评价状态
      * @param Order $order
@@ -254,19 +260,19 @@ class Comment extends BaseModel
      * @return array|false
      * @throws \Exception
      */
-    private function updateOrderIsComment($order, $isComment, &$commentList)
+    private function updateOrderIsComment($order,$order_goods_id)
     {
         // 更新订单商品
-        $orderGoodsData = [];
-        foreach ($commentList as $comment) {
-            $orderGoodsData[] = [
-                'order_goods_id' => $comment['order_goods_id'],
-                'is_comment' => 1
-            ];
-        }
+        //$orderGoodsData = [];
+        //foreach ($commentList as $comment) {
+            //$orderGoodsData[] = [
+                //'order_goods_id' => $order_goods_id,
+                
+            //];
+        //}
         // 更新订单
-        $isComment && $order->save(['is_comment' => 1]);
-        return (new OrderGoods)->saveAll($orderGoodsData);
+        (new Order)->where(['order_id'=>$order['order_id']])->update(['is_comment' => 1]);
+        return (new OrderGoods)->where(['order_goods_id'=>$order_goods_id])->update(['is_comment' => 1]);
     }
     /**
      * 生成评价数据
@@ -280,24 +286,24 @@ class Comment extends BaseModel
     private function createCommentData($user_id, $order_id, &$goodsList, &$formData)
     {
         $data = [];
-        foreach ($goodsList as $Item) {
-            if (!isset($formData[$Item['order_goods_id']])) {
+        //foreach ($goodsList as $Item) {
+            /*if (!isset($formData[$Item['order_goods_id']])) {
                 throw new BaseException(['msg' => '提交的数据不合法']);
-            }
-            $item = $formData[$Item['order_goods_id']];
-            !empty($item['content']) && $data[$Item['order_goods_id']] = [
-                'score' => $item['score'],
-                'content' => $item['content'],
-                'is_picture' => !empty($item['uploaded']),
+            }*/
+            //$item = $Item;dump($item);die;
+            !empty($formData['content']) && $data = [
+                'score' => $formData['score'],
+                'content' => $formData['content'],
+                'is_picture' => $formData['uploaded'],
                 'sort' => 100,
                 'status' => 1,
                 'user_id' => $user_id,
                 'order_id' => $order_id,
-                'item_id' => $item['item_id'],
-                'order_goods_id' => $item['order_goods_id'],
+                'item_id' => $formData['item_id'],
+                'order_goods_id' => $formData['order_goods_id'],
                 'app_id' => self::$app_id
             ];
-        }
+        //}
         return $data;
     }
     /**
@@ -318,19 +324,24 @@ class Comment extends BaseModel
      */
     private function saveAllImages(&$commentList, &$formData)
     {
+    	$formData = explode(',', $formData);
         // 生成评价图片数据
-        $imageData = [];
-        foreach ($commentList as $comment) {
-            $item = $formData[$comment['order_goods_id']];
-            foreach ($item['image_list'] as $imageId) {
-                $imageData[] = [
-                    'comment_id' => $comment['comment_id'],
-                    'image_id' => $imageId,
+        // $imageData = [];
+        // foreach ($commentList as $comment) {
+            // $item = $formData[$comment['order_goods_id']];
+            // foreach ($item['image_list'] as $imageId) {
+    		for($i = 0; $i < count($formData); $i++) {
+    			$image_id = db('upload_file')->where(['file_name'=>$formData[$i]])->value('id');
+                // $imageData[] = [
+                $imageData = [
+                    'comment_id' => $commentList,// $comment['comment_id'],
+                    'image_id' => $image_id,
                     'app_id' => self::$app_id
                 ];
-            }
-        }
+    		}
+            // }
+        // }
         $model = new CommentImage;
-        return !empty($imageData) && $model->saveAll($imageData);
+        return !empty($imageData) && $model->insert($imageData);
     }
 }

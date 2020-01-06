@@ -1,4 +1,4 @@
-<?php /*a:2:{s:81:"/var/www/html/www.0766city.com/application/user/view/supplier/supplier_goods.html";i:1574905143;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1574238926;}*/ ?>
+<?php /*a:2:{s:81:"/var/www/html/www.0766city.com/application/user/view/supplier/supplier_goods.html";i:1578043216;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1578043214;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -130,12 +130,12 @@
 						<input type="hidden" name="s" value="/<?php echo htmlentities($request->pathinfo()); ?>">
 						<div class="layui-col-sm12 layui-col-md12">
 							<div class="layui">
-								<div class="layui-col-md3">
+								<!-- <div class="layui-col-md3">
 									<label class="layui-form-label">商品名称：</label>
 									<div class="layui-col-md6 ">
 										<input type="text" class="layui-input" name="name" placeholder="请输入商品名称" value="<?php echo htmlentities($request->get('name')); ?>">
 									</div>
-								</div>
+								</div>-->
 								<div class="layui-col-md4 layui-col-flex">
 									<label class="layui-form-label">商品分类：</label>
 									<span style="display:none;"><?php echo $category_id = $request->get('category_id')?: null; ?></span>

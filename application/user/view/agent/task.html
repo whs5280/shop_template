@@ -38,6 +38,7 @@
                         <th>奖金</th>
                         <th>状态</th>
                         <th>完成时间</th>
+                        <th>失败原因</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -57,12 +58,17 @@
                             {elseif ($item['status'] == 2)}
                             <p><span>待审核</span></p>
                             {elseif ($item['status'] == 3)}
-                            <p><span>已完成</span></p>
+                            <p><span>已审核</span></p>
                             {else/}
                             <p><span>--</span></p>
                             {/if}
                         </td>
                         <td>{$item['update_time']}</td>
+                        {if $item['reason'] == '0'}
+                            <td>--</td>
+                        {else/}
+                            <td>{$item['reason']}</td>
+                        {/if}
                         <td>
                             {if ($item['status'] == 2)}
                             <div class="tpl-table-black-operation">
@@ -70,6 +76,11 @@
                                    class="item-pass tpl-table-black-operation-primary"
                                    data-id="{$item['id']}">
                                     <i class="mdi menu-icon mdi-pencil-lock"></i> 通过
+                                </a>
+                                <a href="javascript:void(0);"
+                                   class="item-refuse"
+                                   data-id="{$item['id']}">
+                                    <i class="mdi menu-icon mdi-pencil-lock"></i> 拒绝
                                 </a>
                             </div>
                             {else/}
@@ -110,4 +121,40 @@
             layer.close(index);
         });
     });
+
+    /**
+     *
+     */
+    $('.item-refuse').click(function () {
+        var id = $(this).data('id');
+        layer.open({
+            type: 1,
+            title: '请输入审核失败的原因',
+            shadeClose: false,
+            maxmin: false,
+            zIndex: layer.zIndex,
+            area: ['300px', '250px'],
+            content: '<div style="padding: 10px;line-height: 30px;">' +
+                    '失败原因：<input name="reason" id="reason" type="text" class="form-control">'+
+                    '</div>',
+            btn: ['确认','取消'],
+            yes: function (index) {
+                $.ajax({
+                    url: "{:url('user/agent/refuse')}",
+                    dataType: 'json',
+                    type: 'POST',
+                    data: {id: id, reason:$('#reason').val()},
+                    success: function (data) {
+                        if (data.code == 1) {
+                            layer.msg(data.msg, {icon: 1,time:1500,shade: 0.1},function () {
+                                window.location.reload();
+                            });
+                        } else {
+                            layer.msg(data.msg, {icon: 2,time:1500,shade: 0.1});
+                        }
+                    }
+                })
+            }
+        })
+    })
 </script>

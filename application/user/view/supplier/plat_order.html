@@ -49,7 +49,10 @@
                 <table class="layui-table">
                     <thead>
                     <tr>
+                        <th>订单ID</th>
                         <th>商品名称</th>
+                        <th>供应商ID</th>
+                        <th>供应商名称</th>
                         <th>订单号</th>
                         <th>规格id</th>
                         <th>购买数量</th>
@@ -63,7 +66,10 @@
                     <tbody>
                     {if (!$list->isEmpty())}{foreach ($list as $item)}
                     <tr>
+                    	<td>{$item['order_id']}</td>
                         <td>{$item['goods_name']}</td>
+                        <td>{$item['plat_id']}</td>
+                        <td>{$item['supplier_name']?: '--'}</td>
                         <td>{$item['order_no']}</td>
                         <td>{$item['spec_id']}</td>
                         <td>{$item['spec_num']}</td>
@@ -104,7 +110,7 @@
                                     ['order_id' => $item['order_id']])}"
                                    class="tpl-table-black-operation-del"
                                    data-id="{$item['order_id']}">
-                                    <i class="mdi menu-icon mdi-telegram"></i> 退订
+                                    <i class="mdi menu-icon mdi-telegram"></i> 退款
                                 </a>
                             </div>
                         </td>

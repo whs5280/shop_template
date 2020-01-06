@@ -29,17 +29,30 @@ class Category extends BaseModel
         return $this->hasOne('uploadFile', 'id', 'image');
     }
     /**
-     * 所有分类
+     * 所有分类(暂时不要缓存)
      * @return mixed
      */
     public  function getALL()
     {
 		$model=new static;
-       if (!$data=Cache::get('category_' . self::$app_id)) {
-			$data = $model->order(['sort' => 'asc'])->field("id,pid,name,sort,create_time")->select();
-            Cache::set('category_' . self::$app_id,$data);
-		}
+       //if (!$data=Cache::get('category_' . self::$app_id)) {
+			$data = $model->where(['is_show'=>1])->order(['sort' => 'asc'])->field("id,pid,name,sort,create_time")->select();
+            //Cache::set('category_' . self::$app_id,$data);
+		//}
         return $data;
+    }
+    /**
+     * 所有分类(暂时不要缓存)
+     * @return mixed
+     */
+    public  function getALLByWhere()
+    {
+    	$model=new static;
+    	//if (!$data=Cache::get('category_' . self::$app_id)) {
+    	$data = $model->where(['pid'=>0,'is_show'=>1])->order(['sort' => 'asc'])->field("id,pid,name,sort,create_time")->select();
+    	//Cache::set('category_' . self::$app_id,$data);
+    	//}
+    	return $data;
     }
 	/**
 	*清除缓存
@@ -133,9 +146,23 @@ class Category extends BaseModel
     public static function getCacheTree()
     {	
 		$model = new static;
-		$data = $model->with(['images'])->order(['id' => 'asc'])->select();
+		$data = $model->with(['images'])->where(['pid'=>0])->order(['id' => 'asc'])->select();
 		return self::gettree($data);
     }
+    
+    public static function getCategorySe($pid){
+    	$model = new static;
+    	$data = $model->with(['images'])->where(['pid'=>$pid])->order(['id' => 'asc'])->select();
+    	return $data;
+    }
+
+    // 获取分类
+    public static function getCategory(){
+        $model = new static;
+        $data = $model->with(['images'])->where(['pid'=>0,'is_show'=>1])->order(['id' => 'asc'])->select();
+        return $data;
+    }
+    
 	/**
      * 获取指定分类下的所有子分类id
      * @param $pid
@@ -196,7 +223,7 @@ class Category extends BaseModel
      */
     function getSortCategory()
     {
-        $categoryList =  $this->Field('id,name,pid')->select();
+        $categoryList =  $this->Field('id,name,pid')->where(['is_show'=>1])->select();
         $nameList = array();
         foreach($categoryList as $k => $v)
         {		

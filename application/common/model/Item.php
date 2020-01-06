@@ -147,18 +147,26 @@ class Item extends BaseModel
      */
 	function saveAfter($sku,$goods_id)
     {
+        $priceArr = [];
         foreach ($sku as $k=>$v){
             $v['key']=$k;
             $v['key_name']=Db::name('spec_item')->where(['id'=>$k])->value('item');
+            $v['item_pic_id'] = $v['item_pic'];
+            $v['item_pic'] = Db::name('upload_file')->where(['id'=>$v['item_pic']])->value('file_name');
             $v['app_id']=self::$app_id;
             $v['goods_id']=$goods_id;
             $list[]=$v;
             $goods_price = $v['shop_price'];
+            array_push($priceArr, $goods_price);
         }
         $SpecItemPrice= new SpecItemPrice;
         $SpecItemPrice->where('goods_id','=',$goods_id)->delete();
         $SpecItemPrice->allowField(true)->insertAll($list);
-        $this->where(['goods_id'=>$goods_id])->update(['goods_price'=>$goods_price]);
+        // 查出价格范围
+        $priArr = array_min_max($priceArr);
+        $priceRange = $priArr['min_value'] . '~' . $priArr['max_value'];
+        //dump($priceRange);die;
+        $this->where(['goods_id'=>$goods_id])->update(['goods_price'=>$goods_price, 'price_range'=>$priceRange]);
 	}
 	/**
 	 * 获取某个商品分类的 儿子 孙子  重子重孙 的 id
@@ -191,7 +199,7 @@ class Item extends BaseModel
      * @return \think\Paginator
      * @throws \think\exception\DbException
      */
-	public function getList($status = 0, $categoryId = 0, $search = '',$market = '',$goodsId = '', $class = 1, $sortType = 'all', $sortPrice = false, $listRows = 15)
+	public function getList($status = 0, $categoryId = 0, $industryId = '', $search = '',$market = '',$goodsId = '', $class = 1, $sortType = 'all', $sortPrice = false, $listRows = 15)
     {
         // 筛选条件
         $filter = [];
@@ -199,6 +207,12 @@ class Item extends BaseModel
         { 
            $filter[] =['cat_id','=',$categoryId];
         }
+        $plat_id = intval(input('plat_id'));
+        if($plat_id == true)
+        {
+        	$filter[] =['plat_id','=',$plat_id];
+        }
+		!empty($industryId) && $filter[] = ['industry_id', 'like', '%' . trim($industryId) . '%'];
         $status > 0 && $filter[] = ['is_on_sale','=', $status];
         !empty($search) && $filter[] = ['goods_name','like', '%' . trim($search) . '%'];
 		!empty($market) && $filter[] = ['prom_type','=', 0];
@@ -235,7 +249,34 @@ class Item extends BaseModel
     	{
     		$filter[] =['cat_id','=',$categoryId];
     	}
-    	$filter[] =['exchange_integral','=',1];
+    	$filter[] =['exchange_integral','>',0];
+    	$status > 0 && $filter[] = ['is_on_sale','=', $status];
+    	// 排序规则
+    	$sort = ['sort', 'goods_id' => 'desc'];
+    	$list = $this
+		    	->where($filter)
+		    	->order($sort)
+		    	->with(['sku','image.file','category'])
+		    	->paginate(15, false, [
+		    			'query' => Request::instance()->request()
+		    	]);
+    	return $list;
+    }
+    
+    /**
+     * 获取积分商城的商品
+     * @param number $status
+     * @param number $categoryId
+     * @return unknown
+     */
+    public function getSoleList($status=0,$categoryId=0){
+    	// 筛选条件
+    	$filter = [];
+    	if($categoryId > 0)
+    	{
+    		$filter[] =['cat_id','=',$categoryId];
+    	}
+    	$filter[] =['is_sole','>',0];
     	$status > 0 && $filter[] = ['is_on_sale','=', $status];
     	// 排序规则
     	$sort = ['sort', 'goods_id' => 'desc'];
@@ -301,19 +342,18 @@ class Item extends BaseModel
 			$this->error = '请设置商品规格';
 			return false;
 		}
-		if (!isset($data['attr']) || empty($data['attr'])) {
+		/*if (!isset($data['attr']) || empty($data['attr'])) {
             $this->error = '请添加商品属性';
             return false;
-        }
+        }*/
 		$data['app_id'] = self::$app_id;
-		$data['goods_image'] = Db::name('upload_file')->where(['id'=>$data['goods_images'][0]])->value('file_name');
 		// 开启事务
 		$this->allowField(true)->save($data); // 写入数据到数据库
 		// 商品图片
 		$this->addGoodsImages($data['goods_images']);
 		// 处理商品图片 规格
 		$this->saveAfter($data['sku'],$this['goods_id']);
-		$this->saveGoodsAttr($this['goods_id'],$data['attr']); // 处理商品 属性
+		//$this->saveGoodsAttr($this['goods_id'],$data['attr']); // 处理商品 属性
         return true;
 	}
 	  /**
@@ -332,24 +372,22 @@ class Item extends BaseModel
             $this->error = '请添加商品规格';
             return false;
         }
-		if (!isset($data['attr']) || empty($data['attr'])) {
+		/*if (!isset($data['attr']) || empty($data['attr'])) {
             $this->error = '请添加商品属性';
             return false;
-        }
+        }*/
         // 如果该商品属于平台自营则平台id默认为0
 		if ($data['plat_type'] == 1){
 			$data['plat_id'] = 0;
 		}
         $data['app_id'] = self::$app_id;
         $where=['goods_id','=',$data['goods_id']];
-		// 保存商品
-        $data['goods_img'] = Db::name('upload_file')->where(['id'=>$data['goods_images'][0]])->value('file_name');
-        $data['goods_price'] = array_column($data['sku'], 'shop_price')[0];
+		
 		$this->allowField(true)->save($data,$where);
 		// 处理商品图片 规格
 		$this->addGoodsImages($data['goods_images']);
 		$this->saveAfter($data['sku'],$this['goods_id']);
-		$this->saveGoodsAttr($this['goods_id'],$data['attr']); // 处理商品 属性
+		//$this->saveGoodsAttr($this['goods_id'],$data['attr']); // 处理商品 属性
 		return true;
     }
 	/**
@@ -496,19 +534,47 @@ class Item extends BaseModel
 		    	->limit($limit)
 		    	->select();
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+    /**
+     * 修改状态
+     * @param $goods_id
+     * @param $filter
+     * @return bool
+     */
+    public function changeStatus($goods_id, $filter)
+    {
+        return $this->isUpdate(true)->save($filter, ['goods_id' => $goods_id]);
+    }
+
+    /**
+     * 根据where条件返回数据
+     * @param unknown $where
+     * @return unknown|boolean
+     */
+    public function getDataByWhere($where){
+        if ($where){
+            $data = $this->where($where)->find();
+            if ($data){
+                return $data;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 取消商品独家
+     * @param $item_id
+     * @return bool
+     */
+    public function cancalSole($item_id)
+    {
+        $data = [
+            'is_sole' => 0,
+            'sole_user' => 0,
+            'sole_time' => 0,
+        ];
+        return $this->isUpdate(true)->save($data,['goods_id'=>$item_id]);
+    }
 }

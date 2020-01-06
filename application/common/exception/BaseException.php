@@ -7,7 +7,7 @@ use think\Exception;
  * 自定义异常类的基类
  */
 class BaseException extends Exception {
-    public $code = 400;
+    public $code = 200;
     public $msg = 'invalid parameters';
     public $errorCode = 500;
 

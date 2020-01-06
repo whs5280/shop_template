@@ -1,0 +1,48 @@
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+            <form id="my-form" class="layui-form " enctype="multipart/form-data" method="post" action="{Url('Agent/editTask')}">
+                <div class="widget-head">
+                    <div class="widget-title">修改任务信息</div>
+                </div>
+                <div class="widget-body layui-col-sm12 layui-col-md12 layui-col-lg12">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label form-require">任务内容:</label>
+                        <div class="layui-col-sm7 layer-midd-left">
+                            <input type="text" class="layui-input" name="content" value="{$list.content}" required>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label form-require">任务奖金:</label>
+                        <div class="layui-col-sm7 layer-midd-left">
+                            <input type="number" class="layui-input" name="bonus" value="{$list['bonus']}" required>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="hidden" name="task_id" value="{$list['task_id']??''}">
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button type="submit" class="j-submit layui-btn layui-btn-secondary">提交
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        /**
+         * 表单验证提交
+         * @type {*}
+         */
+        $('#my-form').superForm();
+
+    });
+
+</script>

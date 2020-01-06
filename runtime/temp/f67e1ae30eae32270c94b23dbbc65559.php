@@ -1,4 +1,4 @@
-<?php /*a:2:{s:69:"/var/www/html/www.0766city.com/application/user/view/agent/index.html";i:1574394729;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1574238926;}*/ ?>
+<?php /*a:2:{s:69:"/var/www/html/www.0766city.com/application/user/view/agent/index.html";i:1578043214;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1578043214;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -165,6 +165,7 @@
                         <th>ID</th>
                         <th>头像</th>
                         <th>昵称</th>
+                        <th>账号</th>
                         <th>性别</th>
                       <!--  <th>省市</th>-->
                       <!--  <th>上级</th>
@@ -180,11 +181,12 @@
                     <tr>
                         <td><?php echo htmlentities($item['user_id']); ?></td>
                         <td>
-                            <a href="<?php echo htmlentities($item['avatarUrl']); ?>" title="点击查看大图" target="_blank">
-                                <img src="<?php echo htmlentities($item['avatarUrl']); ?>" width="50" height="50" alt="">
+                            <a href="/uploads/<?php echo htmlentities($item['avatarUrl']); ?>" title="点击查看大图" target="_blank">
+                                <img src="/uploads/<?php echo htmlentities($item['avatarUrl']); ?>" width="50" height="50" alt="">
                             </a>
                         </td>
                         <td><?php echo htmlentities($item['nickName']); ?></td>
+                        <td><?php echo htmlentities($item['phone']); ?></td>
                         <td><?php echo htmlentities($item['gender']); ?></td>
                        <!-- <td><?php echo htmlentities($item['country']); ?><?php echo !empty($item['province']) ? htmlentities($item['province']) : ''; ?><?php echo !empty($item['city']) ? htmlentities($item['city']) : '&#45;&#45;'; ?></td>-->
                         <!--<td><?php echo !empty($item['users']['nickName']) ? htmlentities($item['users']['nickName']) : '无'; ?></td>
@@ -212,8 +214,8 @@
                                    data-id="<?php echo htmlentities($item['user_id']); ?>">
                                     <i class="mdi menu-icon mdi-telegram"></i> 推荐
                                 </a>-->
-                                <a class="tpl-table-black-operation-primary" href="<?php echo url('user/profit',
-									['uid' => $item['user_id']]); ?>"
+                                <a class="tpl-table-black-operation-primary" href="<?php echo url('agent/detail',
+									['agent_id' => $item['user_id']]); ?>"
                                    class="tpl-table-black-operation-del"
                                    data-id="<?php echo htmlentities($item['user_id']); ?>">
                                     <i class="mdi menu-icon mdi-telegram"></i> 详情

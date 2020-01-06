@@ -57,7 +57,7 @@ class Order extends Controller
         if ($model->createOrder($this->user['user_id'], $order, $coupon_id, $remark,$prom,$item_id,$other)) {
             // 发起微信支付
             return $this->renderSuccess([
-                'payment' => $this->unifiedorder($model, $this->user),// 微信支付
+                'payment' => '提交成功',// $this->unifiedorder($model, $this->user),// 微信支付
                 'order_id' => $model['order_id']
             ]);
         }
@@ -92,7 +92,7 @@ class Order extends Controller
             $Card->clearAll($cart_ids);
             // 发起微信支付
             return $this->renderSuccess([
-                'payment' => $this->unifiedorder($model, $this->user),
+                'payment' => '提交成功',// $this->unifiedorder($model, $this->user),
                 'order_id' => $model['order_id']
             ]);
         }
@@ -120,7 +120,7 @@ class Order extends Controller
     }
     
     /**
-     * 美豆支付
+     * 积分支付
      * @param string $pay_password  支付密码
      * @param number $order_id 		订单ID
      */
@@ -158,15 +158,15 @@ class Order extends Controller
     		}
     	}
     	// 判断用户的美豆是否足够
-    	if ($this->user['money'] < $pay_price){
-    		return $this->renderError('您的余额不足，请充值');
-    	}
+    	//if ($this->user['money'] < $pay_price){
+    		//return $this->renderError('您的余额不足，请充值');
+    	//}
     	// 修改该笔订单的支付状态
     	$res = $order_model->paySuccess($order_no);
     	// 减少美豆
     	$user_model = new User();
-    	$new_money = $this->user['money'] - $pay_price;
-    	$user_model->upFieldByWhere(['user_id'=>$this->user['user_id']], ['money'=>$new_money]);
+    	$new_money = $this->user['integral'] - $pay_price;
+    	$user_model->upFieldByWhere(['user_id'=>$this->user['user_id']], ['integral'=>$new_money]);
     	// 写log
     	$record_model = new Record();
     	$record_model->addRecord($order_id,$pay_price,$this->user['user_id'],0,$exchange_integral);

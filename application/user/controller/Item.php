@@ -1,6 +1,7 @@
 <?php
 namespace app\user\controller;
 use app\common\model\Category as CategoryModel;
+use app\common\model\Industry as IndustryModel;
 use app\common\model\Item as ItemModel;
 use app\common\model\Type as TypeModel;
 use app\common\model\Spec as SpecModel;
@@ -9,6 +10,8 @@ use app\common\model\Brand as BrandModel;
 use app\common\model\Delivery as DeliveryModel;
 use app\common\model\SpecItemPrice as SpecItemPriceModel;
 use app\common\model\Comment as CommentModel;
+use think\Db;
+
 /**
  * 商品管理控制器
  * Class Goods
@@ -24,17 +27,18 @@ class Item extends Controller
      * @return mixed
      * @throws \think\exception\DbException
      */
-    public function index($status = null, $category_id = null, $name = '', $market = '')
+    public function index($status = null, $category_id = null, $industry_id = null, $name = '', $market = '')
     {
         // 商品分类
         $catgory = (new CategoryModel)->getSortCategory();
+        $industry_list = (new IndustryModel())->getALL();
         // 商品列表
         $model = new ItemModel;
-        $list = $model->getList($status, $category_id, $name,$market);
+        $list = $model->getList($status, $category_id, $industry_id, $name,$market);
         if(empty($market)){
-			return $this->fetch('index', compact('list','catgory'));
+			return $this->fetch('index', compact('list','catgory', 'industry_list'));
 		}
-		return $this->fetch('goodslist', compact('list','catgory'));
+		return $this->fetch('goodslist', compact('list','catgory', 'industry_list'));
     }
 	 /**
      * 商品编辑
@@ -49,12 +53,39 @@ class Item extends Controller
             // 商品分类
 		    $itemType = (new TypeModel)->All();
 		    $brandList = (new ItemModel)->getSortBrands();//获取品牌
-			
+			// 行业列表
+            $industryList = (new IndustryModel())->getALL();
+            $industryIds = explode(",", $goodsInfo['industry_id']);
+
             $delivery = DeliveryModel::getAll();
 			//sku和分类
-            return $this->fetch('edit', compact('goodsInfo','itemType','brandList','delivery'));
+            return $this->fetch('edit', compact('goodsInfo','itemType','brandList','delivery','industryList','industryIds'));
         }
         $data=$this->postData('goods');
+        if ($data['sole_must_num'] > 0){
+        	$data['is_sole'] = 1;
+        }
+        if (isset($data['industry_ids']) || !empty($data['industry_ids'])) {
+            $data['industry_id'] = '0,' . implode(",", $data['industry_ids']) . ',';  // 商品的行业ID默认加上0,以,结束
+        }
+        if (isset($data['end_time']) && !empty($data['end_time'])){
+        	$data['end_time'] = strtotime($data['end_time']);
+			if($data['end_time'] > 0){
+		        $data['exchange_integral'] = 1;
+			}else{
+				$data['end_time'] = NULL;
+		        $data['exchange_integral'] = 0;
+			}
+        }
+        // 保存商品
+        $data['goods_image'] = Db::name('upload_file')->where(['id'=>$data['goods_images'][0]])->value('file_name');
+        $data['goods_price'] = array_column($data['sku'], 'shop_price')[0];
+        // 设置库存
+        $data['store_count'] = min(array_column($data['sku'], 'store_count'));
+        // 设置特价
+        if ($data['discount'] > 0){
+        	$data['discount_price'] = $data['goods_price'] * $data['discount'];
+        }
         if ($goods_id?$model->edit($data):$model->add($data)) {
             return $this->renderSuccess('更新成功', url('item/index'));
         }
@@ -137,7 +168,7 @@ class Item extends Controller
      */
 	public function getJsTree($role_id = null)
     {
-		$list = (new CategoryModel)->field("pid,id,name")->column("*",'id');
+		$list = (new CategoryModel)->field("pid,id,name")->where(['is_show'=>1])->column("*",'id');
 		$parent=[];
 		foreach ($list as $k=>$v) {
 			if ($v['pid'] != 0)
@@ -383,5 +414,66 @@ class Item extends Controller
 		$model = new ItemModel;
         $list = $model->tplgetList($status,$type);
         return $this->fetch('lists', compact('list'));
+    }
+    /**
+     * 修改状态
+     */
+    public function changeStatus()
+    {
+        $param = input();
+        //dump($param);die;
+        $model = new \app\common\model\Item();
+        $filter = [
+            $param['field'] => $param['status']
+        ];
+
+        $res = $model->changeStatus($param['goods_id'], $filter);
+        if ($res!==true) {
+            return $this->renderError('操作失败');
+        }
+        return $this->renderSuccess('操作成功');
+    }
+
+
+
+    /**
+     * 商品行业列表
+     * @return mixed
+     */
+    public function industryList()
+    {
+        $model = new IndustryModel();
+        $list = $model->getALL();
+        $total = count($list);
+        return $this->fetch('item/industry/index',compact('list', 'total'));
+    }
+    /**
+     * ajax行业列表
+     * @return mixed
+     */
+    public function industryAjax(){
+        $model = new IndustryModel();
+        $list = $model->getALL();
+        return $this->renderSuccess('','',$list);
+    }
+    /**
+     * @method
+     * @param string $id
+     * @return array
+     * @author cjj
+     */
+    public function editIndustry($id = '')
+    {
+        $model = new IndustryModel();
+        $industry = $model::detail($id);
+        if (!$this->request->isAjax()) {
+            $list = (new IndustryModel())->getALL();
+            return $this->fetch('item/industry/edit', compact('industry', 'list','id'));
+        }
+        $data=$this->postData('industry');
+        if ($id ? $model->edit($data) : $model ->add($data)) {
+            return $this->renderSuccess('更新成功', url('item/industryList'));
+        }
+        return $this->renderError($model->getError() ?: '更新失败');
     }
 }

@@ -44,6 +44,10 @@ class Driver
         }
         return $this->engine->sendSms($msgType, $templateParams);
     }
+    
+    public function sendSmsCode($phone,$templateParams, $code){
+    	return $this->engine->sendPhoneCode($phone,$templateParams, $code);
+    }
 
     /**
      * 获取错误信息

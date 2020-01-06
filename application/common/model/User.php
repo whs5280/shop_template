@@ -1,5 +1,6 @@
 <?php
 namespace app\common\model;
+use think\Db;
 use think\facade\Request;
 use think\facade\Cache;
 use app\common\library\wechat\WxUser;
@@ -172,6 +173,54 @@ class User extends BaseModel
                  'query' => Request::instance()->request()
             ]);
     }
+    /**
+     * 获取用户信息列表
+     */
+    public function getUserInfoList($nickName = '',$status = 1,$isdelete = '',$type = 1,$industry = '',$listRows = 15)
+    {
+        if(!empty($nickName))
+            $where[]=['u.nickName', 'like', "%$nickName%"];
+        if(!empty($industry))
+            $where[]=['i.industry','like',"%$industry%"];
+
+        $where[]=['u.status','=',$status];
+        $where[]=['u.is_delete','=',$isdelete];
+        $where[]=['u.type','=',$type];
+
+        return $this->alias('u')
+            ->field('u.user_id,u.avatarUrl,u.nickName,u.gender,u.status,u.shop_money,u.money,u.integral,u.create_time,u.phone,u.is_vip,i.site,i.reason,i.pass_time,i.license_pic,i.store_pic,i.principal_pic,i.industry,i.contact_name,i.review_time')
+            ->join('user_info i', 'u.user_id=i.user_id', 'left')
+            ->where($where)
+            ->order('create_time', 'desc')
+            ->paginate($listRows, false, [
+                'query' => Request::instance()->request()
+            ]);
+    }
+
+    /**
+     * 获取商户信息审核列表
+     * @param string $nickName
+     * @param int $status
+     * @param string $type
+     * @param int $listRows
+     * @return \think\Paginator
+     * @throws \think\exception\DbException
+     */
+    public function auditlist($nickName = '', $status = -1,$type = '',$listRows = 15)
+    {
+        $where[]=['u.type','=',$type];
+        if(!empty($nickName))
+            $where[]=['u.nickName', 'like', "%$nickName%"];
+        $status >= 0 && $where[]=['u.status','=',$status];
+
+        return $this->alias('u')
+            ->field('u.user_id,u.nickName,u.status,u.create_time,u.phone,i.site,i.reason,i.pass_time,i.license_pic,i.store_info_pic,i.store_pic,i.principal_pic,i.industry,i.contact_name,i.review_time')
+            ->join('user_info i', 'u.user_id=i.user_id', 'left')
+            ->where($where)
+            ->paginate($listRows, false, [
+                'query' => Request::instance()->request()
+            ]);
+    }
 	/**
 	*获取我的团队。
 	*/
@@ -275,8 +324,8 @@ class User extends BaseModel
      */
     public static function getUser($token)
     {
-        return self::detail(['open_id' => Cache::get($token)['open_id']]);
-        //return self::detail(Cache::get($token)['user_id']);
+        //return self::detail(['open_id' => Cache::get($token)['open_id']]);
+        return self::detail(['user_id' => Cache::get($token)['user_id']]);
     }
 	/*
 	 * 网页用户登录
@@ -370,6 +419,7 @@ class User extends BaseModel
 		}
 		// 生成token (session3rd)
         $this->token = $this->token($data['phone']);
+	$data['password'] = wymall_pass($data['password']);
 		return $this->allowField(true)->insertGetId($data);
 	}
     /**
@@ -507,10 +557,13 @@ class User extends BaseModel
      * @throws BaseException
 	*/
 	public function app_login($post){
-		$user = self::useGlobalScope(false)->where([
-            'phone' => $post['phone'],
-            'password' => wymall_pass($post['password'])
-        ])->find();
+	    $where['password'] = wymall_pass($post['password']);
+	    if (strlen($post['phone']) > 11){
+            $where['organization_code'] = strtoupper($post['phone']);
+        }else{
+	        $where['phone'] = $post['phone'];
+        }
+		$user = self::useGlobalScope(false)->where($where)->find();
 		if(!$user){
             return false;
         }else{
@@ -518,7 +571,7 @@ class User extends BaseModel
 			$this->token = $this->token($user['phone']);
 			// 记录缓存, 7天
 			Cache::set($this->token, $user, 86400 * 7);
-			return $user['user_id'];
+			return $user;
 		}
 	}
 	
@@ -530,6 +583,40 @@ class User extends BaseModel
 	public function upFieldByWhere($where, $data){
 		if ($where && $data){
 			$res = $this->where($where)->update($data);
+			if ($res){
+				return $res;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 根据where条件返回数据
+	 * @param unknown $where
+	 * @return unknown|boolean
+	 */
+	public function getDataByWhereFOS($where, $find = 'find', $order = ''){
+		if ($where){
+			if ($find == 'find'){
+				$data = $this->where($where)->order($order)->find();
+			}elseif ($find == 'select'){
+				$data = $this->where($where)->order($order)->select();
+			}
+			if ($data){
+				return $data;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 查数据
+	 * @param unknown $data
+	 * @return unknown|boolean
+	 */
+	public function getValueByWhere($where, $filed){
+		if ($where && $filed){
+			$res = $this->where($where)->value($filed);
 			if ($res){
 				return $res;
 			}
@@ -638,4 +725,74 @@ class User extends BaseModel
 		}
 		return false;
 	}
+
+    /**
+     * 审核通过
+     * @param $user_id
+     * @return bool
+     */
+    public function pass($user_id)
+    {
+        $model = new UserInfo();
+        $user_info = $model->where('user_id', $user_id)->find();
+        // 存入user_address表
+        $addressModel = new UserAddress();
+        $address_id = $addressModel->allowField(true)->insertGetId([
+            'name'          => $user_info['contact_name'],
+            'phone'         => $user_info['contact_phone'],
+            'detail'        => $user_info['store_address'], // 门店地址
+            'user_id'       => $user_id,
+            'province_id'   => $user_info['province_id'],
+            'city_id'       => $user_info['city_id'],
+            'region_id'     => $user_info['region_id'],
+        ]);
+        if ($address_id <= 0){
+            return false;
+        }
+        // 同步到user_info信息到user表
+        $data = [
+            'status' => 1,
+            'address_id'    => $address_id,
+            'store_address' => $user_info['store_address'],
+            'industry_id'   => $user_info['industry']
+        ];
+        return $this->isUpdate(true)->save($data,['user_id' => $user_id]);
+    }
+    /**
+     * 审核不通过
+     * @param $user_id
+     * @param $reason
+     * @return bool
+     */
+    public function refuse($user_id, $reason)
+    {
+        $this->allowField(true)->save(['status' => 2],['user_id' => $user_id]);
+        $model = new UserInfo();
+        return $model->isUpdate(true)->save(['reason' => $reason],['user_id' => $user_id]);
+    }
+
+    /**
+     * 修改用户信息
+     * @param $data
+     * @param $user_id
+     * @return bool
+     */
+    public function changeInfo($data, $user_id)
+    {
+        return $this->isUpdate(true)->allowField(true)->save($data,['user_id'=>$user_id]);
+    }
+
+    /**
+     * @修改密码
+     * @param $post
+     * @param $user_id
+     * @return bool
+     */
+    public function changePassword($post, $user_id)
+    {
+        $data = [
+            'password' => wymall_pass($post['password']),
+        ];
+        return $this->isUpdate(true)->allowField(true)->save($data,['user_id'=>$user_id]);
+    }
 }

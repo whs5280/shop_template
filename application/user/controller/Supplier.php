@@ -1,6 +1,7 @@
 <?php
 namespace app\user\controller;
 
+use app\common\model\OrderSupplierByUser;
 use app\common\model\Supplier as SupplierModel;
 use app\common\model\Category as CategoryModel;
 use app\common\model\UploadFile;
@@ -8,6 +9,8 @@ use app\common\model\User as UserModel;
 use app\common\model\Item as ItemModel;
 use app\common\model\OrderSupplierByPlat;
 use app\common\model\Returnbuy;
+use think\Db;
+use think\facade\Cache;
 
 /**
  * 供应商列表
@@ -72,14 +75,18 @@ class Supplier extends Controller
     	$post = input('post.sku');
     	$model = new OrderSupplierByPlat();
     	// 获取商品库存，对比库存是否足够
-    	foreach ($post as $key=>$value){    		
-    		if ($value['store_count'] < $value['number']){
-    			return $this->error('您选购的商品库存不足', url('supplier/suppliergoods'));
-    		}
-    		$order = $model->getBuyNow($value['goods_id'], $value['number'], $value['key'], '', '');
-    		if (!$model->createOrder(0, $order)){
-    			return $this->error('订单创建失败', url('supplier/suppliergoods'));
-    		}
+    	foreach ($post as $key=>$value){
+            if ($value['number'] == "" || $value['number'] == 0) {
+                unset($post[$key]);
+            } else {
+                if ($value['store_count'] < $value['number']){
+                    return $this->error('您选购的商品库存不足', url('supplier/suppliergoods'));
+                }
+                $order = $model->getBuyNow($value['goods_id'], $value['number'], $value['key'], '', '');
+                if (!$model->createOrder(0, $order)){
+                    return $this->error('订单创建失败', url('supplier/suppliergoods'));
+                }
+            }
     	}
     	return $this->success('下单成功', url('supplier/suppliergoods'));
     }
@@ -89,10 +96,11 @@ class Supplier extends Controller
      */
     public function platOrder(){
     	$model = new OrderSupplierByPlat();
-    	$where = [
-    			'order_id' => ['>', 0],
-    	];
-    	$list = $model->getAllDataByWhere(['pay_status'=>10]);
+    	$list = $model->getAllDataByWhere(['a.pay_status'=>10], ['a.order_id'=>'desc']);
+    	foreach ($list as &$item) {
+    	    $item['supplier_name'] = Db::name('user')->where('user_id', $item['plat_id'])->value('nickName');
+        }
+
     	$page=$list->render();
     	return $this->fetch('plat_order', compact( 'list','page'));
     }
@@ -107,6 +115,7 @@ class Supplier extends Controller
     	$OrderModel->upFieldByWhere(['order_id'=>$order_id],['order_status'=>40,'sub_status'=>10,'sub_type'=>1]);
     	// 将退款信息存入表中
     	$data = [
+    			'type'=>2,
     			'content'=>'平台下订，不要了',
     			'order_id'=>$order_id,
     			'order_no'=>$model['order_no'],
@@ -118,7 +127,7 @@ class Supplier extends Controller
     	];
     	$returnbuy_model = new Returnbuy();
     	$res = $returnbuy_model->insert($data);
-    	return $this->renderSuccess('申请退款成功，请耐心等待');
+    	return $this->success('申请退款成功，请耐心等待');
     }
     
     /**
@@ -126,14 +135,16 @@ class Supplier extends Controller
      */
     public function addSupplier(){
     	$CategoryModel = new CategoryModel;
-    	$category = $CategoryModel->getALL();
+    	$category = $CategoryModel->getALLByWhere();
     	if (!$this->request->post()) {
     		return $this->fetch('save',compact('category'));
     	}
     	$post = input('post.');
     	// 将用户信息存库
     	$User = new UserModel;
-    	$user_id = $User->reg(['phone'=>$post['phone'],'type'=>2]);
+    	// 处理密码
+    	$post['password'] = wymall_pass($post['password']);
+    	$user_id = $User->reg(['phone'=>$post['phone'],'type'=>2,'password'=>$post['password']]);
     	if (!$user_id){
     		return $this->error('该号码已注册，不可重复使用', url('supplier/index'));
     	}
@@ -144,8 +155,6 @@ class Supplier extends Controller
     	unset($post['brand']);
     	// 处理分类
     	$post['category'] = implode(',', $post['category']);
-    	// 处理密码
-    	$post['password'] = wymall_pass($post['password']);
     	$post['create_time'] = time();
     	$post['pass_time'] = time();// 暂时直接通过
     	$Supplier = new SupplierModel;
@@ -155,5 +164,40 @@ class Supplier extends Controller
     	}else {
     		return $this->error('操作失败', url('supplier/index'));
     	}
+    }
+
+    // 查看周边供应商
+    public function getNeighbor($distance = 5000)
+    {
+        $user_id = input('user_id');
+        $model = new \app\common\model\Supplier();
+        $supplier = $model->where('user_id', $user_id)->find();
+        $latitude = $supplier['latitude'];
+        $longitude = $supplier['longitude'];
+
+        /*if (!$data = Cache::get($latitude. '_' . $longitude)) {
+            $data = $model->getNeighbor($latitude, $longitude, $distance);
+            Cache::set($latitude. '_' . $longitude, json_encode($data));
+        }*/
+        $data = $model->getNeighbor($latitude, $longitude, $distance);
+        return json($data);
+    }
+
+    /**
+     * 查看平台帮供应商代发的订单
+     */
+    public function subOrder(){
+        $model = new OrderSupplierByUser();
+        $where = [
+            'order_id' => ['>', 0],
+        ];
+        $list = $model->getAllDataByWhere(['pay_status'=>10]);
+        $page=$list->render();
+        return $this->fetch('sub_order', compact( 'list','page'));
+    }
+
+    public function getSUpplierName($plat_id)
+    {
+        return Db::name('user')->where('user_id', $plat_id)->value('nickName');
     }
 }

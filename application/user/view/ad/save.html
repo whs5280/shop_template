@@ -1,0 +1,93 @@
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+            <form id="my-form" class="layui-form " enctype="multipart/form-data" method="post">
+            {notempty name="$list"}         
+                <div class="widget-head">                           
+                    <div class="widget-title">编辑公告</div>     
+                </div>
+                <div class="widget-body layui-col-sm12 layui-col-md12 layui-col-lg12">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label form-require">公告标题:</label>
+                            <div class="layui-col-sm7 layer-midd-left">
+                                <input type="text" class="layui-input" name="title"
+                                       value="{$list['title']??''}" required>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label form-require">公告内容:</label>
+                            <div class="layui-col-sm7 layer-midd-left">
+                                <input type="text" class="layui-input" name="content"
+                                       value="{$list['content']??''}" required>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button type="submit" class="j-submit layui-btn layui-btn-secondary">提交
+                                </button>
+                            </div>
+                        </div>
+                </div>
+            {else /}
+                <div class="widget-head">                           
+                    <div class="widget-title">添加公告</div>       
+                </div>
+                <div class="widget-body layui-col-sm12 layui-col-md12 layui-col-lg12">
+                   
+                        <div class="layui-form-item">
+                            <label class="layui-form-label form-require">公告标题:</label>
+                            <div class="layui-col-sm7 layer-midd-left">
+                                <input type="text" class="layui-input" name="title"
+                                       value="" required>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label form-require">公告内容:</label>
+                            <div class="layui-col-sm7 layer-midd-left">
+                                <input type="text" class="layui-input" name="content"
+                                       value="" required>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button type="submit" class="j-submit layui-btn layui-btn-secondary">提交
+                                </button>
+                            </div>
+                        </div>
+                </div>
+            {/notempty}
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 图片文件列表模板 -->
+{include file="layouts/_template/tpl_file_item" /}
+
+<!-- 文件库弹窗 -->
+{include file="layouts/_template/file_library" /}
+
+<script>
+    $(function () {
+
+        // 选择图片
+        $('.upload-file').selectImages({
+            name: 'brand[logo]'
+        });
+
+        /**
+         * 表单验证提交
+         * @type {*}
+         */
+         var parent_id=$("#parent_id_1").val();
+    
+         if(parent_id > 0 ){
+            get_category($("#parent_id_1").val(),'parent_id_2',0);   
+        }   
+        $('#my-form').superForm();
+
+    });
+
+        
+
+</script>

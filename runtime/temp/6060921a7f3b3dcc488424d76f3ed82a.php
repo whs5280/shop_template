@@ -1,4 +1,4 @@
-<?php /*a:2:{s:80:"/var/www/html/www.0766city.com/application/user/view/setting/delivery/index.html";i:1556090954;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1574238926;}*/ ?>
+<?php /*a:2:{s:80:"/var/www/html/www.0766city.com/application/user/view/setting/delivery/index.html";i:1576566262;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1576554474;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -154,7 +154,7 @@
 									<td class="layer-text-middle"><?php echo htmlentities($item['name']); ?></td>
 									<td class="layer-text-middle">
 										<?php echo htmlentities($item['method']['text']); ?>
-										<?php echo $item['method']==10 ? "按件数" : "按重量"; ?>
+										<!--<?php echo $item['method']==10 ? "按件数" : "按重量"; ?>-->
 									</td>
 									<td class="layer-text-middle"><?php echo htmlentities($item['sort']); ?></td>
 									<td class="layer-text-middle">

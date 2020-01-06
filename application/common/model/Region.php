@@ -33,8 +33,12 @@ class Region extends BaseModel
     {
         $data = self::getCacheAll();
         foreach ($data as $item) {
-            if ($item['name'] == $name && $item['level'] == $level && $item['pid'] == $pid)
+            if ($item['name'] == $name && $item['level'] == $level){// && $item['pid'] == $pid
+            	if ($pid != 0 && $item['pid'] != $pid){
+            		return 0;
+            	}
                 return $item['id'];
+            }
         }
         return 0;
     }
@@ -47,6 +51,17 @@ class Region extends BaseModel
         empty(static::$cacheTree) && (static::$cacheTree = self::regionCache()['tree']);
         return static::$cacheTree;
     }
+    
+    /**
+     * 获取所有地区(树状结构)
+     * @return mixed
+     */
+    public static function getCacheTree1()
+    {
+    	empty(static::$cacheTree) && (static::$cacheTree = self::regionCache1());
+    	return static::$cacheTree;
+    }
+    
     /**
      * 获取所有地区
      * @return mixed
@@ -88,5 +103,31 @@ class Region extends BaseModel
             Cache::set('region', compact('all', 'tree'));
         }
         return Cache::get('region');
+    }
+    
+    /**
+     * 获取地区缓存
+     * @return mixed
+     */
+    private static function regionCache1()
+    {
+    	if (true) {// !Cache::get('region')
+    		// 所有地区
+    		$all = $allData = self::useGlobalScope(false)->field('id, pid, name, level')->where(['pid'=>0])->select();
+    		$tree = [];
+    		for($i=0; $i < count($all); $i++){
+    			$city = [];
+    			$region = [];
+    			$city = self::useGlobalScope(false)->field('id, pid, name, level')->where(['pid'=>$all[$i]['id']])->select();
+    			for($j=0; $j < count($city); $j++){
+    				$region = self::useGlobalScope(false)->field('id, pid, name, level')->where(['pid'=>$city[$j]['id']])->select();
+    				$city[$j]['region'] = $region;
+    			}
+    			$all[$i]['city'] = $city;
+    		}
+    		return $all;
+    		Cache::set('region', compact('all', 'tree'));
+    	}
+    	return Cache::get('region');
     }
 }

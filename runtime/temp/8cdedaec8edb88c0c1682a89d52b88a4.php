@@ -1,4 +1,4 @@
-<?php /*a:4:{s:76:"/var/www/html/www.0766city.com/application/user/view/item/category/edit.html";i:1556090954;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1574238926;s:89:"/var/www/html/www.0766city.com/application/user/view/layouts/_template/tpl_file_item.html";i:1556090954;s:88:"/var/www/html/www.0766city.com/application/user/view/layouts/_template/file_library.html";i:1556090954;}*/ ?>
+<?php /*a:4:{s:76:"/var/www/html/www.0766city.com/application/user/view/item/category/edit.html";i:1576222751;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1576118732;s:89:"/var/www/html/www.0766city.com/application/user/view/layouts/_template/tpl_file_item.html";i:1576118733;s:88:"/var/www/html/www.0766city.com/application/user/view/layouts/_template/file_library.html";i:1576118733;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -132,7 +132,7 @@
 						   <input type="text" class="layui-input" name="category[name]" value="<?php echo isset($category['name']) ? htmlentities($category['name']) : ''; ?>" required>
 						</div>
 					</div>
-					<div class="layui-form-item">
+					<div class="layui-form-item" style="display: none;">
 						<label class="layui-form-label form-require">上级分类： </label>
 						<div class="layui-col-sm7 layer-midd-left ">
 						
@@ -149,7 +149,7 @@
 								</button>
 								<div class="uploader-list layer-cf">
 									 <div class="file-item">
-											<a href="<?php echo htmlentities($category['image']); ?>" title="点击查看大图" target="_blank">
+											<a href="<?php echo htmlentities($category['images']['file_path']); ?>" title="点击查看大图" target="_blank">
 												<img src="<?php echo htmlentities($category['images']['file_path']); ?>">
 											</a>
 										  

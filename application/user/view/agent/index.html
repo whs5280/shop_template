@@ -45,6 +45,7 @@
                         <th>ID</th>
                         <th>头像</th>
                         <th>昵称</th>
+                        <th>账号</th>
                         <th>性别</th>
                       <!--  <th>省市</th>-->
                       <!--  <th>上级</th>
@@ -60,11 +61,12 @@
                     <tr>
                         <td>{$item['user_id']}</td>
                         <td>
-                            <a href="{$item['avatarUrl']}" title="点击查看大图" target="_blank">
-                                <img src="{$item['avatarUrl']}" width="50" height="50" alt="">
+                            <a href="/uploads/{$item['avatarUrl']}" title="点击查看大图" target="_blank">
+                                <img src="/uploads/{$item['avatarUrl']}" width="50" height="50" alt="">
                             </a>
                         </td>
                         <td>{$item['nickName']}</td>
+                        <td>{$item['phone']}</td>
                         <td>{$item['gender']}</td>
                        <!-- <td>{$item['country']}{$item['province'] ?: ''}{$item['city'] ?: '&#45;&#45;'}</td>-->
                         <!--<td>{$item['users']['nickName'] ?: '无'}</td>
@@ -92,8 +94,8 @@
                                    data-id="{$item['user_id']}">
                                     <i class="mdi menu-icon mdi-telegram"></i> 推荐
                                 </a>-->
-                                <a class="tpl-table-black-operation-primary" href="{:url('user/profit',
-									['uid' => $item['user_id']])}"
+                                <a class="tpl-table-black-operation-primary" href="{:url('agent/detail',
+									['agent_id' => $item['user_id']])}"
                                    class="tpl-table-black-operation-del"
                                    data-id="{$item['user_id']}">
                                     <i class="mdi menu-icon mdi-telegram"></i> 详情

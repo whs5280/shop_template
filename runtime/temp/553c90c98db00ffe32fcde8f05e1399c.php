@@ -1,4 +1,4 @@
-<?php /*a:4:{s:67:"/var/www/html/www.0766city.com/application/user/view/item/edit.html";i:1556090954;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1574238926;s:88:"/var/www/html/www.0766city.com/application/user/view/layouts/_template/file_library.html";i:1556090954;s:82:"/var/www/html/www.0766city.com/application/user/view/item/_template/spec_many.html";i:1556090954;}*/ ?>
+<?php /*a:5:{s:67:"/var/www/html/www.0766city.com/application/user/view/item/edit.html";i:1577692310;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1577669503;s:88:"/var/www/html/www.0766city.com/application/user/view/layouts/_template/file_library.html";i:1577669504;s:82:"/var/www/html/www.0766city.com/application/user/view/item/_template/spec_many.html";i:1577669504;s:89:"/var/www/html/www.0766city.com/application/user/view/layouts/_template/tpl_file_item.html";i:1577669504;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -133,7 +133,7 @@
 							<li>商品相册</li>
 							<li>商品详情</li>
 							<li>商品规格</li>
-							<li>商品属性</li>
+							<!--<li>商品属性</li>-->
 						</ul>
 						<div class="layui-tab-content">
 							<div class="layui-tab-item layui-show">
@@ -158,7 +158,7 @@
 										<a href="<?php echo url('user/item/editcategory'); ?>" class="layui-btn layui-btn-sm">去添加</a>
 									</div>
 								</div>
-								<div class="layer-form-group">
+								<!--<div class="layer-form-group">
 									<label class="layui-form-label form-require">商品品牌： </label>
 									<div class="layui-col-sm2  layer-midd-left">
 										<select  id="parent_id_1"  name="goods[brand_id]"
@@ -173,7 +173,34 @@
 										<div class="layui-col-sm2 layer-midd-left">
 											<a href="<?php echo url('user/item/savebrand'); ?>" class="layui-btn layui-btn-sm">去添加</a>
 										</div>
+								</div>-->
+								<!-- 行业列表 -->
+								<div class="layer-form-group">
+									<label class="layui-form-label form-require">商品行业：</label>
+									<div class="layui-col-sm2 layer-midd-left">
+										<?php if(is_array($industryList) || $industryList instanceof \think\Collection || $industryList instanceof \think\Paginator): $i = 0; $__LIST__ = $industryList;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$item): $mod = ($i % 2 );++$i;?>
+										<input type="checkbox" class="layui-form-checkbox" name="goods[industry_ids][]" <?php if(in_array($item['id'], $industryIds)): ?>checked<?php endif; ?> value="<?php echo htmlentities($item['id']); ?>"><?php echo htmlentities($item['name']); ?>
+										<?php endforeach; endif; else: echo "" ;endif; ?>
+									</div>
 								</div>
+
+								<div class="layer-form-group">
+									<label class="layui-form-label form-require">商品重量：</label>
+									<div class="layui-col-sm7  layer-midd-left">
+										<input type="number" class="tpl-form-input" name="goods[weight]" value="<?php echo isset($goodsInfo['weight']) ? htmlentities($goodsInfo['weight']) : ''; ?>" required>
+										<div class="help-block">
+											<small>以g为单位</small>
+										</div>
+									</div>
+								</div>
+
+								<div class="layer-form-group">
+									<label class="layui-form-label form-require">发货地：</label>
+									<div class="layui-col-sm7  layer-midd-left">
+										<input type="text" class="tpl-form-input" name="goods[ship_address]" value="<?php echo isset($goodsInfo['ship_address']) ? htmlentities($goodsInfo['ship_address']) : ''; ?>" required>
+									</div>
+								</div>
+
 								<div class="layer-form-group">
 									<label class="layui-form-label form-require">运费模板： </label>
 									<div class="layui-col-sm2  layer-midd-left">
@@ -206,6 +233,55 @@
 									</div>
 								</div>
 								<div class="layer-form-group">
+									<label class="layui-form-label form-require">特价折扣：</label>
+									<div class="layui-col-sm7  layer-midd-left">
+										<input style="width: 100px;" type="text" class="tpl-form-input" name="goods[discount]"
+											   value="<?php echo isset($goodsInfo['discount']) ? htmlentities($goodsInfo['discount']) : 0; ?>">
+										<div class="help-block">
+											<small>无折扣直接不填就好</small>
+										</div>
+									</div>
+								</div>
+								<div class="layer-form-group">
+									<label class="layui-form-label form-require">积分商品结束时间：</label>
+									<div class="layui-col-sm7  layer-midd-left">
+										<input style="width: 100px;" type="text" class="tpl-form-input" name="goods[end_time]"
+											   value="<?php echo isset($goodsInfo['end_time']) ? htmlentities($goodsInfo['end_time']) : ''; ?>">
+										<div class="help-block">
+											<small>不是积分商品直接不填就好（样式：年-月-日【9999-12-30】）</small>
+										</div>
+									</div>
+								</div>
+								<div class="layer-form-group">
+									<label class="layui-form-label form-require">商品独家所需购买数量：</label>
+									<div class="layui-col-sm7  layer-midd-left">
+										<input style="width: 100px;" type="number" class="tpl-form-input" name="goods[sole_must_num]"
+											   value="<?php echo isset($goodsInfo['sole_must_num']) ? htmlentities($goodsInfo['sole_must_num']) : 0; ?>">
+										<div class="help-block">
+											<small>不是独家商品直接不填就好</small>
+										</div>
+									</div>
+								</div>
+								<div class="layer-form-group">
+									<label class="layui-form-label form-require">商品独家范围：</label>
+									<div class="layui-col-sm7  layer-midd-left">
+										<input style="width: 100px;" type="number" class="tpl-form-input" name="goods[sole_range]"
+											   value="<?php echo isset($goodsInfo['sole_range']) ? htmlentities($goodsInfo['sole_range']) : 0; ?>">
+										<div class="help-block">
+											<small>不是独家商品直接不填就好（单位：米）</small>
+										</div>
+									</div>
+								</div>
+								<div class="layer-form-group">
+									<label class="layui-form-label form-require">商品排序：</label>
+									<div class="layui-col-sm7  layer-midd-left">
+										<input type="number" class="tpl-form-input" name="goods[sort]" value="<?php echo isset($goodsInfo['sort']) ? htmlentities($goodsInfo['sort']) : 50; ?>" required>
+										<div class="help-block">
+											<small>数字越小排序越前</small>
+										</div>
+									</div>
+								</div>
+								<!--<div class="layer-form-group">
 									<label class="layui-form-label form-require">分佣方式：</label>
 									 <div class="layer-u-sm-2 layer-midd-left">
 									  <select name="goods['agent_type']" lay-verify="required">
@@ -215,7 +291,25 @@
 									</div>
 									<div class="layer-u-sm-6 layer-midd-left">
 										<input type="text" class="tpl-form-input"  name="goods[agent_price]"
-											   value="<?php echo isset($goodsInfo['agent_price']) ? htmlentities($goodsInfo['agent_price']) : ''; ?>" placeholder="请输入分佣比例" required>
+											   value="<?php echo isset($goodsInfo['agent_price']) ? htmlentities($goodsInfo['agent_price']) : 0; ?>" placeholder="请输入分佣比例" required>
+									</div>
+								</div>-->
+								<div class="layer-form-group">
+									<label class="layui-form-label form-require">商品归属：</label>
+									 <div class="layer-u-sm-2 layer-midd-left">
+									  <select name="goods[plat_type]" lay-verify="required">
+										<option value="1" <?php if($goodsInfo['plat_type']==1): ?>selected <?php endif; ?>>平台订单</option>
+										<option value="2" <?php if($goodsInfo['plat_type']==2): ?>selected <?php endif; ?> >平台代发</option>
+										<option value="3" <?php if($goodsInfo['plat_type']==3): ?>selected <?php endif; ?> >客户订单</option>
+									  </select>
+									</div>
+									<div class="layer-u-sm-6 layer-midd-left">
+										<input style="width: 100px;" type="number" class="tpl-form-input"  name="goods[plat_id]"
+											   value="<?php echo isset($goodsInfo['plat_id']) ? htmlentities($goodsInfo['plat_id']) : ''; ?>" placeholder="当选择平台代发、客户订单的时候请输入供应商user_id" oninput="showName(this)">
+										<span id="supplierName" style="color: red;"></span>
+											<div class="help-block">
+												当选择平台代发、客户订单的时候请输入供应商user_id
+											</div>
 									</div>
 								</div>
 							</div> 
@@ -247,7 +341,7 @@
 												</div>
 											</div>
 											<div class="help-block">
-												<small>尺寸：宽750像素 高度不限</small>
+												<small>尺寸：宽800像素 高度不限</small>
 											</div>
 										</div>
 									</div>
@@ -257,7 +351,13 @@
 								<div class="layer-form-group">
 									<label class="layui-form-label form-require">商品详情： </label>
 									<div class="layui-col-sm7  layer-midd-left">
-										<textarea id="container" name="goods[goods_content]" type="text/plain">
+										<!--<textarea id="container" name="goods[goods_content]" type="text/plain">
+										<?php echo htmlentities($goodsInfo['goods_content']); ?>
+										</textarea>-->
+										<div id="editor">
+
+										</div>
+										<textarea id="text1" name="goods[goods_content]" type="text/plain" style="display: none;">
 										<?php echo htmlentities($goodsInfo['goods_content']); ?>
 										</textarea>
 									</div>
@@ -298,6 +398,12 @@
         </div>
     </div>
 </div>
+<style type="text/css">
+	 /*富文本框高度*/
+	.w-e-text-container{
+		height: 500px !important;
+	}
+</style>
 <!-- 图片文件列表模板 -->
 <!-- 文件库弹窗 -->
 <!-- 文件库模板 -->
@@ -508,6 +614,7 @@
 		 <th>成本价</th>
         <th>库存</th>
         <th>商品编码</th>
+		<th>商品图片</th>
     </tr>
     {{ each data.list }}
 		<tr>
@@ -516,29 +623,305 @@
 			{{ $vo }}
 		</td>{{ /each }}
 		<td> 
-			<input type="number" name="goods[sku][{{ $value.id }}][shop_price]" min="1" step="0.00"  placeholder="0" value="{{ $value['form']['shop_price'] ? $value['form']['shop_price'] : 0 }}" required/>
+			<input type="text" placeholder="请输入上限"  onkeyup="this.value=this.value.replace(/[^\d\.\d{0,2}]/g,'')" name="goods[sku][{{ $value.id }}][shop_price]"  value="{{ $value['form']['shop_price'] ? $value['form']['shop_price'] : 0 }}" required/>
 		</td>
 		<td>  
-			<input type="number" name="goods[sku][{{ $value.id }}][price]" min="1" step="0.00" placeholder="0" value="{{ $value['form']['price'] ? $value['form']['price'] : 0 }}" required/>
+			<input type="text" placeholder="请输入上限"  onkeyup="this.value=this.value.replace(/[^\d\.\d{0,2}]/g,'')" name="goods[sku][{{ $value.id }}][price]"  value="{{ $value['form']['price'] ? $value['form']['price'] : 0 }}" required/>
 		</td>
 		<td> 
-			<input type="number" name="goods[sku][{{ $value.id }}][store_count]" min="1" placeholder="0" value="{{ $value['form']['store_count'] ? $value['form']['store_count'] : 0 }}" >
+			<input type="text" placeholder="请输入上限"  onkeyup="this.value=this.value.replace(/[^\d\.\d{0,2}]/g,'')" name="goods[sku][{{ $value.id }}][store_count]"  value="{{ $value['form']['store_count'] ? $value['form']['store_count'] : 0 }}" >
 		</td>
 		<td>  
-			<input type="number" name="goods[sku][{{ $value.id }}][sku]" min="1" placeholder="0" value="{{ $value['form']['sku'] ? $value['form']['sku'] : 0 }}" /> </td>
+			<input type="number" name="goods[sku][{{ $value.id }}][sku]" min="1" placeholder="0" value="{{ $value['form']['sku'] ? $value['form']['sku'] : 0 }}" /> 
+		</td>
+		<td>  
+					<div class="layui-form-item">    
+						<div class="layer-form-group">
+							<div class="layui-col-sm7 layer-midd-left">
+								<div class="layer-form-file">
+									<button onclick="but_img('{{ $value.id }}')" type="button"
+											class="upload-file{{ $value.id }} layer-btn-secondary layer-radius layui-btn">
+										<i class="layer-icon-cloud-upload "></i> 选择图片
+									</button>
+									<div class="uploader-list layer-cf">
+										<input type="hidden" name="goods[sku][{{ $value.id }}][item_pic]" value="{{ $value['form']['item_pic_id'] ? $value['form']['item_pic_id'] : '0' }}" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+		</td>
 		</tr>
     {{ /each }}
     </tbody>
+</script>
+<!-- 图片文件列表模板 -->
+<script id="tpl-file-item" type="text/template">
+    {{ each list }}
+	
+    <div class="file-item">
+        <a href="{{ $value.file_path }}" title="点击查看大图" target="_blank">
+            <img src="{{ $value.file_path }}">
+        </a>
+        <input type="hidden" name="{{ name }}" value="{{ $value.file_id}}">
+        <i class="iconfont icon-shanchu file-item-delete"></i>
+    </div>
+    {{ /each }}
+</script>
+
+
+
+
+<!-- 文件库弹窗 -->
+<!-- 文件库模板 -->
+<script id="tpl-file-library" type="text/template">
+    <div class="row">
+        <div class="file-group">
+            <ul class="nav-new">
+                <li class="ng-scope {{ is_default ? 'active' : '' }}" data-group-id="-1">
+                    <a class="group-name layui-text-truncate" href="javascript:void(0);" title="全部">全部</a>
+                </li>
+                <li class="ng-scope" data-group-id="0">
+                    <a class="group-name" href="javascript:void(0);" title="未分组">未分组</a>
+                </li>
+                {{ each group_list }}
+                <li class="ng-scope"  data-group-id="{{ $value.group_id }}" title="{{ $value.group_name }}">
+                    <a class="group-edit" href="javascript:void(0);" title="编辑分组">
+                        <i class="iconfont icon-bianji"></i>
+                    </a>
+                    <a class="group-name" href="javascript:void(0);">
+                        {{ $value.group_name }}
+                    </a>
+                    <a class="group-delete" href="javascript:void(0);" title="删除分组">
+                        <i class="iconfont icon-shanchu1"></i>
+                    </a>
+                </li>
+                {{ /each }}
+            </ul>
+            <a class="group-add" href="javascript:void(0);">新增分组</a>
+        </div>
+        <div class="file-list">
+            <div class="v-box-header">
+                <div class="h-left layui-col-flex">
+					<div class="group-select">
+						<button type="button" class="group-select layui-btn layer-dropdown">
+							移动至 <span class="layer-icon-caret-down"></span>
+						</button>
+						
+					  <!--   <ul class="group-list ">
+							<li>请选择分组</li>
+							{{ each group_list }}
+							<li>
+								<a class="move-file-group" data-group-id="{{ $value.group_id }}"
+								   href="javascript:void(0);">{{ $value.group_name }}</a>
+							</li>
+							{{ /each }}
+						</ul> -->
+						
+						<div class="layui-form-item">
+							<label class="layui-form-label">请选择分组</label>
+							<div class="layui-input-block">
+							 
+							  <select class="form-control" name="city" lay-verify="required"> 
+							  {{ each group_list }}
+								<option value="{{ $value.group_id }}" data-group-id="{{ $value.group_id }}">{{ $value.group_name }}</option>
+							 {{ /each }}
+							  </select>
+							 
+							</div>
+						</div>
+					</div>
+						
+						
+					<div class="h-rigth layer-fl layui-input-block">
+						<div class="j-upload upload-image">
+							<i class="iconfont icon-add1"></i>
+							上传图片
+						</div>
+						
+					</div>
+					<div class="tpl-table-black-operation layer-fl">
+							<a href="javascript:void(0);" class="layui-btn-warm file-delete tpl-table-black-operation-del" data-group-id="2">
+								<i class="mdi menu-icon mdi-delete-forever"></i> 删除
+							</a>
+						</div>
+                </div>	
+            </div>
+            <div id="file-list-body" class="v-box-body">
+                {{ include 'tpl-file-list' file_list }}
+            </div>
+            <div class="v-box-footer"></div>
+        </div>
+    </div>
+
+</script>
+
+<!-- 文件列表模板 -->
+<script id="tpl-file-list" type="text/template">
+    <ul class="file-list-item">
+        {{ include 'tpl-file-list-item' data }}
+    </ul>
+    {{ if last_page > 1 }}
+    <div class="file-page-box">
+        <ul class="pagination">
+            {{ if current_page > 1 }}
+            <li>
+                <a class="switch-page" href="javascript:void(0);" title="上一页" data-page="{{ current_page - 1 }}">«</a>
+            </li>
+            {{ /if }}
+            {{ if current_page < last_page }}
+            <li>
+                <a class="switch-page" href="javascript:void(0);" title="下一页" data-page="{{ current_page + 1 }}">»</a>
+            </li>
+            {{ /if }}
+        </ul>
+    </div>
+    {{ /if }}
+</script>
+
+<!-- 文件列表模板 -->
+<script id="tpl-file-list-item" type="text/template">
+    {{ each $data }}
+    <li class="ng-scope" title="{{ $value.file_name }}" data-file-id="{{ $value.id }}"
+        data-file-path="{{ $value.file_path }}">
+        <div class="img-cover"
+             style="background-image: url('{{ $value.file_path }}')">
+        </div>
+        <p class="layui-word-aux">{{ $value.file_name }}</p>
+        <div class="select-mask">
+            <img src="assets/user/img/chose.png">
+        </div>
+    </li>
+    {{ /each }}
+</script>
+
+<!-- 分组元素-->
+<script id="tpl-group-item" type="text/template">
+    <li class="ng-scope" data-group-id="{{ group_id }}" title="{{ group_name }}">
+        <a class="group-edit" href="javascript:void(0);" title="编辑分组">
+            <i class="iconfont icon-bianji"></i>
+        </a>
+        <a class="group-name layer-text-truncate" href="javascript:void(0);">
+            {{ group_name }}
+        </a>
+        <a class="group-delete" href="javascript:void(0);" title="删除分组">
+            <i class="iconfont icon-shanchu1"></i>
+        </a>
+    </li>
+</script>
+<script id="tpl-file-item" type="text/template">
+    {{ each list }}
+	
+    <div class="file-item">
+        <a href="{{ $value.file_path }}" title="点击查看大图" target="_blank">
+            <img src="{{ $value.file_path }}">
+        </a>
+        <input type="hidden" name="{{ name }}" value="{{ $value.file_id}}">
+        <i class="iconfont icon-shanchu file-item-delete"></i>
+    </div>
+    {{ /each }}
+</script>
+
+<script>
+function but_img(id){
+	//选择图片
+	$('.upload-file'+id).selectImages({
+	    name: 'goods[sku]['+id+'][item_pic]'
+	    // , multiple: true
+	});   
+}
 </script>
 <script src="assets/user/js/goods.spec.js"></script>
 <script>
 var cat_id="<?php echo isset($goodsInfo['cat_id']) ? htmlentities($goodsInfo['cat_id']) : ''; ?>";
 </script>
 <script src="assets/user/js/goods.category.js"></script>
+<!--<script src="assets/user/js/wangEditor.min.js"></script>-->
+<script src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var E = window.wangEditor;
+		var editor = new E('#editor');
+		var $content = $('#text1').text();
+
+		editor.customConfig.menus = [
+			'head',  // 标题
+			'bold',  // 粗体
+			'fontSize',  // 字号
+			'fontName',  // 字体
+			'italic',  // 斜体
+			'underline',  // 下划线
+			'strikeThrough',  // 删除线
+			'link',  // 插入链接
+			'justify',  // 对齐方式
+			'image',  // 插入图片
+			'undo',  // 撤销
+			'redo'  // 重复
+		];
+
+		editor.customConfig.uploadImgServer = '/index.php?s=/user/upload/uploadMany';  // 上传图片到服务器*/
+		editor.customConfig.uploadFileName = "file[]";
+		editor.customConfig.uploadImgHooks = {
+			before: function (xhr, editor, files) {
+				// 图片上传之前触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，files 是选择的图片文件
+
+				// 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
+				// return {
+				//     prevent: true,
+				//     msg: '放弃上传'
+				// }
+				// alert("前奏");
+			},
+			success: function (xhr, editor, result) {
+				// 图片上传并返回结果，图片插入成功之后触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+				// var url = result.data.url;
+				// alert(JSON.stringify(url));
+				// editor.txt.append(url);
+				// alert("成功");
+			},
+			fail: function (xhr, editor, result) {
+				// 图片上传并返回结果，但图片插入错误时触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+				alert("失败");
+			},
+			error: function (xhr, editor) {
+				// 图片上传出错时触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+				// alert("错误");
+			},
+			// 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+			// （但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
+			customInsert: function (insertImg, result, editor) {
+				// 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+				// insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+				// 举例：假如上传图片成功后，服务器端返回的是 <?php echo url("","",true,false);?> 这种格式，即可这样插入图片：
+				/*var url = result.data.src;
+				insertImg(url);*/
+				for(var j=0;j<result.data.length;j++){
+					insertImg(result.data[j]);
+				}
+
+				// result 必须是一个 JSON 格式字符串！！！否则报错
+			}
+		}
+
+		editor.customConfig.onchange = function (html) {
+            // 监控变化，同步更新到 textarea
+			$('#text1').val(html)
+        };
+		editor.create();
+		// 初始化 文本框的值
+		console.log($content);
+		editor.txt.html($content);
+	});
+
+</script>
 <script>
 		$(function () {
 			  // 富文本编辑器
-		layui.use('layedit', function(){
+		/*layui.use('layedit', function(){
 		var layedit = layui.layedit;
 		layedit.build('container', {
 		height: 600, //设置编辑器高度
@@ -547,7 +930,7 @@ var cat_id="<?php echo isset($goodsInfo['cat_id']) ? htmlentities($goodsInfo['ca
                   , type: 'post' //默认post
                 }
 		});	
-		});
+		});*/
         // 选择图片
         $('.j-withdraw_apply').selectImages({
             name: 'goods[goods_images][]'
@@ -572,6 +955,22 @@ var cat_id="<?php echo isset($goodsInfo['cat_id']) ? htmlentities($goodsInfo['ca
 	if(goods_id){
 		spec(spec_type);
 		goodstype(goods_id,spec_type);
+	}
+</script>
+
+<script>
+	$(function () {
+		showName();
+	});
+
+	function showName(obj) {
+		let plat_id = $(obj).val();
+		console.log(plat_id);
+
+		var url = "<?php echo url('user/supplier/getSUpplierName'); ?>";
+		$.post(url, {plat_id: plat_id}, function (result) {
+			$('#supplierName').html('供应商名称:' + result);
+		});
 	}
 </script>
     </div>

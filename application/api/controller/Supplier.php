@@ -18,6 +18,7 @@ use app\common\model\OrderSupplierByUser;
 use app\common\model\Returnbuy;
 use app\common\library\wechat\WxPay;
 use app\common\model\App as AppModel;
+use app\common\model\Industry;
 /**
  * 供应商主页
  * Class Index
@@ -65,11 +66,12 @@ class Supplier extends Controller
     /**
      * 供应商登录
      */
-    public function login(){
-    	$post = input('post.');
+    public function login($post){
+    	// $post = input('post.');
     	$model = new SupplierModel;
     	$user = $model->appLogin($post);
     	if($user){
+    		return $user;
     		return $this->renderSuccess([
     				'user_id' => $user,
     				'token' => $model->getToken()
@@ -210,6 +212,7 @@ class Supplier extends Controller
     	$model = new SupplierModel;
     	$CategoryModel = new CategoryModel;
     	$OrderModel = new OrderModel;
+    	$Industry = new Industry();
     	
     	// 获取用户信息
     	$token = input('post.token');
@@ -221,20 +224,29 @@ class Supplier extends Controller
     	
     	// 获取所有的分类数据
     	$category_data = $CategoryModel->getALL();
+    	$industry_data = $Industry->getALLByWhere();
     	
     	// 获取订单数据
     	// 未选择分类
+    	$where = ['plat_id'=>$user_id];
     	if ($post['type'] == 0){
-    		$where = ['plat_id'=>$user_id];
     		$order_data = $OrderModel->getAllDataByWhere($where);
     	// 根据已选择的分类id来进行查询
     	}else {
     		// 如果有分类id
-    		if (isset($post['category_id']) && !(isset($post['start_time']) || isset($post['end_time']))){
+    		if ((isset($post['industry_id']) && isset($post['category_id'])) && !(isset($post['start_time']) || isset($post['end_time']))){
     			$OrderGoodsModel = new OrderGoodsModel;
-    			$order_data = $OrderGoodsModel->getAllDataByCategoryAndUser($post['category_id'],$user_id);
+    			$order_data = $OrderGoodsModel->getAllDataByCategoryAndUser($post['industry_id'],$post['category_id'],$user_id);
+    			$order_id = [];
+    			foreach ($order_data as $key=>$value){
+    				$order_id[] = $value['order_id'];
+    			}
+    			$where = [
+    					'plat_id'=>$user_id,
+    					'order_id' => ['in', implode(',', $order_id)],
+    			];
     		// 如果有时间
-    		}elseif (isset($post['start_time']) && isset($post['end_time']) && !isset($post['category_id'])){
+    		}elseif ((isset($post['start_time']) && isset($post['end_time'])) && !(isset($post['industry_id']) && isset($post['category_id']))){
     			$where = [
     					'plat_id'=>$user_id,
     					'create_time' => ['>', $post['start_time']],
@@ -244,6 +256,7 @@ class Supplier extends Controller
     		}
     	}
     	return $this->renderSuccess([
+    			'industry_data'=>$industry_data,// 行业信息
     			'category_data'=>$category_data,// 分类信息
     			'order_data'=>$order_data,// 订单信息
     			'countPrice'=>$OrderModel->countReceiveData($where),// 成交总额
@@ -280,20 +293,43 @@ class Supplier extends Controller
     			'returnbuy_info'=>$returnbuy_info
     	]);
     }
-    
+
     /**
      * 发货
-     * @TODO 等确定怎么发货
+     * @return array
+     * @throws \app\common\exception\BaseException
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function deliverGoods(){
-    	// 先获取订单详情
-    	
-    	// ... 
-    	$wxConfig = AppModel::getAppCache();
-    	$WxPay = new WxPay($wxConfig);
-    	$payment = $WxPay->refund($transaction_id, $openid, $total_fee);
-    	dump($payment);
-    	die;
+        // 先获取订单详情
+        $param = input('');
+        $orderModel = new OrderModel();
+        $order_info = $orderModel->where('order_id', $param['order_id'])->find();
+        if ($order_info['pay_status']['value'] == 20 && $order_info['pay_time'] != 0) {
+            $model = OrderModel::detail($param['order_id']);
+
+            // 前端没做，先写死
+            $param['express_id'] = '10005';
+            $param['order_no'] = $order_info['order_no'];
+            $param['company'] = '京东1快递';
+            $param['express_no'] = rand(1000000000, 9999999999);
+
+            if ($model->delivery($param)) {
+                return $this->renderSuccess([],'发货成功');
+            }
+            return $this->renderError($model->getError() ?: '发货失败');
+        } else {
+            return $this->renderError('订单未支付');
+        }
+        // ...
+        /*$wxConfig = AppModel::getAppCache();
+        $WxPay = new WxPay($wxConfig);
+        $payment = $WxPay->refund($transaction_id, $openid, $total_fee);
+        dump($payment);
+        die;*/
     }
     
     /**
@@ -303,7 +339,12 @@ class Supplier extends Controller
      * @param unknown $user_id
      * @param unknown $returnbuy_status
      */
-    public function returnUserMoney($id,$order_id,$user_id,$returnbuy_status){
+    public function returnUserMoney(){
+    	$id = input('post.id');
+    	$order_id = input('post.order_id');
+    	$user_id = input('post.user_id');
+    	$returnbuy_status = input('post.returnbuy_status');
+    	
     	$user_model = new User();
     	$returbuy_model = new Returnbuy();
     	$OrderPlatModel = new OrderSupplierByPlat();
@@ -318,15 +359,12 @@ class Supplier extends Controller
 	    	if ($user_id != 0){
 	    		$res = $user_model->upUserMoney($user_id,$pay_price);
 	    	}
-	    	if ($res){
-	    		return $this->Success('退款成功');
-	    	}
-	    	return $this->Error('退款失败');
+	    	return $this->renderSuccess('退款成功','退款成功');
     	}
     	if ($res1){
-    		return $this->Success('审核成功');
+    		return $this->renderSuccess('审核成功','审核成功');
     	}
-    	return $this->Error('请稍后再试');
+    	return $this->renderError('请稍后再试','请稍后再试');
     }
     
     /**

@@ -33,9 +33,19 @@ class Item extends Controller
      * 返回积分商城商品
      */
     public function IntegralGoods(){
-    	$user = $this->getUser(false);
+    	$user = $this->getUser();
     	$model = new ItemModel;
     	$list = $model->getIntegralList();
+    	return $this->renderSuccess(compact('list','user'));
+    }
+    
+    /**
+     * 返回积分商城商品
+     */
+    public function SoleGoods(){
+    	$user = $this->getUser();
+    	$model = new ItemModel;
+    	$list = $model->getSoleList();
     	return $this->renderSuccess(compact('list','user'));
     }
 
@@ -46,7 +56,7 @@ class Item extends Controller
      * @throws \app\common\exception\BaseException
      * @throws \think\exception\DbException
      */
-    public function detail($item_id)
+    public function detail($item_id,$user_id)
     {
         // 商品详情
 		$data=[];
@@ -81,7 +91,11 @@ class Item extends Controller
 			$count=count($order);
 		
 		}
-        return $this->renderSuccess(compact('detail', 'cart_total_num','order','count','endtime'));
+		$comment = db('comment')->field('a.*,b.nickName,b.avatarUrl')->alias('a')->join('bfb_user b','a.user_id = b.user_id')->where(['a.item_id'=>$item_id,'a.is_delete'=>0,'a.status'=>1])->select();
+		$brand = db('brand')->where(['id'=>$detail['brand_id']])->find();
+		$is_collect = db('collect')->where(['goods_id'=>$item_id,'user_id'=>$user_id])->value('status');
+		$is_collect = $is_collect ? $is_collect : 0;
+        return $this->renderSuccess(compact('detail', 'cart_total_num','order','count','endtime','comment','brand','is_collect'));
     }
 
     /**

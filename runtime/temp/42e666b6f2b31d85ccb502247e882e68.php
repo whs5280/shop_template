@@ -1,4 +1,4 @@
-<?php /*a:2:{s:72:"/var/www/html/www.0766city.com/application/user/view/withdraw/index.html";i:1574409966;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1574238926;}*/ ?>
+<?php /*a:2:{s:72:"/var/www/html/www.0766city.com/application/user/view/withdraw/index.html";i:1576657112;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1576657110;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -257,7 +257,11 @@
                                 <?php endif; ?>
                             </td>
                             <td><?php echo htmlentities($item['create_time']); ?></td>
-                            <td class="audit_time"><?php echo !empty($item['audit_time']) ? htmlentities($item['audit_time']) : '--'; ?></td>
+                            <?php if($item['audit_time']=="0"): ?>
+                                <td class="audit_time">--</td>
+                            <?php else: ?>
+                                <td class="audit_time"><?php echo htmlentities(date("Y-m-d H:m:s",!is_numeric($item['audit_time'])? strtotime($item['audit_time']) : $item['audit_time'])); ?></td>
+                            <?php endif; ?>
                             <td>
                                 <div class="tpl-table-black-operation">
                                     <?php if(($item['apply_status'] == 10)): ?>
@@ -371,25 +375,7 @@
             });
         });
 
-        let val = $('.audit_time').html();
-        $('.audit_time').html(timestampToTime(val))
     });
-
-    /**
-     * 转换时间戳
-     * @param timestamp
-     * @returns {string}
-     */
-    function timestampToTime(timestamp) {
-        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-        var Y = date.getFullYear() + '-';
-        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-        var D = date.getDate() + ' ';
-        var h = date.getHours() + ':';
-        var m = date.getMinutes() + ':';
-        var s = date.getSeconds();
-        return Y+M+D+h+m+s;
-    }
 </script>
 
 

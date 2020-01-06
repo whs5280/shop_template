@@ -8,9 +8,11 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
+
 //------------------------
 // ThinkPHP 助手函数
 //-------------------------
+
 use think\Container;
 use think\Db;
 use think\exception\HttpException;
@@ -29,6 +31,7 @@ use think\facade\Session;
 use think\facade\Url;
 use think\Response;
 use think\route\RuleItem;
+
 if (!function_exists('abort')) {
     /**
      * 抛出HTTP异常
@@ -45,6 +48,7 @@ if (!function_exists('abort')) {
         }
     }
 }
+
 if (!function_exists('action')) {
     /**
      * 调用模块的操作方法 参数格式 [模块/控制器/]操作
@@ -59,6 +63,7 @@ if (!function_exists('action')) {
         return app()->action($url, $vars, $layer, $appendSuffix);
     }
 }
+
 if (!function_exists('app')) {
     /**
      * 快速获取容器中的实例 支持依赖注入
@@ -72,6 +77,7 @@ if (!function_exists('app')) {
         return Container::get($name, $args, $newInstance);
     }
 }
+
 if (!function_exists('behavior')) {
     /**
      * 执行某个行为（run方法） 支持依赖注入
@@ -84,6 +90,7 @@ if (!function_exists('behavior')) {
         return Hook::exec($behavior, $args);
     }
 }
+
 if (!function_exists('bind')) {
     /**
      * 绑定一个类到容器
@@ -97,6 +104,7 @@ if (!function_exists('bind')) {
         return Container::getInstance()->bindTo($abstract, $concrete);
     }
 }
+
 if (!function_exists('cache')) {
     /**
      * 缓存管理
@@ -115,6 +123,7 @@ if (!function_exists('cache')) {
             // 缓存初始化
             return Cache::connect($name);
         }
+
         if ('' === $value) {
             // 获取缓存
             return 0 === strpos($name, '?') ? Cache::has(substr($name, 1)) : Cache::get($name);
@@ -122,12 +131,14 @@ if (!function_exists('cache')) {
             // 删除缓存
             return Cache::rm($name);
         }
+
         // 缓存数据
         if (is_array($options)) {
             $expire = isset($options['expire']) ? $options['expire'] : null; //修复查询缓存无法设置过期时间
         } else {
             $expire = is_numeric($options) ? $options : null; //默认快捷缓存设置过期时间
         }
+
         if (is_null($tag)) {
             return Cache::set($name, $value, $expire);
         } else {
@@ -135,6 +146,7 @@ if (!function_exists('cache')) {
         }
     }
 }
+
 if (!function_exists('call')) {
     /**
      * 调用反射执行callable 支持依赖注入
@@ -147,6 +159,7 @@ if (!function_exists('call')) {
         return Container::getInstance()->invoke($callable, $args);
     }
 }
+
 if (!function_exists('class_basename')) {
     /**
      * 获取类名(不包含命名空间)
@@ -160,6 +173,7 @@ if (!function_exists('class_basename')) {
         return basename(str_replace('\\', '/', $class));
     }
 }
+
 if (!function_exists('class_uses_recursive')) {
     /**
      *获取一个类里所有用到的trait，包括父类的
@@ -172,14 +186,17 @@ if (!function_exists('class_uses_recursive')) {
         if (is_object($class)) {
             $class = get_class($class);
         }
+
         $results = [];
         $classes = array_merge([$class => $class], class_parents($class));
         foreach ($classes as $class) {
             $results += trait_uses_recursive($class);
         }
+
         return array_unique($results);
     }
 }
+
 if (!function_exists('config')) {
     /**
      * 获取和设置配置参数
@@ -193,12 +210,14 @@ if (!function_exists('config')) {
             if ('.' == substr($name, -1)) {
                 return Config::pull(substr($name, 0, -1));
             }
+
             return 0 === strpos($name, '?') ? Config::has(substr($name, 1)) : Config::get($name);
         } else {
             return Config::set($name, $value);
         }
     }
 }
+
 if (!function_exists('container')) {
     /**
      * 获取容器对象实例
@@ -209,6 +228,7 @@ if (!function_exists('container')) {
         return Container::getInstance();
     }
 }
+
 if (!function_exists('controller')) {
     /**
      * 实例化控制器 格式：[模块/]控制器
@@ -222,6 +242,7 @@ if (!function_exists('controller')) {
         return app()->controller($name, $layer, $appendSuffix);
     }
 }
+
 if (!function_exists('cookie')) {
     /**
      * Cookie管理
@@ -250,6 +271,7 @@ if (!function_exists('cookie')) {
         }
     }
 }
+
 if (!function_exists('db')) {
     /**
      * 实例化数据库类
@@ -263,6 +285,7 @@ if (!function_exists('db')) {
         return Db::connect($config, $force)->name($name);
     }
 }
+
 if (!function_exists('debug')) {
     /**
      * 记录时间（微秒）和内存使用情况
@@ -280,6 +303,7 @@ if (!function_exists('debug')) {
         }
     }
 }
+
 if (!function_exists('download')) {
     /**
      * 获取\think\response\Download对象实例
@@ -294,6 +318,7 @@ if (!function_exists('download')) {
         return Response::create($filename, 'download')->name($name)->isContent($content)->expire($expire)->openinBrowser($openinBrowser);
     }
 }
+
 if (!function_exists('dump')) {
     /**
      * 浏览器友好的变量输出
@@ -307,6 +332,7 @@ if (!function_exists('dump')) {
         return Debug::dump($var, $echo, $label);
     }
 }
+
 if (!function_exists('env')) {
     /**
      * 获取环境变量值
@@ -320,6 +346,7 @@ if (!function_exists('env')) {
         return Env::get($name, $default);
     }
 }
+
 if (!function_exists('exception')) {
     /**
      * 抛出异常处理
@@ -336,6 +363,7 @@ if (!function_exists('exception')) {
         throw new $e($msg, $code);
     }
 }
+
 if (!function_exists('halt')) {
     /**
      * 调试变量并且中断输出
@@ -344,9 +372,11 @@ if (!function_exists('halt')) {
     function halt($var)
     {
         dump($var);
+
         throw new HttpResponseException(new Response);
     }
 }
+
 if (!function_exists('input')) {
     /**
      * 获取输入数据 支持默认值和过滤
@@ -361,6 +391,7 @@ if (!function_exists('input')) {
             $key = substr($key, 1);
             $has = true;
         }
+
         if ($pos = strpos($key, '.')) {
             // 指定参数来源
             $method = substr($key, 0, $pos);
@@ -373,6 +404,7 @@ if (!function_exists('input')) {
             // 默认为自动判断
             $method = 'param';
         }
+
         if (isset($has)) {
             return request()->has($key, $method, $default);
         } else {
@@ -380,6 +412,7 @@ if (!function_exists('input')) {
         }
     }
 }
+
 if (!function_exists('json')) {
     /**
      * 获取\think\response\Json对象实例
@@ -394,6 +427,7 @@ if (!function_exists('json')) {
         return Response::create($data, 'json', $code, $header, $options);
     }
 }
+
 if (!function_exists('jsonp')) {
     /**
      * 获取\think\response\Jsonp对象实例
@@ -408,6 +442,7 @@ if (!function_exists('jsonp')) {
         return Response::create($data, 'jsonp', $code, $header, $options);
     }
 }
+
 if (!function_exists('lang')) {
     /**
      * 获取语言变量值
@@ -421,6 +456,7 @@ if (!function_exists('lang')) {
         return Lang::get($name, $vars, $lang);
     }
 }
+
 if (!function_exists('model')) {
     /**
      * 实例化Model
@@ -434,6 +470,7 @@ if (!function_exists('model')) {
         return app()->model($name, $layer, $appendSuffix);
     }
 }
+
 if (!function_exists('parse_name')) {
     /**
      * 字符串命名风格转换
@@ -449,12 +486,14 @@ if (!function_exists('parse_name')) {
             $name = preg_replace_callback('/_([a-zA-Z])/', function ($match) {
                 return strtoupper($match[1]);
             }, $name);
+
             return $ucfirst ? ucfirst($name) : lcfirst($name);
         } else {
             return strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $name), "_"));
         }
     }
 }
+
 if (!function_exists('redirect')) {
     /**
      * 获取\think\response\Redirect对象实例
@@ -469,9 +508,11 @@ if (!function_exists('redirect')) {
             $code   = $params;
             $params = [];
         }
+
         return Response::create($url, 'redirect', $code)->params($params);
     }
 }
+
 if (!function_exists('request')) {
     /**
      * 获取当前Request对象实例
@@ -482,6 +523,7 @@ if (!function_exists('request')) {
         return app('request');
     }
 }
+
 if (!function_exists('response')) {
     /**
      * 创建普通 Response 对象实例
@@ -496,6 +538,7 @@ if (!function_exists('response')) {
         return Response::create($data, $type, $code, $header);
     }
 }
+
 if (!function_exists('route')) {
     /**
      * 路由注册
@@ -510,6 +553,7 @@ if (!function_exists('route')) {
         return Route::rule($rule, $route, '*', $option, $pattern);
     }
 }
+
 if (!function_exists('session')) {
     /**
      * Session管理
@@ -538,6 +582,7 @@ if (!function_exists('session')) {
         }
     }
 }
+
 if (!function_exists('token')) {
     /**
      * 生成表单令牌
@@ -548,9 +593,11 @@ if (!function_exists('token')) {
     function token($name = '__token__', $type = 'md5')
     {
         $token = Request::token($name, $type);
+
         return '<input type="hidden" name="' . $name . '" value="' . $token . '" />';
     }
 }
+
 if (!function_exists('trace')) {
     /**
      * 记录日志信息
@@ -567,6 +614,7 @@ if (!function_exists('trace')) {
         }
     }
 }
+
 if (!function_exists('trait_uses_recursive')) {
     /**
      * 获取一个trait里所有引用到的trait
@@ -580,9 +628,11 @@ if (!function_exists('trait_uses_recursive')) {
         foreach ($traits as $trait) {
             $traits += trait_uses_recursive($trait);
         }
+
         return $traits;
     }
 }
+
 if (!function_exists('url')) {
     /**
      * Url生成
@@ -597,6 +647,7 @@ if (!function_exists('url')) {
         return Url::build($url, $vars, $suffix, $domain);
     }
 }
+
 if (!function_exists('validate')) {
     /**
      * 实例化验证器
@@ -610,6 +661,7 @@ if (!function_exists('validate')) {
         return app()->validate($name, $layer, $appendSuffix);
     }
 }
+
 if (!function_exists('view')) {
     /**
      * 渲染模板输出
@@ -624,6 +676,7 @@ if (!function_exists('view')) {
         return Response::create($template, 'view', $code)->assign($vars)->filter($filter);
     }
 }
+
 if (!function_exists('widget')) {
     /**
      * 渲染输出Widget
@@ -633,9 +686,16 @@ if (!function_exists('widget')) {
      */
     function widget($name, $data = [])
     {
-        return app()->action($name, $data, 'widget');
+        $result = app()->action($name, $data, 'widget');
+
+        if (is_object($result)) {
+            $result = $result->getContent();
+        }
+
+        return $result;
     }
 }
+
 if (!function_exists('xml')) {
     /**
      * 获取\think\response\Xml对象实例
@@ -650,6 +710,7 @@ if (!function_exists('xml')) {
         return Response::create($data, 'xml', $code, $header, $options);
     }
 }
+
 if (!function_exists('yaconf')) {
     /**
      * 获取yaconf配置

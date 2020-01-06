@@ -48,7 +48,7 @@ class OrderGoods extends BaseModel
     protected $hidden = [
         'content',
         'app_id',
-        'create_time',
+        // 'create_time',
     ];
     /**
      * 获取未评价的商品
@@ -81,12 +81,13 @@ class OrderGoods extends BaseModel
      * @param unknown $order_id
      * @return unknown|boolean
      */
-    public function getAllDataByCategoryAndUser($category_id,$user_id){
-    	if ($order_id){
-    		$data = $this->field('c.order_no,a.goods_price as pay_price,a.create_time,b.cat_id')
+    public function getAllDataByCategoryAndUser($industry_id,$category_id,$user_id){
+    	if ($category_id){
+    		$data = $this->field('c.order_no,a.goods_price as pay_price,b.cat_id,a.order_id,c.create_time')
     					->alias('a')
     					->join('bfb_item b', 'a.item_id = b.goods_id')
-    					->join('bfb_order c', 'b.order_id = c.order_id')
+    					->join('bfb_order c', 'a.order_id = c.order_id')
+    					->where('b.industry_id', 'like', '%,' . $industry_id . ',%')
     					->where(['c.plat_id'=>$user_id,'b.cat_id'=>$category_id])
     					->order('a.create_time desc')
     					->select();

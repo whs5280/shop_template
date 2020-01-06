@@ -15,7 +15,7 @@ class Delivery extends BaseModel
      * @return \think\model\relation\HasMany
      */
     public function rule()
-    {	
+    {
         return $this->hasMany('DeliveryRule','delivery_id','delivery_id');
     }
     /**
@@ -25,7 +25,7 @@ class Delivery extends BaseModel
      */
     public function getMethodAttr($value)
     {
-        $method = [10 => '按件数', 20 => '按重量'];
+        $method = [10 => '按件数', 20 => '按重量', 30 => '包邮'];
         return ['text' => $method[$value], 'value' => $value];
     }
     /**
@@ -71,14 +71,19 @@ class Delivery extends BaseModel
      */
     public function add($data)
     {
-        if (!isset($data['rule']) || empty($data['rule'])) {
-            $this->error = '请选择可配送区域';
-            return false;
+        if ($data['method'] < 30) {
+            if (!isset($data['rule']) || empty($data['rule'])) {
+                $this->error = '请选择可配送区域';
+                return false;
+            }
         }
         $data['app_id'] = self::$app_id;
-		
+
         if ($this->allowField(true)->save($data)) {
-            return (new DeliveryRule)->createDeliveryRule($data['rule'],$this->delivery_id);
+            if (isset($data['rule'])) {
+                return (new DeliveryRule)->createDeliveryRule($data['rule'],$this->delivery_id);
+            }
+            return true;
         }
         return false;
     }
@@ -100,14 +105,20 @@ class Delivery extends BaseModel
      * @throws \think\exception\PDOException
      */
     public function edit($data) {
-        if (!isset($data['rule']) || empty($data['rule'])) {
-            $this->error = '请选择可配送区域';
-            return false;
+        if ($data['method'] < 30) {
+            if (!isset($data['rule']) || empty($data['rule'])) {
+                $this->error = '请选择可配送区域';
+                return false;
+            }
         }
         $data['app_id'] = self::$app_id;
         $where=['delivery_id','=',$data['delivery_id']];
+
         if ($this->allowField(true)->save($data,$where)) {
-           return (new DeliveryRule)->createDeliveryRule($data['rule'],$data['delivery_id']);
+            if (isset($data['rule'])) {
+                return (new DeliveryRule)->createDeliveryRule($data['rule'],$data['delivery_id']);
+            }
+            return true;
         }
         return false;
     }

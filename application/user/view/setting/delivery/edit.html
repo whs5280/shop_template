@@ -25,17 +25,21 @@
 							<label class="layui-form-label form-require">计费方式 </label>
 							<div class="layui-col-sm9 layer-midd-left">
 								<label class="layui-input-inline">
-									<input type="radio" name="delivery[method]" value="10" data-am-ucheck {$model['method']['value'] == 10 ? 'checked' : ''}> 按件数
-
+									<input type="radio" name="delivery[method]" onclick="getRadio()" value="10" data-am-ucheck {$model['method']['value'] == 10 ? 'checked' : ''}>
+									按件数
 								</label>
 								<label class="layui-input-inline">
-									<input type="radio" name="delivery[method]" value="20"  data-am-ucheck {$model['method']['value'] == 20 ? 'checked' : ''}>
+									<input type="radio" name="delivery[method]" onclick="getRadio()" value="20"  data-am-ucheck {$model['method']['value'] == 20 ? 'checked' : ''}>
 									按重量
+								</label>
+								<label class="layui-input-inline">
+									<input type="radio" name="delivery[method]" onclick="getRadio()" value="30"  data-am-ucheck {$model['method']['value'] == 30 ? 'checked' : ''}>
+									包邮
 								</label>
 							</div>
 						</div>
-                         
-						<div class="layui-form-item">
+
+						<div class="layui-form-item" id="delivery_region" style="display: block">
 							<label class="layui-form-label form-require">
 								配送区域及运费
 							</label>
@@ -134,5 +138,16 @@
          */
         $('#my-form').superForm();
 
+        getRadio();
     });
+
+	function getRadio() {
+		let value = $("input[type='radio']:checked").val();
+		if (value == 30) {
+			console.log(value);
+			$("#delivery_region").hide();
+		} else {
+			$("#delivery_region").show();
+		}
+	}
 </script>

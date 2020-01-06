@@ -10,7 +10,9 @@ use app\common\model\Task;
 use app\common\model\Agent as AgentModel;
 use app\common\model\User as DealerUserModel;
 use app\common\model\Order as OrderModel;
+use app\common\model\UserAddress;
 use app\common\model\Withdraw as WithdrawModel;
+use think\Db;
 
 /**
  * 推广员接口
@@ -71,6 +73,7 @@ class Agent extends Controller
         $token = input('post.token');
         $model = new AgentModel;
         $userInfo = $model->getUser($token);
+        $userInfo['address'] = UserAddress::detail($userInfo['user_id'], $userInfo['address_id']);
         if($userInfo){
             return $this->renderSuccess([
                 'userInfo' => $userInfo,
@@ -88,11 +91,19 @@ class Agent extends Controller
      */
     public function tasks()
     {
+        $status = input('status');
         $user = $this->getAgent();
         $model = new Task();
-        $list = $model->getList($user['user_id']);
+        $list = $model->getList($user['user_id'], $status);
         return $this->renderSuccess([
-            'list' => $list
+            'list' => $list,
+            'total' => [
+                1 => $model->countByStatus($user['user_id'], 0),
+                2 => $model->countByStatus($user['user_id'], 1),
+                3 => $model->countByStatus($user['user_id'], 2),
+                4 => $model->countByStatus($user['user_id'], 3),
+            ],
+
         ]);
     }
 
@@ -134,14 +145,46 @@ class Agent extends Controller
      */
     public function invite_list()
     {
+        $status = input('status');
         $user = $this->getAgent();
         $model = new AgentModel;
-        $list = $model->invite_lists($user['user_id']);
+        $list = $model->invite_lists($user['user_id'], $status);
+        foreach ($list as &$item) {
+            $item['pass_time'] = date('Y-m-d h:m:s', $item['pass_time']);
+        }
         return $this->renderSuccess([
-            'list' => $list
+            'list' => $list,
+            'total' => [
+                1 => $model->countByStatus($user['user_id'], 0),
+                2 => $model->countByStatus($user['user_id'], 1),
+                3 => $model->countByStatus($user['user_id'], 2),
+            ],
         ]);
     }
+    /**
+     * 人头列表(搜索)
+     * @return array
+     * @throws \app\common\exception\BaseException
+     * @throws \think\exception\DbException
+     */
+    public function invite_search()
+    {
+        $keyword = input('nickname','');
+        $start = input('start_time','');
+        $end = input('end_time','');
 
+        $user = $this->getAgent();
+        $model = new AgentModel;
+        $list = $model->invite_lists($user['user_id'], -1, $keyword ,$start, $end);
+        foreach ($list as &$item) {
+            $item['pass_time'] = date('Y-m-d h:m:s', $item['pass_time']);
+        }
+        $total = count($list);
+        return $this->renderSuccess([
+            'list' => $list,
+            'total' => $total,
+        ]);
+    }
     /**
      * 佣金记录列表
      * @return array
@@ -150,11 +193,44 @@ class Agent extends Controller
      */
     public function award_list()
     {
+        $award_type = input('award_type',-1);
+        $start = input('start_time','');
+        $end = input('end_time','');
+
         $user = $this->getAgent();
         $model = new AgentRecord();
-        $list = $model->getAll($user['user_id']);
+        $list = $model->getAll($user['user_id'], $award_type, $start, $end);
+
+        $agent = AgentInfo::detail($user['user_id']);
+        $profit = 0;
+        if ($award_type == 100) {
+            $profit = $agent['profit1'];
+        }
+        if ($award_type == 300) {
+            $profit = $agent['profit2'];
+        }
+        if ($award_type == 200) {
+            $profit = $agent['profit3'];
+        }
+
+        // 时间条件搜索
+        if (isset($start) && trim($start) != '' && isset($end) && trim($end) != ''){
+            $profit = 0;
+            if (count($list) > 0){
+                foreach ($list as &$item) {
+                    $profit += (double)$item['money'];
+                }
+            }
+        }
         return $this->renderSuccess([
-            'list' => $list
+            'list' => $list,
+            'profit' => round($profit, 2),
+            // 分类统计的数量
+            'total' => [
+                1 => $model->CountByProfit($user['user_id'], 100),
+                2 => $model->CountByProfit($user['user_id'], 200),
+                3 => $model->CountByProfit($user['user_id'], 300),
+            ],
         ]);
     }
 

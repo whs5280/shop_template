@@ -60,9 +60,9 @@ class WebUser extends BaseModel
             return false;
         }
         if($user['is_super']!=0 && count($name)===1){
-        $this->error = '登录失败, 必须带主帐号登陆';
-        return false;
-    }
+	        $this->error = '登录失败, 必须带主帐号登陆';
+	        return false;
+	    }
 		if($user['app_id']!=0)
 			Session::set('app_id', $user['app_id']);
 		//存放用户登录信息

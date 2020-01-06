@@ -68,31 +68,34 @@ class OrderSupplierByPlat extends BaseModel
 				break;
 				// 待付款（一般用不上）
 			case 'payment';
-			$filter['pay_status'] = 10;
+			$filter['a.pay_status'] = 10;
 			break;
 			// 待发货
 			case 'uncollected';
-			$filter['delivery_status'] = 10;// 未发货
+			$filter['a.delivery_status'] = 10;// 未发货
 			break;
 			// 待收货
 			case 'received';
-			$filter['delivery_status'] = 20;
-			$filter['receipt_status'] = 10;// 未收货
+			$filter['a.delivery_status'] = 20;
+			$filter['a.receipt_status'] = 10;// 未收货
 			break;
 			// 待评论
 			case 'comment';
-			$filter['order_status'] = 30;
-			$filter['is_comment'] = 0;
+			$filter['a.order_status'] = 30;
+			$filter['a.is_comment'] = 0;
 			break;
 			// 退款
 			case 'refund';
-			$filter['order_status'] = 40;// 退款
+			$filter['a.order_status'] = 40;// 退款
 			break;
 		}
-		return $this->where('plat_id', '=', $user_id)
-		->where('order_status', '<>', 20)
-		->where($filter)
-		->select();
+		return $this->alias('a')
+					->field('a.*,b.*,a.create_time as new_create_time')
+					->join('bfb_item b','a.item_id = b.goods_id')
+					->where('a.plat_id', '=', $user_id)
+					->where('a.order_status', '<>', 20)
+					->where($filter)
+					->select();
 	}
 	
 	/**
@@ -160,6 +163,7 @@ class OrderSupplierByPlat extends BaseModel
 				'exist_address' => 0,      // 是否存在收货地址
 				'express_price' => $expressPrice,       // 配送费用
 				'item_id'=>$item_id,
+				'plat_id'=>$Item['plat_id'],
 				// 'intra_region' => $intraRegion,         // 当前用户收货城市是否存在配送规则中
 				// 'has_error' => $this->hasError(),
 				// 'error_msg' => $this->getError(),
@@ -226,7 +230,7 @@ class OrderSupplierByPlat extends BaseModel
 				'spec_id'=>$order['spec_id'],
 				'spec_num'=>$order['spec_num'],
 				'total_price' => $order['order_total_price'],
-				'plat_id'=>$order['goods_list'][0]['plat_id'],
+				'plat_id'=>$order['plat_id'],
 				// 'coupon_id' => $order['coupon_id'],
 				// 'coupon_price' => $order['coupon_price'],
 				'pay_price' => $order['order_pay_price'],
@@ -241,6 +245,8 @@ class OrderSupplierByPlat extends BaseModel
 				'give_integral' =>isset($order['goods_list'][0]["give_integral"])?$order['goods_list'][0]["give_integral"]:0,
 				'rebate' =>isset($assemble['rebate'])?$assemble['rebate']:'',
 				'end_time' =>isset($endtime)?$endtime:'',
+				'create_time'=>time(),
+				'update_time'=>time(),
 		]);
 	}
 	
@@ -311,13 +317,14 @@ class OrderSupplierByPlat extends BaseModel
 	 * @param unknown $where
 	 * @return unknown|boolean
 	 */
-	public function getAllDataByWhere($where){
+	public function getAllDataByWhere($where, $order = ''){
 		if ($where){
 			$data = $this->alias('a')
 						->join('bfb_item b','a.item_id = b.goods_id')
-						->where('order_status <> 20')
+						->where('a.order_status <> 20 && a.order_status <> 40')// ->fetchSql()->select();
+						->order($order)
 						->paginate(10, false, [
-			                'query' => Request::instance()->request()
+			               'query' => Request::instance()->request()
 			            ]);
 			if ($data){
 				return $data;
@@ -349,7 +356,7 @@ class OrderSupplierByPlat extends BaseModel
 	{
 		// 回退商品库存
 		$this->backGoodsStock($Item);
-		return $this->save(['order_status' => 20]);
+		return $this->where(['order_id'=>$Item['order_id']])->update(['order_status' => 20,'sub_status'=>20]);
 	}
 	
     /**
@@ -362,14 +369,19 @@ class OrderSupplierByPlat extends BaseModel
     {
         $goodsSpecSave = [];
         // 下单减库存
-        if ($Item['type'] === 10) {
-            $goodsSpecSave[] = [
-                'item_sku_id' => $Item['item_sku_id'],
-                'stock_num' => ['inc', $Item['total_num']]
+        // if ($Item['type'] === 10) {
+            $goodsSpecSave = [
+                'key' => $Item['spec_id'],
+                'store_count' => ['inc', $Item['spec_num']]
             ];
-        }
+            $goodsSpecSave_item = [
+            		'store_count' => ['inc', $Item['spec_num']]
+            ];
+            $where = ['goods_id'=>$Item['item_id']];
+            $where_item = ['goods_id'=>$Item['item_id']];
+        // }
         // 更新商品规格库存
-        return !empty($goodsSpecSave) && (new ItemSku)->isUpdate()->saveAll($goodsSpecSave);
+        return !empty($goodsSpecSave) && Db::name('spec_item_price')->where($where)->update($goodsSpecSave) && Db::name('item')->where($where_item)->update($goodsSpecSave_item);
     }
 	
 	/**

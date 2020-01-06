@@ -29,9 +29,35 @@
 						<label class="layui-form-label form-require">规格项 </label>
 						<div class="layui-col-sm7 layer-midd-left">
 							<textarea name='spec[items]' rows="6" class="layui-textarea">{$spec['items']??''}</textarea>
-							<small>一行为一个规格项</small>
+							<small>不同规格项用“,”分隔，注意这是英文符号的逗号</small>
 						</div>
 					</div>
+					<!-- <div class="layui-form-item">    
+						<div class="layer-form-group">
+							<label class="layui-form-label form-require">规格项图片： </label>
+							<div class="layui-col-sm7 layer-midd-left">
+								<div class="layer-form-file">
+									<button type="button"
+											class="upload-file layer-btn-secondary layer-radius layui-btn">
+										<i class="layer-icon-cloud-upload "></i> 选择图片
+									</button>
+									<div class="uploader-list layer-cf">
+										<div class="file-item">
+											<a href="" title="点击查看大图" target="_blank">
+												<img src="">
+											</a>
+											<input type="hidden" name="store_pic"
+												   value="">
+											<i class="mdi menu-icon mdi-window-close file-item-delete"></i>
+										</div>
+									</div>
+								</div>
+								<div class="help-block layer-margin-top-sm">
+									<small>尺寸150x150像素以上，大小2M以下</small>
+								</div>
+							</div>
+						</div>
+					</div> -->
 					<div class="layui-form-item">
 						<label class="layui-form-label form-require">分类排序 </label>
 						<div class="layui-col-sm7 layer-midd-left">
@@ -53,6 +79,35 @@
         </div>
     </div>
 </div>
+<!-- 图片文件列表模板 -->
+{include file="layouts/_template/tpl_file_item" /}
+
+<!-- 文件库弹窗 -->
+{include file="layouts/_template/file_library" /}
+<script>
+    $(function () {
+
+        // 选择图片
+        $('.upload-file').selectImages({
+            name: 'image_id'
+        });
+
+        /**
+         * 表单验证提交
+         * @type {*}
+         */
+         var parent_id=$("#parent_id_1").val();
+    
+         if(parent_id > 0 ){
+            get_category($("#parent_id_1").val(),'parent_id_2',0);   
+        }   
+        $('#my-form').superForm();
+
+    });
+
+        
+
+</script>
 <script>
     $(function ()
     {

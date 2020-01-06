@@ -16,7 +16,7 @@ class AgentInfo extends BaseModel
      * @param $agent_id
      * @return mixed
      */
-    public function detail($agent_id)
+    public static function detail($agent_id)
     {
         return self::get($agent_id);
     }

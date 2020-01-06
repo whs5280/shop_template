@@ -6,6 +6,8 @@ use app\common\model\OrderDelivery;
 use app\common\model\Setting;
 use app\common\model\Returnbuy;
 use app\common\model\User;
+use PhpOffice\PhpWord\PhpWord;
+
 /**
  * 订单管理
  * Class Order
@@ -314,5 +316,117 @@ class Order extends Controller
             return $this->renderSuccess('发货成功');
         }
         return $this->renderError($this->model->getError() ?: '发货失败');
+    }
+    /**
+     * 清单打印
+     * @method
+     */
+    public function export($order_id)
+    {
+        // 获取订单详情
+        $detail=OrderModel::detail($order_id);
+        //dump($detail);die;
+        //dump($orderdelivery);die;
+
+        // Word生成
+        $phpWord = new PhpWord();
+        $section = $phpWord->addSection();  // 添加新的一夜
+
+        $fontStyle = [
+            'name' => 'Microsoft Yahei UI',
+            'size' => 20,
+            'bold' => true,
+            'valign' => 'center',
+            'align'  => 'center'
+        ];
+        $textrun = $section->addTextRun();
+        $textrun->addText('出库清单', $fontStyle);
+
+        $header = array('size' => 14, 'bold' => true);
+
+        // 订单详情表格
+        $section->addTextBreak(2); //换行
+        $section->addText('订单详情', $header);
+        $table = $section->addTable();
+
+        $table->addRow();
+        $table->addCell(2000)->addText("订单号码");
+        $table->addCell(2000)->addText("买家");
+        $table->addCell(2000)->addText("订单金额");
+        $table->addCell(1000)->addText("状态");
+        $table->addCell(3000)->addText("发货时间");
+
+        $table->addRow();
+        $table->addCell(2000)->addText($detail['order_no']);
+        $table->addCell(2000)->addText($detail['user']['nickName']);
+        $table->addCell(2000)->addText($detail['pay_price']);
+        $table->addCell(1000)->addText($detail['delivery_status']['text']);
+        $table->addCell(3000)->addText(date('Y-m-d h:m:s', $detail['delivery_time']));
+
+        // 商品详情表
+        $section->addTextBreak(2); //换行
+        $section->addText('商品信息', $header);
+        $table = $section->addTable();
+
+        $table->addRow();
+        $table->addCell(2000)->addText("商品名称");
+        $table->addCell(2000)->addText("商品编号");
+        $table->addCell(2000)->addText("单价");
+        $table->addCell(2000)->addText("数量");
+        $table->addCell(2000)->addText("总价");
+
+        $table->addRow();
+        foreach ($detail['goods'] as $item){
+            $table->addCell(2000)->addText($item['name']);
+            $table->addCell(2000)->addText($item['goods_no']);
+            $table->addCell(2000)->addText($item['goods_price']);
+            $table->addCell(2000)->addText($item['total_num']);
+            $table->addCell(2000)->addText($item['total_pay_price']);
+        }
+
+        // 收货地址表
+        $section->addTextBreak(2); //换行
+        $section->addText('收货地址', $header);
+        $table = $section->addTable();
+
+        $table->addRow();
+        $table->addCell(2000)->addText("收货人");
+        $table->addCell(2000)->addText("联系方式");
+        $table->addCell(2000)->addText("地址");
+        $table->addCell(4000)->addText("详细地址");
+
+        $table->addRow();
+        $table->addCell(2000)->addText($detail['address']['name']);
+        $table->addCell(2000)->addText($detail['address']['phone']);
+        $table->addCell(2000)->addText($detail['address']['detail']);
+        $table->addCell(4000)->addText($detail['address']['region']['province'] . $detail['address']['region']['city'] . $detail['address']['region']['region']);
+
+        // 物流信息表
+        $section->addTextBreak(2); //换行
+        $section->addText('物流信息', $header);
+        $table = $section->addTable();
+
+        $table->addRow();
+        $table->addCell(3000)->addText("物流单号");
+        $table->addCell(2000)->addText("物流公司");
+        $table->addCell(3000)->addText("发货时间");
+
+        $table->addRow();
+        foreach ($detail['order_delivery'] as $item) {
+            $table->addCell(3000)->addText($item['express_no']);
+            $table->addCell(2000)->addText($item['company']);
+            $table->addCell(3000)->addText($item['create_time']);
+        }
+
+        // 导出
+        $file = '清单'. time(). '.docx';
+        header("Content-Description: File Transfer");
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        header('Content-Transfer-Encoding: binary');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Expires: 0');
+        $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $xmlWriter->save("php://output");
     }
 }

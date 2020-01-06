@@ -59,10 +59,30 @@ class Order extends BaseModel
         if ($goods_num > $Item['goods_sku']['store_count'] || $goods_num > $Item['store_count']) {
             $this->setError('很抱歉，商品库存不足');
         }
+        // 判断商品是否被独家
+        if ($Item['is_sole'] == 1){
+        	// 判断独家商品是否过期
+        	$time = time();
+        	if ($Item['sole_time'] > $time){
+	        	// 判断独家商品购买者地址是否超出范围
+        		$now_range = get_lat_and_log($user['store_address']);// 当前购买者的位置
+        		$sole_user_range = get_lat_and_log(Db::name('user')->where(['user_id'=>$Item['sole_user']])->value('store_address'));// 独家用户的位置
+        		$range = getdistanceAction($now_range, $sole_user_range);// 算出两个经纬度之间的距离（单位：米）
+	        	if ($Item['sole_range'] <= $range){
+	        		// 判断独家商品购买者是否是该独家商户
+	        		if ($Item['sole_user'] != $user['user_id']){
+	        			$this->setError('很抱歉，该商品已被'.$Item['sole_user'].'独家，独家结束时间为：'.$Item['sole_time']);
+	        		}
+	        	}
+        	}
+        }
         // 商品单价
         $Item['goods_price'] = $Item['goods_sku'] ? $Item['goods_sku']['shop_price'] :'';
         // 商品总价
         $Item['agio'] = $agio;
+        if ($Item['discount'] <= 0){
+        	$Item['discount'] = 1;
+        }
         $Item['level'] = $user['level'];
         $Item['total_num'] = $goods_num;
         //是拼团商品修改折扣价格
@@ -75,7 +95,7 @@ class Order extends BaseModel
             $Item['goods_price']= $Item['goods_price']*$assemble['discount']/10;
             $Item['shop_price']= $Item['goods_sku']['shop_price']*$assemble['discount']/10;
         }
-        $Item['total_price'] = $totalPrice = sprintf("%1\$.2f",bcmul($Item['goods_price'], $goods_num, 2)*$agio/10);
+        $Item['total_price'] = $totalPrice = sprintf("%1\$.2f",bcmul($Item['goods_price'], $goods_num, 2)*$agio*$Item['discount']/10);
         $agio_count =sprintf("%1\$.2f",bcmul($Item['goods_price'], $goods_num, 2)-bcmul($Item['goods_price'], $goods_num, 2)*$agio/10);
         // 商品总重量
         $goods_total_weight = bcmul($Item['weight'], $goods_num, 2);
@@ -84,7 +104,7 @@ class Order extends BaseModel
         // 是否存在收货地址
         $exist_address = !empty($user['address']);
         // 验证用户收货地址是否存在运费规则中
-
+		
         if (!$intraRegion = $Item['delivery']->checkAddress($cityId)) {
             $exist_address && $this->setError('很抱歉，您的收货地址不在配送范围内');
         }
@@ -113,6 +133,9 @@ class Order extends BaseModel
             'error_msg' => $this->getError(),
             'prom' => $prom,
             'other' => $other,
+        	'is_sole'=>$Item['is_sole'],
+        	'sole_time'=>$Item['sole_time'],
+        	'sole_must_num'=>$Item['sole_must_num'],
         ];
     }
     /**
@@ -212,7 +235,7 @@ class Order extends BaseModel
                 }
             }
         }
-        return $this->save([
+        $data = [
             'user_id' => $user_id,
             'app_id' => self::$app_id,
             'order_no' => $this->orderNo(),
@@ -221,7 +244,7 @@ class Order extends BaseModel
             'coupon_price' => $order['coupon_price'],
             'pay_price' => $order['order_pay_price'],
             'express_price' => $order['express_price'],
-            'vip_price'=>$order['agio_count'],
+            // 'vip_price'=>$order['agio_count'],
             'buyer_remark' => trim($remark),
             'prom_type' => $prom,
             'prom_statis' => $prom_statis,
@@ -231,7 +254,15 @@ class Order extends BaseModel
             'give_integral' =>isset($order['goods_list'][0]["give_integral"])?$order['goods_list'][0]["give_integral"]:0,
             'rebate' =>isset($assemble['rebate'])?$assemble['rebate']:'',
             'end_time' =>isset($endtime)?$endtime:'',
-        ]);
+        ];
+        // 判断这是不是独家商品，并且购买的商品数量要大于独家所需商品数量
+        if ($order['is_sole'] == 1 && $order['order_total_num'] >= $order['sole_must_num']){
+        	$data['sole_user'] = $user_id;
+        	$time = 2592000;// 一个月
+        	$data['sole_time'] = time() + $time;
+        	soleLog(1,$user_id,0,$this->orderNo());
+        }
+        return $this->save($data);
     }
     /**
      * 保存订单商品信息
@@ -539,7 +570,7 @@ class Order extends BaseModel
 	    		$filter['order_status'] = 40;// 退款
 	    		break;
     	}
-    	return $this->where('plat_id', '=', $user_id)
+    	return $this->field('*,create_time as new_create_time')->where('plat_id', '=', $user_id)
 			    	->where('order_status', '<>', 20)
 			    	->where($filter)
 			    	->select();
@@ -551,10 +582,13 @@ class Order extends BaseModel
      * @param string $type
      * @return int|string
      */
-    public function getOrderDetaile($user_id, $type = 'all')
+    public function getOrderDetaile($user_id, $type = 'all',$search = '')
     {
     	// 筛选条件
     	$filter = [];
+    	if ($search != ''){
+    		$filter['order_no'] = $search;
+    	}
     	// 订单数据类型
     	switch ($type) {
     		// 全部订单
@@ -585,7 +619,7 @@ class Order extends BaseModel
 	    		$filter['order_status'] = 40;// 退款
 	    		break;
     	}
-    	return $this->where('user_id', '=', $user_id)
+    	return $this->with(['goods'])->where('user_id', '=', $user_id)
 		    	->where('order_status', '<>', 20)
 		    	->where($filter)
 		    	->select();

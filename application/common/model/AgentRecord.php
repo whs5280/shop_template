@@ -17,9 +17,23 @@ class AgentRecord extends BaseModel
      * @return array
      * @throws \think\exception\DbException
      */
-    public function getAll($agent_id)
+    public function getAll($agent_id, $award_type = -1, $start = '', $end = '')
     {
+        $where[] = ['agent_id', '=', $agent_id];
+        $award_type == -1 && $where[] = ['award_type', '<>', 400];
+        $award_type > 0 && $where[] = ['award_type', '=', $award_type];
+
+        if (isset($start) && trim($start) != '' ) {
+            $where[] = ['create_time', '>=', $start];
+        }
+        if (isset($end) && trim($end) != '' ) {
+            $where[] = ['create_time', '<=', $end];
+        }
+        if (isset($start) && trim($start) != '' && isset($end) && trim($end) != '') {
+            $where[] = ['create_time', 'between', [$start,$end]];
+        }
         return $this->where('agent_id', $agent_id)
+            ->where($where)
             ->order('create_time','desc')
             ->select();
     }
@@ -64,5 +78,20 @@ class AgentRecord extends BaseModel
             ->where('agent_id', $agent_id)
             ->where('award_type', '=', 400)
             ->select();
+    }
+    /**
+     * 佣金分类统计
+     * @param $agent_id
+     * @param $award_type
+     * @return float|string
+     */
+    public function CountByProfit($agent_id, $award_type)
+    {
+        $where[] = ['agent_id', '=', $agent_id];
+        $where[] = ['award_type', '=', $award_type];
+
+        return $this->where($where)
+            ->order('create_time','desc')
+            ->count();
     }
 }

@@ -54,11 +54,11 @@ class UserAddress extends BaseModel
      */
     public function add($user, $data)
     {
+    	$Region = new Region();
         // 添加收货地址
-        $region = explode(',', $data['region']);
-        $province_id = Region::getIdByName($region[0], 1);
-        $city_id = Region::getIdByName($region[1], 2, $province_id);
-        $region_id = Region::getIdByName($region[2], 3, $city_id);
+        $province_id = $data['province_id'] = $Region->getIdByName($data['province_id'],1);
+    	$city_id = $data['city_id'] = $Region->getIdByName($data['city_id'],2,$province_id);
+    	$region_id = $data['region_id'] = $Region->getIdByName($data['region_id'],3,$city_id);
         $this->allowField(true)->save(array_merge([
             'user_id' => $user['user_id'],
             'app_id' => self::$app_id,
@@ -77,11 +77,18 @@ class UserAddress extends BaseModel
      */
     public function edit($data)
     {
+    	$Region = new Region();
         // 添加收货地址
-        $region = explode(',', $data['region']);
-        $province_id = Region::getIdByName($region[0], 1);
-        $city_id = Region::getIdByName($region[1], 2, $province_id);
-        $region_id = Region::getIdByName($region[2], 3, $city_id);
+    	$province_id = $data['province_id'] = $Region->getIdByName($data['province_id'],1);
+    	$city_id = $data['city_id'] = $Region->getIdByName($data['city_id'],2,$province_id);
+    	$region_id = $data['region_id'] = $Region->getIdByName($data['region_id'],3,$city_id);
+    	if ($province_id == 0 || $city_id == 0 || $region_id == 0){
+    		return false;
+    	}
+        // $region = explode(',', $data['region']);
+        // $province_id = Region::getIdByName($region[0], 1);
+        // $city_id = Region::getIdByName($region[1], 2, $province_id);
+        // $region_id = Region::getIdByName($region[2], 3, $city_id);
         return $this->allowField(true)
             ->save(array_merge(compact('province_id', 'city_id', 'region_id'), $data));
     }

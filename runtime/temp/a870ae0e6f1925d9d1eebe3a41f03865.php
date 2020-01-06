@@ -1,4 +1,4 @@
-<?php /*a:2:{s:68:"/var/www/html/www.0766city.com/application/user/view/item/index.html";i:1574911219;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1574911218;}*/ ?>
+<?php /*a:2:{s:68:"/var/www/html/www.0766city.com/application/user/view/item/index.html";i:1577669504;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1577669503;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -136,7 +136,7 @@
 										<input type="text" class="layui-input" name="name" placeholder="请输入商品名称" value="<?php echo htmlentities($request->get('name')); ?>">
 									</div>
 								</div>
-								<div class="layui-col-md4 layui-col-flex">
+								<div class="layui-col-md3 layui-col-flex">
 									<label class="layui-form-label">商品分类：</label>
 									<span style="display:none;"><?php echo $category_id = $request->get('category_id')?: null; ?></span>
 									<select class="form-control" name="category_id" data-layer-selected="{searchBox: 1, btnSize: 'sm',  placeholder: '商品分类', maxHeight: 400}">
@@ -146,6 +146,19 @@
 											<option value="<?php echo htmlentities($first['id']); ?>"><?php echo htmlentities($first['name']); ?></option>
 										<?php endforeach; ?>
 									<?php endif; ?>
+									</select>
+								</div>
+								<div class="layui-col-md3 layui-col-flex">
+									<label class="layui-form-label">行业：</label>
+									<?php echo $industry_id = $request->get('industry_id')?: null; ?>
+									<select class="form-control" name="industry_id"
+											data-layer-selected="{btnSize: 'sm', placeholder: '行业'}">
+										<option value="">全部行业</option>
+										<?php if(isset($industry_list)): ?>:
+										<?php foreach($industry_list as $item): ?>
+										<option value="<?php echo htmlentities($item['id']); ?>"><?php echo htmlentities($item['name']); ?></option>
+										<?php endforeach; ?>
+										<?php endif; ?>
 									</select>
 								</div>
 								<div class="layui-col-md2">
@@ -183,6 +196,7 @@
 						<tr>
 							<th>商品ID</th>
 							<th width="20%">商品名称</th>
+							<th>行业</th>
 							<th>分类</th>
 							<th>价格</th>
 							<th>库存</th>
@@ -198,6 +212,7 @@
 								<td>
 									 <p class="item-title"><?php echo htmlentities($item['goods_name']); ?></p>
 								</td>
+								<td><?php echo htmlentities(industry($item['industry_id'])); ?></td>
 								<td>
 								<?php echo htmlentities($item['category']['name']); ?>
 								</td>
@@ -222,6 +237,33 @@
 										   data-id="<?php echo htmlentities($item['goods_id']); ?>">
 											<i class="mdi menu-icon mdi-delete-forever"></i> 删除
 										</a>
+
+										<?php if($item['is_hot']==0): ?>
+										<a class="tpl-table-black-operation-primary status_change" data-id="<?php echo htmlentities($item['goods_id']); ?>" data-field="is_hot"  data-status="1">
+											<i></i> <?php if($item['is_hot'] == 1): ?>取消热门<?php else: ?>热门<?php endif; ?>
+										</a>
+										<?php else: ?>
+										<a class="tpl-table-black-operation-primary status_change" data-id="<?php echo htmlentities($item['goods_id']); ?>" data-field="is_hot"  data-status="0">
+											<i></i> <?php if($item['is_hot'] == 1): ?>取消热门<?php else: ?>热门<?php endif; ?>
+										</a>
+										<?php endif; if($item['is_recommend']==0): ?>
+										<a class="status_change" data-id="<?php echo htmlentities($item['goods_id']); ?>" data-field="is_recommend" data-status="1">
+										<i></i> <?php if($item['is_recommend'] == 1): ?>取消推荐<?php else: ?>推荐<?php endif; ?>
+										</a>
+										<?php else: ?>
+										<a class="status_change" data-id="<?php echo htmlentities($item['goods_id']); ?>" data-field="is_recommend" data-status="0">
+											<i></i> <?php if($item['is_recommend'] == 1): ?>取消推荐<?php else: ?>推荐<?php endif; ?>
+										</a>
+										<?php endif; if($item['is_new']==0): ?>
+										<a class="tpl-table-black-operation-del status_change" data-id="<?php echo htmlentities($item['goods_id']); ?>" data-field="is_new" data-status="1">
+										<i></i> <?php if($item['is_new'] == 1): ?>取消最新<?php else: ?>最新<?php endif; ?>
+										</a>
+										<?php else: ?>
+										<a class="tpl-table-black-operation-del status_change" data-id="<?php echo htmlentities($item['goods_id']); ?>" data-field="is_new" data-status="0">
+											<i></i> <?php if($item['is_new'] == 1): ?>取消最新<?php else: ?>最新<?php endif; ?>
+										</a>
+										<?php endif; ?>
+
 									</div>
 								</td>
 							</tr>
@@ -249,6 +291,20 @@
         // 删除元素
         $('.item-delete').delete('id', "<?php echo url('item/delete'); ?>",'','Item');
 
+
+		/**
+		 * 审核操作
+		 */
+		$('.status_change').click(function () {
+			var goods_id = $(this).data('id');
+			var field = $(this).data('field');
+			var status = $(this).data('status');
+			var url = "<?php echo url('user/item/changeStatus'); ?>";
+			$.post(url, {goods_id: goods_id, field: field, status: status}, function (result) {
+				result.code === 1 ? $.show_success(result.msg, result.url)
+						: $.show_error(result.msg);
+			});
+		});
     });
 	 
 </script>

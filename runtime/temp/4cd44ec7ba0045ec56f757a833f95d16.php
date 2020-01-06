@@ -1,4 +1,4 @@
-<?php /*a:3:{s:71:"/var/www/html/www.0766city.com/application/user/view/setting/store.html";i:1556091498;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1574238926;s:88:"/var/www/html/www.0766city.com/application/user/view/layouts/_template/file_library.html";i:1556090954;}*/ ?>
+<?php /*a:3:{s:71:"/var/www/html/www.0766city.com/application/user/view/setting/store.html";i:1576636452;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1576636450;s:88:"/var/www/html/www.0766city.com/application/user/view/layouts/_template/file_library.html";i:1576636451;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -130,8 +130,8 @@
 							<li class="layui-this">基础设置</li>
 							<li>交易设置</li>
 							<li>短信通知</li>
-							<li>模板消息</li>
-							<li>上传设置</li>
+							<!-- <li>模板消息</li>
+							<li>上传设置</li> -->
 						</ul>
 						<div class="layui-tab-content">
 							<div class="layui-tab-item layui-show">

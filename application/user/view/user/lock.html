@@ -10,28 +10,20 @@
                             <input type="hidden" nlayere="s" value="/{$request->pathinfo()}">
                             <div class="layui-u-sm-12 layui-u-md-12 layui-col-lg12"> 
 								<div class="layui-form-item">
-									<div class="layui-col-md4 layui-col-flex">
-										<label  class="layui-form-label">性别：</label>
-										{$gender = $request->get('gender')}
-										<select class="form-control"  name="gender" data-layer-selected="{btnSize: 'sm', placeholder: '性别'}">
-											<option value="-1"
-												{$gender === '-1' ? 'selected' : ''}>全部
-											</option>
-											<option value="1"
-												{$gender === '1' ? 'selected' : ''}>男
-											</option>
-											<option value="2"
-												{$gender === '2' ? 'selected' : ''}>女
-											</option>
-											<option value="0"
-												{$gender === '0' ? 'selected' : ''}>未知
-											</option>
-										</select>
-									</div>
+                                    <div class="layui-col-md4 layui-col-flex">
+                                        <label class="layui-form-label">行业：</label>
+                                        {$industry = $request->get('industry')}
+                                        <select class="form-control" name="industry"
+                                                data-layer-selected="{btnSize: 'sm', placeholder: '行业'}">
+                                            {foreach ($industry_list as $item)}
+                                            <option value="{$item['id']}">{$item['name']}</option>
+                                            {/foreach}
+                                        </select>
+                                    </div>
 									<div class="layui-col-md3">
-										<label class="layui-form-label">微信昵称：</label>
+										<label class="layui-form-label">昵称：</label>
 										<div class="layui-input-inline">
-											<input name="nickName" type="text"  class="layui-input" placeholder="请输入微信昵称" value="{$request->get('nickName ')}">
+											<input name="nickName" type="text"  class="layui-input" placeholder="请输入昵称" value="{$request->get('nickName')}">
 										</div>
 									</div>
 									<div class="layui-col-md4 laui-col-width" >
@@ -44,34 +36,40 @@
                 <div class="layui-col-md12" >
                         <table width="100%" class="layui-table">
                             <thead>
+                            <thead>
                             <tr>
-                                <th>用户ID</th>
+                                <th>ID</th>
                                 <th>头像</th>
                                 <th>昵称</th>
-                                <th>累积消费</th>
                                 <th>性别</th>
-                                <th>国家</th>
-                                <th>省份</th>
-                                <th>城市</th>
+                                <th>经营行业</th>
+                                <!--<th>上级</th>-->
+                                <th>消费</th>
+                                <!--<th>余额</th>-->
+                                <th>积分</th>
+                                <th>VIP</th>
                                 <th>注册时间</th>
                                 <th>操作</th>
                             </tr>
+                            </thead>
                             </thead>
                             <tbody>
                             {if (!$list->isEmpty())}{foreach ($list as $item)}
                                 <tr>
                                     <td>{$item['user_id']}</td>
                                     <td>
-                                        <a href="{$item['avatarUrl']}" title="点击查看大图" target="_blank">
-                                            <img src="{$item['avatarUrl']}" width="72" height="72" alt="">
+                                        <a href="/uploads/{$item['avatarUrl']}" title="点击查看大图" target="_blank">
+                                            <img src="/uploads/{$item['avatarUrl']}" width="50" height="50" alt="">
                                         </a>
                                     </td>
                                     <td>{$item['nickName']}</td>
-                                    <td>{$item['money']}</td>
                                     <td>{$item['gender']}</td>
-                                    <td>{$item['country'] ?: '--'}</td>
-                                    <td>{$item['province'] ?: '--'}</td>
-                                    <td>{$item['city'] ?: '--'}</td>
+                                    <td>{$item['industry']|industry}</td>
+                                    <!--<td>{$item['users']['nickName'] ?: '无'}</td>-->
+                                    <td>{$item['shop_money']}</td>
+                                    <!--<td>{$item['money']}</td>-->
+                                    <td>{$item['integral']}</td>
+                                    <td>{$item['is_vip']|is_vip}</td>
                                     <td>{$item['create_time']}</td>
                                     <td>
                                         <div class="tpl-table-black-operation">
@@ -80,11 +78,11 @@
                                                data-id="{$item['user_id']}">
                                                 <i class="mdi menu-icon mdi-pencil-lock"></i> 解除冻结
                                             </a>
-											 <a href="javascript:void(0);"
+											<!-- <a href="javascript:void(0);"
                                                class="item-delete tpl-table-black-operation-del"
                                                data-id="{$item['user_id']}">
                                                 <i class="mdi menu-icon mdi-delete-forever"></i> 删除
-                                            </a>
+                                            </a>-->
                                         </div>
                                     </td>
                                 </tr>
@@ -110,9 +108,9 @@
 <script>
     $(function () {
         // 删除元素
-        var url = "index.php?s=/user/user/remove";
+        /*var url = "index.php?s=/user/user/remove";
+        $('.item-delete').delete('user_id', url, '删除后不可恢复，确定要删除吗？');*/
 
-        $('.item-delete').delete('user_id', url, '删除后不可恢复，确定要删除吗？');
 		var url="index.php?s=/user/user/uefreezing";
 		$(".uefreezing").delete('user_id', url, '确定要解冻吗？');
     });

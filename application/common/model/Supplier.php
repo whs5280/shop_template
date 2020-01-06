@@ -1,6 +1,7 @@
 <?php
 namespace app\common\model;
 
+use think\Db;
 use think\facade\Request;
 use think\facade\Cache;
 /**
@@ -31,7 +32,7 @@ class Supplier extends BaseModel
 			$this->token = $this->token($user['phone']);
 			// 记录缓存, 7天
 			Cache::set($this->token, $user, 86400 * 7);
-			return $user['user_id'];
+			return $this->token;
 		}
 	}
 	
@@ -112,7 +113,7 @@ class Supplier extends BaseModel
 	public function getUser($token, $is_force = true)
 	{
 		if (!$token) {
-			$is_force && $this->throwError('缺少必要的参数：token', -1);
+			// $is_force && $this->throwError('缺少必要的参数：token', -1);
 			return false;
 		}
 		if (!$user = self::detail(['user_id' => Cache::get($token)['user_id']])) {
@@ -141,4 +142,21 @@ class Supplier extends BaseModel
 		}
 		return self::where($filter)->select();
 	}
+
+    /**
+     * 获取周边供应商
+     * @param $latitude
+     * @param $longitude
+     * @param int $distance
+     * @return int
+     * @throws \think\db\exception\BindParamException
+     * @throws \think\exception\PDOException
+     */
+    public function getNeighbor($latitude, $longitude, $distance = 5000)
+    {
+        $sql = "select * from (select user_id,name,address,category,
+            ROUND(6378.138*2*ASIN(SQRT(POW(SIN(($latitude*PI()/180-`latitude`*PI()/180)/2),2)+COS($latitude*PI()/180)*COS(`latitude`*PI()/180)*POW(SIN(($longitude*PI()/180-`longitude`*PI()/180)/2),2)))*1000) AS distance from bfb_supplier order by distance ) as a where a.distance<=$distance";
+
+        return Db::name('supplier')->query($sql);
+    }
 }

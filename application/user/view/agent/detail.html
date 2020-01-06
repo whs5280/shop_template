@@ -1,10 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    shishi
-</body>
-</html>
+<style>
+    .label-width{
+        width: 150px!important;
+    }
+</style>
+
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+            <form id="my-form" class="layui-form " enctype="multipart/form-data" method="post" action="{Url('Agent/saveAgent')}">
+                <div class="widget-head">
+                    <div class="widget-title">推广员详情</div>
+                </div>
+                <div class="widget-body layui-col-sm12 layui-col-md12 layui-col-lg12">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label form-require label-width">推广员名称:</label>
+                        <div class="layui-col-sm7 layer-midd-left">
+                            <input type="text" class="layui-input" value="{$detail['agent_name']}" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label form-require label-width">账号:</label>
+                        <div class="layui-col-sm7 layer-midd-left">
+                            <input type="text" class="layui-input" value="{$detail['phone']}" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label form-require label-width">当前账号金额:</label>
+                        <div class="layui-col-sm7 layer-midd-left">
+                            <input type="text" class="layui-input" value="{$detail['profit']}" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label form-require label-width">已提现金额（累计）:</label>
+                        <div class="layui-col-sm7 layer-midd-left">
+                            <input type="text" class="layui-input" value="{$detail['withdraw_money']}" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label form-require label-width">邀请人数（累计）:</label>
+                        <div class="layui-col-sm7 layer-midd-left">
+                            <input type="text" class="layui-input" value="{$detail['num1']}" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label form-require label-width">充值VIP人数（累计）:</label>
+                        <div class="layui-col-sm7 layer-midd-left">
+                            <input type="text" class="layui-input" value="{$detail['num2']}" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label form-require label-width">订单成功数（累计）:</label>
+                        <div class="layui-col-sm7 layer-midd-left">
+                            <input type="text" class="layui-input" value="{$detail['num3']}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <a href="javascript:history.go(-1);" class="j-submit layui-btn layui-btn-secondary">返回</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

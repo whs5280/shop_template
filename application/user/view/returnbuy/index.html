@@ -1,0 +1,137 @@
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+            <div class="widget-head">
+                <div class="widget-title">退款申请</div>
+            </div>
+            <div class="layui-col-md12 layui-col-xs12 widget-body ">
+                <!-- 工具栏 -->
+                <div class="page_toolbar ">
+                    <form class="layui-form" method="post" action="{Url('Returnby/index')}">
+                        <input type="hidden" name="s" value="/{$request->pathinfo()}">
+                        <input type="hidden" name="user_id" value="{$request->get('user_id')}">
+                        <div class="layui-col-sm12 layui-col-md12">
+                            <div class="layui">
+                                <div class="layui-col-md2 layui-col-flex layui-col-one">
+                                    <label class="layui-form-label">关键词：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" class="layui-input" name="search" placeholder="请输入昵称" value="{$request->get('search')}">
+                                    </div>
+                                </div>
+                                <div class="layui-col-md2">
+                                    <button class="layui-btn" lay-submit lay-filter="formDemo">搜索</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-col-md12">
+                    <table width="100%" class="layui-table tpl-table-black">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>类型</th>
+                            <th>退款原因</th>
+                            <th>订单号</th>
+                            <th>用户ID</th>
+                            <th class="">审核状态</th>
+                            <th>申请时间</th>
+                            <th>审核时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {if !$list->isEmpty()}{foreach $list as $item}
+                        <tr>
+                            <td>{$item['id']}</td>
+                            <td>
+                                {if ($item['type'] == 1)}
+                                <p><span>普通订单</span></p>
+                                {elseif ($item['type'] == 2)}
+                                <p><span>平台退订</span></p>
+                                {else/}
+                                <p><span>--</span></p>
+                                {/if}
+                            </td>
+                            <td>{$item['content']}</td>
+                            <td>{$item['order_no']}</td>
+                            <td>{$item['user_id']}</td>
+                            <td>
+                                {if $item['status'] == 1}
+                                <span class="layer-badge">待审核</span>
+                                {elseif ($item['status'] == 2)/}
+                                <span class="layer-badge layer-badge-secondary">审核通过</span>
+                                {elseif ($item['status'] == 3)/}
+                                <p><span class="layer-badge layer-badge-warning">已驳回</span></p>
+                                {/if}
+                            </td>
+                            <td>{$item['create_time']}</td>
+                            <td>{$item['update_time'] ?: '--'}</td>
+                            <td>
+                                <div class="tpl-table-black-operation">
+                                    {if ($item['status'] == 1)}
+                                    <a class="j-money tpl-table-black-operation-green item-pass"
+                                       data-id="{$item['id']}" href="javascript:void(0);">退款
+                                    </a>
+                                    <a class="j-money tpl-table-black-operation-del item-refuse"
+                                       data-id="{$item['id']}" href="javascript:void(0);">驳回
+                                    </a>
+                                    {else/}
+                                    <span>---</span>
+                                    {/if}
+                                </div>
+                            </td>
+                        </tr>
+                        {/foreach}{else/}
+                        <tr>
+                            <td colspan="12" class="layer-text-center">暂无记录</td>
+                        </tr>
+                        {/if}
+                        </tbody>
+                    </table>
+                    <div class="layui-col-lg12">
+                        <div class="">{$list->render()|raw} </div>
+                        <div class="pagination-total">
+                            <div class="">总记录：{$list->total()}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        /**
+         * 审核操作
+         */
+        $('.item-pass').click(function () {
+            var id = $(this).data('id');
+            var url = "{:url('user/returnbuy/changeStatus')}";
+            layer.confirm('确定通过吗？', function (index) {
+                $.post(url, {id: id, status: 2}, function (result) {
+                    result.code === 1 ? $.show_success(result.msg, result.url)
+                        : $.show_error(result.msg);
+                });
+                layer.close(index);
+            });
+        });
+
+        /**
+         * 驳回申请
+         */
+        $('.item-refuse').click(function () {
+            var id = $(this).data('id');
+            var url = "{:url('user/returnbuy/changeStatus')}";
+            layer.confirm('确定驳回吗？', function (index) {
+                $.post(url, {id: id, status: 3}, function (result) {
+                    result.code === 1 ? $.show_success(result.msg, result.url)
+                        : $.show_error(result.msg);
+                });
+                layer.close(index);
+            });
+        });
+    });
+</script>
+

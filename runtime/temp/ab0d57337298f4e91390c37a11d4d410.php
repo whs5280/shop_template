@@ -1,4 +1,4 @@
-<?php /*a:1:{s:61:"/var/www/html/www.0766city.com/thinkphp/tpl/dispatch_jump.tpl";i:1556009592;}*/ ?>
+<?php /*a:1:{s:61:"/var/www/html/www.0766city.com/thinkphp/tpl/dispatch_jump.tpl";i:1574032922;}*/ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -7,24 +7,22 @@
     <title>跳转提示</title>
     <style type="text/css">
         *{ padding: 0; margin: 0; }
-		html {background:url(/assets/user/img/bady-bj.jpg) no-repeat;  background-size:cover;}
-        body{ font-family: "Microsoft Yahei","Helvetica Neue",Helvetica,Arial,sans-serif; color: #333; font-size: 16px;}
-        .system-message{width:50%;margin-top:10%; margin-left:15%; text-align:center; background:#fff; padding:5% 0; border-radius:10px;    box-shadow: 2px 5px 10px 0px #ccc}
+        body{ background: #fff; font-family: "Microsoft Yahei","Helvetica Neue",Helvetica,Arial,sans-serif; color: #333; font-size: 16px; }
+        .system-message{ padding: 24px 48px; }
         .system-message h1{ font-size: 100px; font-weight: normal; line-height: 120px; margin-bottom: 12px; }
-		.system-message h1 img {margin:20px 0; width:50px; height:50px;}
         .system-message .jump{ padding-top: 10px; }
         .system-message .jump a{ color: #333; }
         .system-message .success,.system-message .error{ line-height: 1.8em; font-size: 36px; }
         .system-message .detail{ font-size: 12px; line-height: 20px; margin-top: 12px; display: none; }
     </style>
 </head>
-<body >
+<body>
     <div class="system-message">
         <?php switch ($code) {case 1:?>
-            <h1><img src="/assets/user/img/dui.svg"/></h1>
+            <h1>:)</h1>
             <p class="success"><?php echo(strip_tags($msg));?></p>
             <?php break;case 0:?>
-            <h1><img src="/assets/user/img/gan.svg"/></h1>
+            <h1>:(</h1>
             <p class="error"><?php echo(strip_tags($msg));?></p>
             <?php break;} ?>
         <p class="detail"></p>

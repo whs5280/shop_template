@@ -1,4 +1,4 @@
-<?php /*a:2:{s:77:"/var/www/html/www.0766city.com/application/user/view/supplier/plat_order.html";i:1574905144;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1574238926;}*/ ?>
+<?php /*a:2:{s:77:"/var/www/html/www.0766city.com/application/user/view/supplier/plat_order.html";i:1578043217;s:64:"/var/www/html/www.0766city.com/application/user/view/layout.html";i:1578043214;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -169,7 +169,10 @@
                 <table class="layui-table">
                     <thead>
                     <tr>
+                        <th>订单ID</th>
                         <th>商品名称</th>
+                        <th>供应商ID</th>
+                        <th>供应商名称</th>
                         <th>订单号</th>
                         <th>规格id</th>
                         <th>购买数量</th>
@@ -183,7 +186,10 @@
                     <tbody>
                     <?php if((!$list->isEmpty())): foreach($list as $item): ?>
                     <tr>
+                    	<td><?php echo htmlentities($item['order_id']); ?></td>
                         <td><?php echo htmlentities($item['goods_name']); ?></td>
+                        <td><?php echo htmlentities($item['plat_id']); ?></td>
+                        <td><?php echo !empty($item['supplier_name']) ? htmlentities($item['supplier_name']) : '--'; ?></td>
                         <td><?php echo htmlentities($item['order_no']); ?></td>
                         <td><?php echo htmlentities($item['spec_id']); ?></td>
                         <td><?php echo htmlentities($item['spec_num']); ?></td>
@@ -224,7 +230,7 @@
                                     ['order_id' => $item['order_id']]); ?>"
                                    class="tpl-table-black-operation-del"
                                    data-id="<?php echo htmlentities($item['order_id']); ?>">
-                                    <i class="mdi menu-icon mdi-telegram"></i> 退订
+                                    <i class="mdi menu-icon mdi-telegram"></i> 退款
                                 </a>
                             </div>
                         </td>

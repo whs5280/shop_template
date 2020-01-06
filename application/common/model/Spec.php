@@ -38,11 +38,11 @@ class Spec extends BaseModel
      * @return mixed
      */
     public function add($data)
-        {
-            $data['app_id'] = self::$app_id;
-            $this->allowField(true)->save($data);
-           return (new SpecItem())->saveAfter('',$data['items']);
-        }
+    {
+    	$data['app_id'] = self::$app_id;
+    	$this->allowField(true)->save($data);
+    	return (new SpecItem())->saveAfter($this->id,$data['items']);
+    }
 	/**
      * 获取
      * @param $spec_name
@@ -88,7 +88,7 @@ class Spec extends BaseModel
 		$spec = $this->column('id,name'); // 规格表
 		$specItem =(new SpecItem)->column('id,item,spec_id');//规格项 
 		if($goods_id)
-		$keySpecGoodsPrice = (new SpecItemPrice)->where('goods_id = '.$goods_id)->column('key,price,shop_price,store_count,sku');//规格项
+		$keySpecGoodsPrice = (new SpecItemPrice)->where('goods_id = '.$goods_id)->column('key,price,shop_price,store_count,sku,item_pic,item_pic_id');//规格项
 	    foreach($spec_arr as $k=>$v){
 		    $name=array();
 		    $list[$k]['id']=implode('_', array_values($v));

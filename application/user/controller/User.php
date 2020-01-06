@@ -1,5 +1,7 @@
 <?php
 namespace app\user\controller;
+use app\common\model\Category;
+use app\common\model\Industry;
 use app\common\model\User as UserModel;
 use app\common\model\Level as LevelModel;
 use app\common\model\Withdraw as WithdrawModel;
@@ -20,13 +22,32 @@ class User extends Controller
      * @return mixed
      * @throws \think\exception\DbException
      */
-    public function index($nickName = '', $gender = null,$pid=null,$is_delete=0,$type=1)
+    public function index($nickName = '', $industry = '')
     {
         $model = new UserModel;
-        $list = $model->getList(trim($nickName), $gender,$pid,$is_delete,$type);
+        $list = $model->getUserInfoList(trim($nickName),$status = 1,$isdelete = 0,$type = 1,$industry);
+
+        $industryModel = new Industry();
+        $industry_list = $industryModel->getALL();
 
         $page=$list->render();
-        return $this->fetch('index', compact('list','page'));
+        return $this->fetch('index', compact('list','page', 'industry_list'));
+    }
+    /**
+     * 获取商户信息审核列表
+     * @param string $nickName
+     * @param int $status
+     * @param int $type
+     * @return mixed
+     * @throws \think\exception\DbException
+     */
+    public function auditlist($nickName = '', $status=-1,$type=1)
+    {
+        $model = new UserModel;
+        $list = $model->auditlist(trim($nickName), $status, $type);
+
+        $page=$list->render();
+        return $this->fetch('auditlist', compact('list','page'));
     }
     /**
      * 用户收益列表
@@ -66,13 +87,16 @@ class User extends Controller
      * @return mixed
      * @throws \think\exception\DbException
      */
-    public function frozen($nickName = '', $gender = null,$pid=null,$is_delete=1)
+    public function frozen($nickName = '', $industry = '')
     {
-        $nickName=trim($nickName);
         $model = new UserModel;
-        $list = $model->getList($nickName,$gender,$pid,$is_delete);
+        $list = $model->getUserInfoList(trim($nickName),$status = 1,$isdelete = 1,$type = 1,$industry);
+
+        $industryModel = new Industry();
+        $industry_list = $industryModel->getALL();
+
         $page=$list->render();
-        return $this->fetch('lock', compact('list','page'));
+        return $this->fetch('lock', compact('list','page', 'industry_list'));
     }
     /**
      * 冻结用户
@@ -131,5 +155,33 @@ class User extends Controller
         if(!$model->submits($data)){
             return $this->fetch();
         }
+    }
+    /**
+     * 审核通过
+     * @param $user_id
+     * @return array
+     */
+    public function pass($user_id)
+    {
+        $model = new UserModel;
+        $res = $model->pass($user_id);
+        if ($res!==true) {
+            return $this->renderError('操作失败');
+        }
+        return $this->renderSuccess('操作成功');
+    }
+    /**
+     * 审核不通过
+     * @return array
+     */
+    public function refuse()
+    {
+        $param = input();
+        $model = new UserModel;
+        $res = $model->refuse($param['user_id'], $param['reason']);
+        if ($res!==true) {
+            return $this->renderError('操作失败');
+        }
+        return $this->renderSuccess('操作成功');
     }
 }

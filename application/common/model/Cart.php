@@ -66,6 +66,9 @@ class Cart
         $goodsList = [];
 		$shopList=[];
 		$agio_count=0;
+        $is_sole = 0;
+        $sole_time = 0;
+        $sole_must_num = 0;
         foreach ($cartList as $key => $cart) {
             // 判断商品不存在则自动删除
             if (!isset($goodsData[$cart['item_id']])) continue;
@@ -79,6 +82,26 @@ class Cart
                 $this->delete($cart['item_id'], $cart['item_sku_id']);
                 continue;
             } 
+            // 判断商品是否被独家
+            if ($Item['is_sole'] == 1){
+            	// 判断独家商品是否过期
+            	$time = time();
+            	if ($Item['sole_time'] > $time){
+            		// 判断独家商品购买者地址是否超出范围
+            		$now_range = get_lat_and_log($user['store_address']);// 当前购买者的位置
+            		$sole_user_range = get_lat_and_log(Db::name('user')->where(['user_id'=>$Item['sole_user']])->value('store_address'));// 独家用户的位置
+            		$range = getdistanceAction($now_range, $sole_user_range);// 算出两个经纬度之间的距离（单位：米）
+            		if ($Item['sole_range'] <= $range){
+            			// 判断独家商品购买者是否是该独家商户
+            			if ($Item['sole_user'] != $user['user_id']){
+            				$this->setError('很抱歉，'.$Item['goods_nam'].'商品已被'.$Item['sole_user'].'独家，独家结束时间为：'.$Item['sole_time']);
+            			}
+            		}
+            	}
+	            $is_sole = 1;
+	            $sole_time = $Item['sole_time'];
+	            $sole_must_num = $Item['sole_must_num'];
+            }
 			$Item['goods_sku'] = $Item->getGoodsSku($cart['item_sku_id']);
             // 判断商品是否下架 item_sku_id
 			if ($Item['is_on_sale'] !== 1) {
@@ -90,9 +113,13 @@ class Cart
             }
             // 商品单价
             $Item['goods_price'] = $Item['goods_sku']['shop_price'];
+            // $agio_count +=sprintf("%1\$.2f",bcmul($Item['goods_price'], $cart['goods_num'], 2)-bcmul($Item['goods_price'], $cart['goods_num'], 2)/10);
             // 商品总价
+            if ($Item['discount'] <= 0){
+            	$Item['discount'] = 1;
+            }
             $Item['total_num'] = $cart['goods_num'];
-			$Item['total_price'] = $total_price =bcmul($Item['goods_price'], $cart['goods_num'], 2);      
+			$Item['total_price'] = $total_price =bcmul($Item['goods_price'], $cart['goods_num'], 2)*$Item['discount'];      
             // 商品总重量
             $Item['goods_total_weight'] = bcmul($Item['weight'], $cart['goods_num'], 2);
             // 验证用户收货地址是否存在运费规则中
@@ -126,11 +153,15 @@ class Cart
             'order_pay_price' => $orderPayPrice,          // 实际支付金额
             'coupon_list' => array_values($couponList),   // 优惠券列表
             'address' => $user,  // 默认地址
+        	'agio_count'=>$agio_count,
             'exist_address' => $exist_address,      // 是否存在收货地址
             'express_price' => $expressPrice,       // 配送费用
             'intra_region' => $intraRegion,         // 当前用户收货城市是否存在配送规则中
             'has_error' => $this->hasError(),
             'error_msg' => $this->getError(),
+        	'is_sole'=>$is_sole,
+        	'sole_time'=>$sole_time,
+        	'sole_must_num'=>$sole_must_num
         ];
     }
     /**
@@ -188,7 +219,7 @@ class Cart
     public function delete($cart_ids)
     {
         $indexArr = strpos($cart_ids, ',') !== false
-            ? explode(',', $cart_ids) : [$cart_ids];
+            ? explode(',', $cart_ids) : [$cart_ids];//4
         foreach ($indexArr as $index) {
             if (isset($this->cart[$index])) unset($this->cart[$index]);
         }

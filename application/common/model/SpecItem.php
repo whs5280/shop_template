@@ -43,7 +43,7 @@ class SpecItem extends BaseModel
     public function saveAfter($id='',$items)
     {
         $model = new static; // 实例化User对象
-        $post_items = explode(PHP_EOL,$items);
+        $post_items = explode(',',$items);
 		//删除所有的规格
        if($id) $model->where('spec_id','=', $id)->delete();
         /*数据插入*/
